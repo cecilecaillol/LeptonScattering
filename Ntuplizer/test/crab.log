@@ -1,0 +1,674 @@
+DEBUG 2024-05-06 14:09:22.655 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-05-06 14:09:22.655 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:09:22.655 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-06 14:09:22.787 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-06 14:09:22.861 UTC: 	 Will use CRAB configuration file submit_crab_ssem_MuonEG2018A.py
+DEBUG 2024-05-06 14:09:22.861 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-05-06 14:09:22.866 UTC: 	 Error while loading CRAB configuration:
+cannot import name getUsernameFromCRIC
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-05-06 14:09:22.866 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240416.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240416.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240416.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240416.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.240416.00/lib/CRABClient/Commands/SubCommand.py", line 91, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+cannot import name getUsernameFromCRIC
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-05-06 14:09:22.868 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:09:34.610 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:09:34.610 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:09:34.611 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-06 14:09:34.611 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-06 14:09:34.611 UTC: 	 Will use CRAB configuration file submit_crab_ssem_MuonEG2018A.py
+DEBUG 2024-05-06 14:09:34.611 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-05-06 14:09:34.612 UTC: 	 Error while loading CRAB configuration:
+cannot import name getUsernameFromCRIC
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-05-06 14:09:34.613 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 91, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+cannot import name getUsernameFromCRIC
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-05-06 14:09:34.614 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:10:09.344 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:10:09.344 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:10:09.344 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-06 14:10:09.345 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-06 14:10:09.345 UTC: 	 Will use CRAB configuration file submit_crab_ssem_MuonEG2018A.py
+DEBUG 2024-05-06 14:10:09.345 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-05-06 14:10:09.350 UTC: 	 Error while loading CRAB configuration:
+name 'config' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-05-06 14:10:09.350 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 91, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+name 'config' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-05-06 14:10:09.352 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:32:58.078 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:32:58.078 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:32:58.078 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-06 14:32:58.078 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-06 14:32:58.079 UTC: 	 Will use CRAB configuration file submit_crab_ssem_WZ2018.py
+DEBUG 2024-05-06 14:32:58.079 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-05-06 14:32:58.083 UTC: 	 Error while loading CRAB configuration:
+'ConfigSection' object has no attribute 'inputFiles'
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-05-06 14:32:58.083 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 91, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+'ConfigSection' object has no attribute 'inputFiles'
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-05-06 14:32:58.084 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:34:46.180 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:34:46.180 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:34:46.180 UTC: 	 Executing command: 'status'
+DEBUG 2024-05-06 14:34:46.180 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-05-06 14:35:20.392 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:35:20.393 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:35:20.393 UTC: 	 Executing command: 'status'
+DEBUG 2024-05-06 14:35:20.393 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+ERROR 2024-05-06 14:35:20.394 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC
+ERROR 2024-05-06 14:35:20.394 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 678, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 519, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC
+INFO 2024-05-06 14:35:20.397 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:35:27.085 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:35:27.086 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:35:27.086 UTC: 	 Executing command: 'status'
+DEBUG 2024-05-06 14:35:27.086 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+ERROR 2024-05-06 14:35:27.087 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC/crab_WZ3LNu_2018
+ERROR 2024-05-06 14:35:27.087 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 678, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 519, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC/crab_WZ3LNu_2018
+INFO 2024-05-06 14:35:27.089 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-06 14:35:40.123 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-06 14:35:40.124 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-06 14:35:40.124 UTC: 	 Executing command: 'status'
+DEBUG 2024-05-06 14:35:40.124 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+ERROR 2024-05-06 14:35:40.125 UTC: 	 Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC/crab_WZ3LNu_2018
+ERROR 2024-05-06 14:35:40.125 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 678, in validateOptions
+    self.loadLocalCache()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 525, in loadLocalCache
+    raise ex
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 519, in loadLocalCache
+    self.cachedinfo, self.logfile = loadCache(self.requestarea, self.logger)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/ClientUtilities.py", line 445, in loadCache
+    raise CachefileNotFoundException(msg)
+CRABClient.ClientExceptions.CachefileNotFoundException: Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab_projectsMC/crab_WZ3LNu_2018
+INFO 2024-05-06 14:35:40.127 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/python/crab.log
+DEBUG 2024-05-29 13:37:18.833 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-29 13:37:18.833 UTC: 	 Running on: Linux lxplus704.cern.ch 3.10.0-1160.118.1.el7.x86_64 #1 SMP Wed Apr 24 16:01:50 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-29 13:37:18.834 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-29 13:37:18.834 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-29 13:37:18.835 UTC: 	 Will use CRAB configuration file crabConfigDataFR.py
+DEBUG 2024-05-29 13:37:18.835 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-05-29 13:37:18.852 UTC: 	 Error while loading CRAB configuration:
+name 'Falseconfig' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-05-29 13:37:18.852 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 91, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+name 'Falseconfig' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3FAQ
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-05-29 13:37:18.919 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-05-30 08:59:13.219 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-30 08:59:13.219 UTC: 	 Running on: Linux lxplus729.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-30 08:59:13.219 UTC: 	 Executing command: 'submit'
+DEBUG 2024-05-30 08:59:13.219 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-05-30 08:59:13.220 UTC: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2024-05-30 08:59:13.220 UTC: 	 Loading CRAB configuration file.
+DEBUG 2024-05-30 08:59:13.225 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+ERROR 2024-05-30 08:59:13.226 UTC: 	 Working area '/afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab_projects/crab_VV2L2Nu_2018' already exists 
+Please change the requestName in the config file
+ERROR 2024-05-30 08:59:13.226 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 329, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/ClientUtilities.py", line 392, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab_projects/crab_VV2L2Nu_2018' already exists 
+Please change the requestName in the config file
+INFO 2024-05-30 08:59:13.249 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-05-30 18:10:47.843 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-05-30 18:10:47.844 UTC: 	 Running on: Linux lxplus713.cern.ch 3.10.0-1160.114.2.el7.x86_64 #1 SMP Wed Mar 20 15:54:52 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-05-30 18:10:47.844 UTC: 	 Executing command: 'status'
+DEBUG 2024-05-30 18:10:47.844 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+ERROR 2024-05-30 18:10:47.845 UTC: 	 Error: crab_projects/crab_MuonEG_2018AD is not a valid CRAB project directory.
+ERROR 2024-05-30 18:10:47.845 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 280, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 674, in validateOptions
+    raise ConfigurationException(msg)
+CRABClient.ClientExceptions.ConfigurationException: [91mError[0m: crab_projects/crab_MuonEG_2018AD is not a valid CRAB project directory.
+INFO 2024-05-30 18:10:47.862 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-06-11 07:16:23.735 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-06-11 07:16:23.735 UTC: 	 Running on: Linux lxplus9103.cern.ch 5.14.0-427.16.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Apr 26 18:16:09 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-06-11 07:16:23.735 UTC: 	 Executing command: 'submit'
+DEBUG 2024-06-11 07:16:23.735 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-06-11 07:16:23.736 UTC: 	 Will use CRAB configuration file crabConfigFRmu.py
+DEBUG 2024-06-11 07:16:23.736 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-06-11 07:16:23.738 UTC: 	 Invalid CRAB configuration: In case of Automatic splitting, the Data.unitsPerJob parameter must be in the [180, 2700] minutes range. You asked for 10 minutes.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-06-11 07:16:23.738 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 96, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Invalid CRAB configuration: In case of Automatic splitting, the Data.unitsPerJob parameter must be in the [180, 2700] minutes range. You asked for 10 minutes.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-06-11 07:16:23.759 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-06-17 12:46:44.960 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-06-17 12:46:44.960 UTC: 	 Running on: Linux lxplus940.cern.ch 5.14.0-427.16.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Apr 26 18:16:09 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-06-17 12:46:44.960 UTC: 	 Executing command: 'submit'
+DEBUG 2024-06-17 12:46:44.992 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-06-17 12:46:45.168 UTC: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2024-06-17 12:46:45.168 UTC: 	 Loading CRAB configuration file.
+ERROR 2024-06-17 12:46:45.249 UTC: 	 Invalid CRAB configuration: In case of Automatic splitting, the Data.unitsPerJob parameter must be in the [180, 2700] minutes range. You asked for 10 minutes.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2024-06-17 12:46:45.249 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 325, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240110.00/lib/CRABClient/Commands/SubCommand.py", line 96, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Invalid CRAB configuration: In case of Automatic splitting, the Data.unitsPerJob parameter must be in the [180, 2700] minutes range. You asked for 10 minutes.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2024-06-17 12:46:45.263 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-06-18 07:44:17.348 UTC: 	 CRAB Client version: v3.240110
+DEBUG 2024-06-18 07:44:17.348 UTC: 	 Running on: Linux lxplus708.cern.ch 3.10.0-1160.118.1.el7.x86_64 #1 SMP Wed Apr 24 16:01:50 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-06-18 07:44:17.348 UTC: 	 Executing command: 'status'
+DEBUG 2024-06-18 07:44:17.349 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-07-08 07:53:48.915 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-07-08 07:53:48.916 UTC: 	 Running on: Linux lxplus976.cern.ch 5.14.0-427.22.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Mon Jun 10 09:23:36 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-07-08 07:53:48.916 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2024-07-08 07:53:48.916 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-07-08 07:53:48.917 UTC: 	 Checking credentials
+DEBUG 2024-07-08 07:53:48.917 UTC: 	 Found proxy file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:53:48.917 UTC: 	 Making sure it has proper VOMS extension
+DEBUG 2024-07-08 07:53:48.917 UTC: 	 Executing command :
+ voms-proxy-info --vo --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:53:48.967 UTC: 	 output : cms
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:53:48.967 UTC: 	 Getting proxy life time left
+DEBUG 2024-07-08 07:53:48.967 UTC: 	 Executing command :
+ voms-proxy-info --actimeleft --timeleft --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:53:49.011 UTC: 	 output : 172626
+172626
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:53:49.011 UTC: 	 Proxy valid for 47:57:06 hours
+DEBUG 2024-07-08 07:53:49.011 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:53:49.011 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:53:49.616 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:53:50.212 UTC: 	 Rucio client intialized for account ccaillol
+ERROR 2024-07-08 07:53:50.213 UTC: 	 Error: Please specify the site where to check the write permissions. Use the --site option.
+ERROR 2024-07-08 07:53:50.213 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/lib/CRABClient/Commands/checkwrite.py", line 22, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/lib/CRABClient/Commands/SubCommand.py", line 402, in __init__
+    self.validateOptions()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/lib/CRABClient/Commands/checkwrite.py", line 355, in validateOptions
+    raise ex
+CRABClient.ClientExceptions.MissingOptionException: [91mError[0m: Please specify the site where to check the write permissions. Use the --site option.
+INFO 2024-07-08 07:53:50.237 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
+DEBUG 2024-07-08 07:54:00.771 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-07-08 07:54:00.772 UTC: 	 Running on: Linux lxplus976.cern.ch 5.14.0-427.22.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Mon Jun 10 09:23:36 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-07-08 07:54:00.772 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2024-07-08 07:54:00.772 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-07-08 07:54:00.773 UTC: 	 Checking credentials
+DEBUG 2024-07-08 07:54:00.773 UTC: 	 Found proxy file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:54:00.773 UTC: 	 Making sure it has proper VOMS extension
+DEBUG 2024-07-08 07:54:00.773 UTC: 	 Executing command :
+ voms-proxy-info --vo --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:54:00.814 UTC: 	 output : cms
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:54:00.814 UTC: 	 Getting proxy life time left
+DEBUG 2024-07-08 07:54:00.814 UTC: 	 Executing command :
+ voms-proxy-info --actimeleft --timeleft --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:54:00.856 UTC: 	 output : 172615
+172615
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:54:00.856 UTC: 	 Proxy valid for 47:56:55 hours
+DEBUG 2024-07-08 07:54:00.856 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:54:00.856 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:54:02.120 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:54:02.690 UTC: 	 Rucio client intialized for account ccaillol
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Command use: checkwrite
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Options use: ['--site', 'T2_CH_CERN']
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Instance is None
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Server base url is None
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:54:02.691 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:54:03.307 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:54:03.308 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2024-07-08 07:54:03.308 UTC: 	 Validating LFN /store/user/ccaillol...
+INFO 2024-07-08 07:54:03.308 UTC: 	 LFN /store/user/ccaillol is valid.
+INFO 2024-07-08 07:54:03.361 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2024-07-08 07:54:03.361 UTC: 	 Will check write permission in /store/user/ccaillol on site T2_CH_CERN
+INFO 2024-07-08 07:54:03.381 UTC: 	 Will use PFN: davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp
+INFO 2024-07-08 07:54:03.381 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998 and copy (dummy) file a51e0e53-4116-4955-a072-e3d062231998.tmp to /store/user/ccaillol
+
+INFO 2024-07-08 07:54:03.386 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/a51e0e53-4116-4955-a072-e3d062231998.tmp 'davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp'
+INFO 2024-07-08 07:54:03.386 UTC: 	 Please wait...
+INFO 2024-07-08 07:54:05.123 UTC: 	 
+Successfully created directory crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998 and copied file a51e0e53-4116-4955-a072-e3d062231998.tmp to /store/user/ccaillol
+INFO 2024-07-08 07:54:05.123 UTC: 	 
+Attempting to delete file davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp
+
+INFO 2024-07-08 07:54:05.123 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp'
+INFO 2024-07-08 07:54:05.123 UTC: 	 Please wait...
+INFO 2024-07-08 07:54:05.849 UTC: 	 Failed running delete command
+INFO 2024-07-08 07:54:05.849 UTC: 	   Stdout:
+    davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp	FAILED
+    
+INFO 2024-07-08 07:54:05.849 UTC: 	   Stderr:
+    gfal-rm error: 5 (Input/output error) - DavPosix::unlink  HTTP 507 : Insufficient Storage  with url davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp
+    
+INFO 2024-07-08 07:54:05.849 UTC: 	 
+Failed to delete file davs://eoscms.cern.ch:443/eos/cms/store/user/ccaillol/crab3checkwrite_20240708_095403_a51e0e53-4116-4955-a072-e3d062231998/a51e0e53-4116-4955-a072-e3d062231998.tmp
+INFO 2024-07-08 07:54:05.853 UTC: 	 
+Checkwrite Result:
+INFO 2024-07-08 07:54:05.853 UTC: 	 Error: CRAB3 is able to copy but unable to delete file in /store/user/ccaillol on site T2_CH_CERN. Asynchronous Stage Out with CRAB3 will fail.
+       You may want to contact the site administrators sending them the 'crab checkwrite' output as printed above.
+INFO 2024-07-08 07:54:05.853 UTC: 	 Note: You cannot write to a site if you did not ask permission.
+INFO 2024-07-08 07:54:05.930 UTC: 	 Additional diagnostic info for CERN EOS
+== id ==>:
+uid=36196(ccaillol) gid=1399(zh) groups=1399(zh),65534 context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+== voms-proxy-info -all ==>:
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol/CN=1988713424
+issuer    : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+identity  : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+type      : RFC compliant proxy
+strength  : 2048 bits
+path      : /tmp/x509up_u36196
+timeleft  : 47:56:50
+key usage : Digital Signature, Key Encipherment
+=== VO cms extension information ===
+VO        : cms
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+issuer    : /DC=ch/DC=cern/OU=computers/CN=cms-auth.web.cern.ch
+attribute : /cms/Role=NULL/Capability=NULL
+attribute : /cms/country/Role=NULL/Capability=NULL
+attribute : /cms/country/ch/Role=NULL/Capability=NULL
+timeleft  : 47:56:50
+uri       : voms-cms-auth.app.cern.ch:15000
+WARNING uberftp command not found. To get additional diagnostic info
+ log on lxplus, get a proxy and execute:
+ uberftp eoscmsftp.cern.ch pwd
+
+ERROR 2024-07-08 07:54:05.931 UTC: 	 Command checkwrite failed
+ERROR 2024-07-08 07:54:05.931 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 139, in __call__
+    raise CommandFailedException("Command %s failed" % str(args[0]))
+CRABClient.ClientExceptions.CommandFailedException: Command checkwrite failed
+DEBUG 2024-07-08 07:56:18.955 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-07-08 07:56:18.955 UTC: 	 Running on: Linux lxplus976.cern.ch 5.14.0-427.22.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Mon Jun 10 09:23:36 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-07-08 07:56:18.955 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2024-07-08 07:56:18.955 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-07-08 07:56:18.956 UTC: 	 Checking credentials
+DEBUG 2024-07-08 07:56:18.956 UTC: 	 Found proxy file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:56:18.956 UTC: 	 Making sure it has proper VOMS extension
+DEBUG 2024-07-08 07:56:18.956 UTC: 	 Executing command :
+ voms-proxy-info --vo --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:56:19.005 UTC: 	 output : cms
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:56:19.005 UTC: 	 Getting proxy life time left
+DEBUG 2024-07-08 07:56:19.005 UTC: 	 Executing command :
+ voms-proxy-info --actimeleft --timeleft --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:56:19.044 UTC: 	 output : 172731
+172731
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:56:19.045 UTC: 	 Proxy valid for 47:58:51 hours
+DEBUG 2024-07-08 07:56:19.045 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:56:19.045 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:56:19.657 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:56:20.367 UTC: 	 Rucio client intialized for account ccaillol
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Command use: checkwrite
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Options use: ['--site', 'T2_CH_CERN', '--lfn', '/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/']
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Instance is None
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Server base url is None
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:56:20.368 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:56:21.021 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:56:21.022 UTC: 	 Validating LFN /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/...
+INFO 2024-07-08 07:56:21.023 UTC: 	 LFN /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/ is valid.
+INFO 2024-07-08 07:56:21.047 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2024-07-08 07:56:21.047 UTC: 	 Will check write permission in /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/ on site T2_CH_CERN
+INFO 2024-07-08 07:56:21.067 UTC: 	 Will use PFN: davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp
+INFO 2024-07-08 07:56:21.067 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9 and copy (dummy) file ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp to /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/
+
+INFO 2024-07-08 07:56:21.075 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp 'davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp'
+INFO 2024-07-08 07:56:21.075 UTC: 	 Please wait...
+INFO 2024-07-08 07:56:22.139 UTC: 	 
+Successfully created directory crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9 and copied file ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp to /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/
+INFO 2024-07-08 07:56:22.139 UTC: 	 
+Attempting to delete file davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp
+
+INFO 2024-07-08 07:56:22.139 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp'
+INFO 2024-07-08 07:56:22.139 UTC: 	 Please wait...
+INFO 2024-07-08 07:56:22.919 UTC: 	 Failed running delete command
+INFO 2024-07-08 07:56:22.920 UTC: 	   Stdout:
+    davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp	FAILED
+    
+INFO 2024-07-08 07:56:22.921 UTC: 	   Stderr:
+    gfal-rm error: 5 (Input/output error) - DavPosix::unlink  HTTP 507 : Insufficient Storage  with url davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp
+    
+INFO 2024-07-08 07:56:22.921 UTC: 	 
+Failed to delete file davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/crab3checkwrite_20240708_095621_ff16dd42-36f9-4cd5-907e-d7efce7ee5a9/ff16dd42-36f9-4cd5-907e-d7efce7ee5a9.tmp
+INFO 2024-07-08 07:56:22.925 UTC: 	 
+Checkwrite Result:
+INFO 2024-07-08 07:56:22.925 UTC: 	 Error: CRAB3 is able to copy but unable to delete file in /store/group/cmst3/user/ccaillol/LeptonScattering/SSEM/ on site T2_CH_CERN. Asynchronous Stage Out with CRAB3 will fail.
+       You may want to contact the site administrators sending them the 'crab checkwrite' output as printed above.
+INFO 2024-07-08 07:56:22.925 UTC: 	 Note: You cannot write to a site if you did not ask permission.
+INFO 2024-07-08 07:56:23.004 UTC: 	 Additional diagnostic info for CERN EOS
+== id ==>:
+uid=36196(ccaillol) gid=1399(zh) groups=1399(zh),65534 context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+== voms-proxy-info -all ==>:
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol/CN=446471723
+issuer    : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+identity  : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+type      : RFC compliant proxy
+strength  : 2048 bits
+path      : /tmp/x509up_u36196
+timeleft  : 47:58:48
+key usage : Digital Signature, Key Encipherment
+=== VO cms extension information ===
+VO        : cms
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+issuer    : /DC=ch/DC=cern/OU=computers/CN=cms-auth.web.cern.ch
+attribute : /cms/Role=NULL/Capability=NULL
+attribute : /cms/country/Role=NULL/Capability=NULL
+attribute : /cms/country/ch/Role=NULL/Capability=NULL
+timeleft  : 47:58:48
+uri       : voms-cms-auth.app.cern.ch:15000
+WARNING uberftp command not found. To get additional diagnostic info
+ log on lxplus, get a proxy and execute:
+ uberftp eoscmsftp.cern.ch pwd
+
+ERROR 2024-07-08 07:56:23.004 UTC: 	 Command checkwrite failed
+ERROR 2024-07-08 07:56:23.004 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 139, in __call__
+    raise CommandFailedException("Command %s failed" % str(args[0]))
+CRABClient.ClientExceptions.CommandFailedException: Command checkwrite failed
+DEBUG 2024-07-08 07:57:22.512 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-07-08 07:57:22.512 UTC: 	 Running on: Linux lxplus976.cern.ch 5.14.0-427.22.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Mon Jun 10 09:23:36 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-07-08 07:57:22.512 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2024-07-08 07:57:22.512 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+DEBUG 2024-07-08 07:57:22.513 UTC: 	 Checking credentials
+DEBUG 2024-07-08 07:57:22.513 UTC: 	 Found proxy file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:57:22.513 UTC: 	 Making sure it has proper VOMS extension
+DEBUG 2024-07-08 07:57:22.513 UTC: 	 Executing command :
+ voms-proxy-info --vo --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:57:22.560 UTC: 	 output : cms
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:57:22.560 UTC: 	 Getting proxy life time left
+DEBUG 2024-07-08 07:57:22.561 UTC: 	 Executing command :
+ voms-proxy-info --actimeleft --timeleft --file /tmp/x509up_u36196
+DEBUG 2024-07-08 07:57:22.604 UTC: 	 output : 172668
+172668
+
+ error: 
+ retcode : 0
+DEBUG 2024-07-08 07:57:22.604 UTC: 	 Proxy valid for 47:57:48 hours
+DEBUG 2024-07-08 07:57:22.605 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:57:22.605 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:57:23.219 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:57:23.796 UTC: 	 Rucio client intialized for account ccaillol
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Command use: checkwrite
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Options use: ['--site', 'T2_CH_CERN', '--lfn', '/store/group/cmst3/group/taug2']
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Instance is None
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Server base url is None
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Retrieving username ...
+DEBUG 2024-07-08 07:57:23.796 UTC: 	 Retrieving username from CRIC...
+DEBUG 2024-07-08 07:57:24.462 UTC: 	 username is ccaillol
+INFO 2024-07-08 07:57:24.463 UTC: 	 Validating LFN /store/group/cmst3/group/taug2...
+INFO 2024-07-08 07:57:24.464 UTC: 	 LFN /store/group/cmst3/group/taug2 is valid.
+INFO 2024-07-08 07:57:24.479 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2024-07-08 07:57:24.480 UTC: 	 Will check write permission in /store/group/cmst3/group/taug2 on site T2_CH_CERN
+INFO 2024-07-08 07:57:24.498 UTC: 	 Will use PFN: davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp
+INFO 2024-07-08 07:57:24.498 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04 and copy (dummy) file c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp to /store/group/cmst3/group/taug2
+
+INFO 2024-07-08 07:57:24.507 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp 'davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp'
+INFO 2024-07-08 07:57:24.508 UTC: 	 Please wait...
+INFO 2024-07-08 07:57:25.370 UTC: 	 
+Successfully created directory crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04 and copied file c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp to /store/group/cmst3/group/taug2
+INFO 2024-07-08 07:57:25.370 UTC: 	 
+Attempting to delete file davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp
+
+INFO 2024-07-08 07:57:25.370 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp'
+INFO 2024-07-08 07:57:25.370 UTC: 	 Please wait...
+INFO 2024-07-08 07:57:26.083 UTC: 	 Failed running delete command
+INFO 2024-07-08 07:57:26.083 UTC: 	   Stdout:
+    davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp	FAILED
+    
+INFO 2024-07-08 07:57:26.083 UTC: 	   Stderr:
+    gfal-rm error: 5 (Input/output error) - DavPosix::unlink  HTTP 507 : Insufficient Storage  with url davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp
+    
+INFO 2024-07-08 07:57:26.084 UTC: 	 
+Failed to delete file davs://eoscms.cern.ch:443/eos/cms/store/group/cmst3/group/taug2/crab3checkwrite_20240708_095724_c3e8169f-75ca-4d80-95ad-c10982e96b04/c3e8169f-75ca-4d80-95ad-c10982e96b04.tmp
+INFO 2024-07-08 07:57:26.202 UTC: 	 
+Checkwrite Result:
+INFO 2024-07-08 07:57:26.202 UTC: 	 Error: CRAB3 is able to copy but unable to delete file in /store/group/cmst3/group/taug2 on site T2_CH_CERN. Asynchronous Stage Out with CRAB3 will fail.
+       You may want to contact the site administrators sending them the 'crab checkwrite' output as printed above.
+INFO 2024-07-08 07:57:26.202 UTC: 	 Note: You cannot write to a site if you did not ask permission.
+INFO 2024-07-08 07:57:26.291 UTC: 	 Additional diagnostic info for CERN EOS
+== id ==>:
+uid=36196(ccaillol) gid=1399(zh) groups=1399(zh),65534 context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+== voms-proxy-info -all ==>:
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol/CN=446471723
+issuer    : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+identity  : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+type      : RFC compliant proxy
+strength  : 2048 bits
+path      : /tmp/x509up_u36196
+timeleft  : 47:57:44
+key usage : Digital Signature, Key Encipherment
+=== VO cms extension information ===
+VO        : cms
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ccaillol/CN=734274/CN=Cecile Sarah Caillol
+issuer    : /DC=ch/DC=cern/OU=computers/CN=cms-auth.web.cern.ch
+attribute : /cms/Role=NULL/Capability=NULL
+attribute : /cms/country/Role=NULL/Capability=NULL
+attribute : /cms/country/ch/Role=NULL/Capability=NULL
+timeleft  : 47:57:44
+uri       : voms-cms-auth.app.cern.ch:15000
+WARNING uberftp command not found. To get additional diagnostic info
+ log on lxplus, get a proxy and execute:
+ uberftp eoscmsftp.cern.ch pwd
+
+ERROR 2024-07-08 07:57:26.292 UTC: 	 Command checkwrite failed
+ERROR 2024-07-08 07:57:26.292 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.01/bin/crab.py", line 139, in __call__
+    raise CommandFailedException("Command %s failed" % str(args[0]))
+CRABClient.ClientExceptions.CommandFailedException: Command checkwrite failed
+DEBUG 2024-09-04 08:39:56.776 UTC: 	 CRAB Client version: v3.240416
+DEBUG 2024-09-04 08:39:56.776 UTC: 	 Running on: Linux lxplus940.cern.ch 5.14.0-427.24.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Sun Jun 23 11:48:35 EDT 2024 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2024-09-04 08:39:56.776 UTC: 	 Executing command: 'submit'
+DEBUG 2024-09-04 08:39:56.787 UTC: 	 Found CRAB cache file /afs/cern.ch/user/c/ccaillol/.crab3
+INFO 2024-09-04 08:39:56.787 UTC: 	 Will use CRAB configuration file crabConfigPrivate.py
+DEBUG 2024-09-04 08:39:56.788 UTC: 	 Loading CRAB configuration file.
+DEBUG 2024-09-04 08:39:56.790 UTC: 	 Will use CRAB plugin ANALYSIS (i.e. will run an analysis job type).
+ERROR 2024-09-04 08:39:56.790 UTC: 	 Working area '/afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab_projects/crab_GGEE_2018' already exists 
+Please change the requestName in the config file
+ERROR 2024-09-04 08:39:56.790 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.02/bin/crab.py", line 152, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.02/bin/crab.py", line 135, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.02/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.02/lib/CRABClient/Commands/SubCommand.py", line 329, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-pre/v3.240416.02/lib/CRABClient/ClientUtilities.py", line 392, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab_projects/crab_GGEE_2018' already exists 
+Please change the requestName in the config file
+INFO 2024-09-04 08:39:56.845 UTC: 	 Log file is /afs/cern.ch/work/c/ccaillol/LeptonScattering/CMSSW_10_6_20/src/LeptonScattering/Ntuplizer/test/crab.log
