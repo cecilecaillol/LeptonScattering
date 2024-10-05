@@ -160,40 +160,76 @@ int main(int argc, char** argv) {
 
    std::vector<TH1F*> h0;
    std::vector<TH1F*> h0R;
+   std::vector<TH1F*> h0_anti0;
+   std::vector<TH1F*> h0R_anti0;
    std::vector<TH1F*> h0_anti1;
    std::vector<TH1F*> h0R_anti1;
+   std::vector<TH1F*> h0_anti2;
+   std::vector<TH1F*> h0R_anti2;
    std::vector<TH1F*> h1;
    std::vector<TH1F*> h1R;
+   std::vector<TH1F*> h1_anti0;
+   std::vector<TH1F*> h1R_anti0;
    std::vector<TH1F*> h1_anti1;
    std::vector<TH1F*> h1R_anti1;
+   std::vector<TH1F*> h1_anti2;
+   std::vector<TH1F*> h1R_anti2;
    std::vector<TH1F*> h2;
    std::vector<TH1F*> h2R;
+   std::vector<TH1F*> h2_anti0;
+   std::vector<TH1F*> h2R_anti0;
    std::vector<TH1F*> h2_anti1;
    std::vector<TH1F*> h2R_anti1;
+   std::vector<TH1F*> h2_anti2;
+   std::vector<TH1F*> h2R_anti2;
    std::vector<TH1F*> h3;
    std::vector<TH1F*> h3R;
+   std::vector<TH1F*> h3_anti0;
+   std::vector<TH1F*> h3R_anti0;
    std::vector<TH1F*> h3_anti1;
    std::vector<TH1F*> h3R_anti1;
+   std::vector<TH1F*> h3_anti2;
+   std::vector<TH1F*> h3R_anti2;
    std::vector<TH1F*> h4;
    std::vector<TH1F*> h4R;
+   std::vector<TH1F*> h4_anti0;
+   std::vector<TH1F*> h4R_anti0;
    std::vector<TH1F*> h4_anti1;
    std::vector<TH1F*> h4R_anti1;
+   std::vector<TH1F*> h4_anti2;
+   std::vector<TH1F*> h4R_anti2;
    std::vector<TH1F*> h5;
    std::vector<TH1F*> h5R;
+   std::vector<TH1F*> h5_anti0;
+   std::vector<TH1F*> h5R_anti0;
    std::vector<TH1F*> h5_anti1;
    std::vector<TH1F*> h5R_anti1;
+   std::vector<TH1F*> h5_anti2;
+   std::vector<TH1F*> h5R_anti2;
    std::vector<TH1F*> h6;
    std::vector<TH1F*> h6R;
+   std::vector<TH1F*> h6_anti0;
+   std::vector<TH1F*> h6R_anti0;
    std::vector<TH1F*> h6_anti1;
    std::vector<TH1F*> h6R_anti1;
+   std::vector<TH1F*> h6_anti2;
+   std::vector<TH1F*> h6R_anti2;
    std::vector<TH1F*> h7;
    std::vector<TH1F*> h7R;
+   std::vector<TH1F*> h7_anti0;
+   std::vector<TH1F*> h7R_anti0;
    std::vector<TH1F*> h7_anti1;
    std::vector<TH1F*> h7R_anti1;
+   std::vector<TH1F*> h7_anti2;
+   std::vector<TH1F*> h7R_anti2;
    std::vector<TH1F*> h8;
    std::vector<TH1F*> h8R;
+   std::vector<TH1F*> h8_anti0;
+   std::vector<TH1F*> h8R_anti0;
    std::vector<TH1F*> h8_anti1;
    std::vector<TH1F*> h8R_anti1;
+   std::vector<TH1F*> h8_anti2;
+   std::vector<TH1F*> h8R_anti2;
 
    // Control 0
    float bins0[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80};
@@ -266,6 +302,44 @@ int main(int argc, char** argv) {
         ostringstream HN8R; HN8R << "h8R" << k;
         h8R.push_back(new TH1F (HN8R.str().c_str(),"InvMa",binnum8,bins8)); h8R[k]->Sumw2();
 
+        ostringstream HN0_anti0; HN0_anti0 << "h0_anti0" << k;
+        h0_anti0.push_back(new TH1F (HN0_anti0.str().c_str(),"InvMa",binnum0,bins0)); h0_anti0[k]->Sumw2();
+        ostringstream HN1_anti0; HN1_anti0 << "h1_anti0" << k;
+        h1_anti0.push_back(new TH1F (HN1_anti0.str().c_str(),"InvMa",binnum1,bins1)); h1_anti0[k]->Sumw2();
+        ostringstream HN2_anti0; HN2_anti0 << "h2_anti0" << k;
+        h2_anti0.push_back(new TH1F (HN2_anti0.str().c_str(),"InvMa",binnum2,bins2)); h2_anti0[k]->Sumw2();
+        ostringstream HN3_anti0; HN3_anti0 << "h3_anti0" << k;
+        h3_anti0.push_back(new TH1F (HN3_anti0.str().c_str(),"InvMa",binnum3,bins3)); h3_anti0[k]->Sumw2();
+        ostringstream HN4_anti0; HN4_anti0 << "h4_anti0" << k;
+        h4_anti0.push_back(new TH1F (HN4_anti0.str().c_str(),"InvMa",binnum4,bins4)); h4_anti0[k]->Sumw2();
+        ostringstream HN5_anti0; HN5_anti0 << "h5_anti0" << k;
+        h5_anti0.push_back(new TH1F (HN5_anti0.str().c_str(),"InvMa",binnum5,bins5)); h5_anti0[k]->Sumw2();
+        ostringstream HN6_anti0; HN6_anti0 << "h6_anti0" << k;
+        h6_anti0.push_back(new TH1F (HN6_anti0.str().c_str(),"InvMa",binnum6,bins6)); h6_anti0[k]->Sumw2();
+        ostringstream HN7_anti0; HN7_anti0 << "h7_anti0" << k;
+        h7_anti0.push_back(new TH1F (HN7_anti0.str().c_str(),"InvMa",binnum7,bins7)); h7_anti0[k]->Sumw2();
+        ostringstream HN8_anti0; HN8_anti0 << "h8_anti0" << k;
+        h8_anti0.push_back(new TH1F (HN8_anti0.str().c_str(),"InvMa",binnum8,bins8)); h8_anti0[k]->Sumw2();
+
+        ostringstream HN0R_anti0; HN0R_anti0 << "h0R_anti0" << k;
+        h0R_anti0.push_back(new TH1F (HN0R_anti0.str().c_str(),"InvMa",binnum0,bins0)); h0R_anti0[k]->Sumw2();
+        ostringstream HN1R_anti0; HN1R_anti0 << "h1R_anti0" << k;
+        h1R_anti0.push_back(new TH1F (HN1R_anti0.str().c_str(),"InvMa",binnum1,bins1)); h1R_anti0[k]->Sumw2();
+        ostringstream HN2R_anti0; HN2R_anti0 << "h2R_anti0" << k;
+        h2R_anti0.push_back(new TH1F (HN2R_anti0.str().c_str(),"InvMa",binnum2,bins2)); h2R_anti0[k]->Sumw2();
+        ostringstream HN3R_anti0; HN3R_anti0 << "h3R_anti0" << k;
+        h3R_anti0.push_back(new TH1F (HN3R_anti0.str().c_str(),"InvMa",binnum3,bins3)); h3R_anti0[k]->Sumw2();
+        ostringstream HN4R_anti0; HN4R_anti0 << "h4R_anti0" << k;
+        h4R_anti0.push_back(new TH1F (HN4R_anti0.str().c_str(),"InvMa",binnum4,bins4)); h4R_anti0[k]->Sumw2();
+        ostringstream HN5R_anti0; HN5R_anti0 << "h5R_anti0" << k;
+        h5R_anti0.push_back(new TH1F (HN5R_anti0.str().c_str(),"InvMa",binnum5,bins5)); h5R_anti0[k]->Sumw2();
+        ostringstream HN6R_anti0; HN6R_anti0 << "h6R_anti0" << k;
+        h6R_anti0.push_back(new TH1F (HN6R_anti0.str().c_str(),"InvMa",binnum6,bins6)); h6R_anti0[k]->Sumw2();
+        ostringstream HN7R_anti0; HN7R_anti0 << "h7R_anti0" << k;
+        h7R_anti0.push_back(new TH1F (HN7R_anti0.str().c_str(),"InvMa",binnum7,bins7)); h7R_anti0[k]->Sumw2();
+        ostringstream HN8R_anti0; HN8R_anti0 << "h8R_anti0" << k;
+        h8R_anti0.push_back(new TH1F (HN8R_anti0.str().c_str(),"InvMa",binnum8,bins8)); h8R_anti0[k]->Sumw2();
+
         ostringstream HN0_anti1; HN0_anti1 << "h0_anti1" << k;
         h0_anti1.push_back(new TH1F (HN0_anti1.str().c_str(),"InvMa",binnum0,bins0)); h0_anti1[k]->Sumw2();
         ostringstream HN1_anti1; HN1_anti1 << "h1_anti1" << k;
@@ -304,6 +378,43 @@ int main(int argc, char** argv) {
         ostringstream HN8R_anti1; HN8R_anti1 << "h8R_anti1" << k;
         h8R_anti1.push_back(new TH1F (HN8R_anti1.str().c_str(),"InvMa",binnum8,bins8)); h8R_anti1[k]->Sumw2();
 
+        ostringstream HN0_anti2; HN0_anti2 << "h0_anti2" << k;
+        h0_anti2.push_back(new TH1F (HN0_anti2.str().c_str(),"InvMa",binnum0,bins0)); h0_anti2[k]->Sumw2();
+        ostringstream HN1_anti2; HN1_anti2 << "h1_anti2" << k;
+        h1_anti2.push_back(new TH1F (HN1_anti2.str().c_str(),"InvMa",binnum1,bins1)); h1_anti2[k]->Sumw2();
+        ostringstream HN2_anti2; HN2_anti2 << "h2_anti2" << k;
+        h2_anti2.push_back(new TH1F (HN2_anti2.str().c_str(),"InvMa",binnum2,bins2)); h2_anti2[k]->Sumw2();
+        ostringstream HN3_anti2; HN3_anti2 << "h3_anti2" << k;
+        h3_anti2.push_back(new TH1F (HN3_anti2.str().c_str(),"InvMa",binnum3,bins3)); h3_anti2[k]->Sumw2();
+        ostringstream HN4_anti2; HN4_anti2 << "h4_anti2" << k;
+        h4_anti2.push_back(new TH1F (HN4_anti2.str().c_str(),"InvMa",binnum4,bins4)); h4_anti2[k]->Sumw2();
+        ostringstream HN5_anti2; HN5_anti2 << "h5_anti2" << k;
+        h5_anti2.push_back(new TH1F (HN5_anti2.str().c_str(),"InvMa",binnum5,bins5)); h5_anti2[k]->Sumw2();
+        ostringstream HN6_anti2; HN6_anti2 << "h6_anti2" << k;
+        h6_anti2.push_back(new TH1F (HN6_anti2.str().c_str(),"InvMa",binnum6,bins6)); h6_anti2[k]->Sumw2();
+        ostringstream HN7_anti2; HN7_anti2 << "h7_anti2" << k;
+        h7_anti2.push_back(new TH1F (HN7_anti2.str().c_str(),"InvMa",binnum7,bins7)); h7_anti2[k]->Sumw2();
+        ostringstream HN8_anti2; HN8_anti2 << "h8_anti2" << k;
+        h8_anti2.push_back(new TH1F (HN8_anti2.str().c_str(),"InvMa",binnum8,bins8)); h8_anti2[k]->Sumw2();
+
+        ostringstream HN0R_anti2; HN0R_anti2 << "h0R_anti2" << k;
+        h0R_anti2.push_back(new TH1F (HN0R_anti2.str().c_str(),"InvMa",binnum0,bins0)); h0R_anti2[k]->Sumw2();
+        ostringstream HN1R_anti2; HN1R_anti2 << "h1R_anti2" << k;
+        h1R_anti2.push_back(new TH1F (HN1R_anti2.str().c_str(),"InvMa",binnum1,bins1)); h1R_anti2[k]->Sumw2();
+        ostringstream HN2R_anti2; HN2R_anti2 << "h2R_anti2" << k;
+        h2R_anti2.push_back(new TH1F (HN2R_anti2.str().c_str(),"InvMa",binnum2,bins2)); h2R_anti2[k]->Sumw2();
+        ostringstream HN3R_anti2; HN3R_anti2 << "h3R_anti2" << k;
+        h3R_anti2.push_back(new TH1F (HN3R_anti2.str().c_str(),"InvMa",binnum3,bins3)); h3R_anti2[k]->Sumw2();
+        ostringstream HN4R_anti2; HN4R_anti2 << "h4R_anti2" << k;
+        h4R_anti2.push_back(new TH1F (HN4R_anti2.str().c_str(),"InvMa",binnum4,bins4)); h4R_anti2[k]->Sumw2();
+        ostringstream HN5R_anti2; HN5R_anti2 << "h5R_anti2" << k;
+        h5R_anti2.push_back(new TH1F (HN5R_anti2.str().c_str(),"InvMa",binnum5,bins5)); h5R_anti2[k]->Sumw2();
+        ostringstream HN6R_anti2; HN6R_anti2 << "h6R_anti2" << k;
+        h6R_anti2.push_back(new TH1F (HN6R_anti2.str().c_str(),"InvMa",binnum6,bins6)); h6R_anti2[k]->Sumw2();
+        ostringstream HN7R_anti2; HN7R_anti2 << "h7R_anti2" << k;
+        h7R_anti2.push_back(new TH1F (HN7R_anti2.str().c_str(),"InvMa",binnum7,bins7)); h7R_anti2[k]->Sumw2();
+        ostringstream HN8R_anti2; HN8R_anti2 << "h8R_anti2" << k;
+        h8R_anti2.push_back(new TH1F (HN8R_anti2.str().c_str(),"InvMa",binnum8,bins8)); h8R_anti2[k]->Sumw2();
    }
 
    TFile* f_eleIDSF=new TFile("scalefactors/egammaEffi.txt_Ele_wp80iso_EGM2D.root","read");
@@ -508,14 +619,16 @@ int main(int argc, char** argv) {
 	if (mu_rawiso[0]>0.5) continue;
 	bool is_ele_isolated=el_MVAIDisoWP80[0];
 	bool is_mu_isolated=(mu_pfiso[0]>0.50);
-	if (!is_ele_isolated or !is_mu_isolated) continue;
+	//if (!is_ele_isolated or !is_mu_isolated) continue; //NEW
 	bool is_SS = (mu_charge[0]*el_charge[0]>0);
 	if (is_SS) continue;
 	if (!el_conversionveto[0] or !el_chargeconsistent[0]) continue;
-        /*if (name!="data_obs"){
-	  if (!(el_genPart[0]==1 or el_genPart[0]==22 or el_genPart[0]==15)) continue;
-          if (!(mu_genPart[0]==1 or mu_genPart[0]==15)) continue;
-	}*/
+	bool is_mu_real=false;
+	bool is_el_real=false;
+        if (name!="data_obs"){
+	  if (el_genPart[0]==1 or el_genPart[0]==22 or el_genPart[0]==15) is_el_real=true;
+          if (mu_genPart[0]==1 or mu_genPart[0]==15) is_mu_real=true;
+	}
 
 	bool is_extra_real=false;
 	float extrasf=1.0;
@@ -558,6 +671,11 @@ int main(int argc, char** argv) {
 	if (has_ZLL) continue; 
 	if (n_extrael+n_extramu!=1) continue;
         if (name!="data_obs" and !is_extra_real) continue;
+
+        if (n_extrael==1 and !is_ele_isolated) continue;
+        if (n_extramu==1 and !is_mu_isolated) continue;
+        if (name!="data_obs" and n_extramu==1 and !is_el_real) continue;
+        if (name!="data_obs" and n_extrael==1 and !is_mu_real) continue;
 
         // Block weights
         float aweight=1.0;
@@ -753,7 +871,9 @@ int main(int argc, char** argv) {
               var8=ptbalance;
            }
 
-	   if (is_extra_isolated){
+	   if (is_extra_isolated and ((n_extrael==1 and is_mu_isolated) or (n_extramu==1 and is_ele_isolated))){
+//if (n_extrael==1) cout<<"Extra el: "<<el_genPart[0]<<" "<<mu_genPart[0]<<endl;
+//if (n_extramu==1) cout<<"Extra mu: "<<el_genPart[0]<<" "<<mu_genPart[0]<<endl;
 	     if (is_cat0) h0[k]->Fill(var0,weight*aweight*weight2);
              if (is_cat1) h1[k]->Fill(var1,weight*aweight*weight2);
              if (is_cat2) h2[k]->Fill(var2,weight*aweight*weight2);
@@ -776,17 +896,16 @@ int main(int argc, char** argv) {
 	   }
 
 	   float mufr=0.0;
+           int ntracks=ntrk_prompt+ntrk_nonprompt;
+           if (ntracks>80) ntracks=80;
            if (n_extramu==1){
               float mupt=extramu.Pt();
               if (mupt<5) mupt=5;
               if (mupt>39) mupt=39;//FIXME
 	      if (fabs(extramu.Eta())<1.2) mufr=h_mufrB->GetBinContent(h_mufrB->GetXaxis()->FindBin(mupt));
               else mufr=h_mufrE->GetBinContent(h_mufrE->GetXaxis()->FindBin(mupt));
-	      int ntracks=ntrk_prompt+ntrk_nonprompt;
-	      if (ntracks>80) ntracks=80;
 	      mufr*=fit_mufrnt->Eval(ntracks);
 	   }
-
            float efr=0.0;
 	   if (n_extrael==1){
 	      float ept=extrael.Pt();
@@ -794,15 +913,52 @@ int main(int argc, char** argv) {
               if (ept>39) ept=39;//FIXME
               if (fabs(extrael.Eta())<1.5) efr=h_efrB->GetBinContent(h_efrB->GetXaxis()->FindBin(ept));
               else efr=h_efrE->GetBinContent(h_efrE->GetXaxis()->FindBin(ept));
-              int ntracks=ntrk_prompt+ntrk_nonprompt;
-              if (ntracks>80) ntracks=80;
               efr*=fit_efrnt->Eval(ntracks);
 	   }
-
 	   float wfr=mufr;
 	   if (n_extrael==1) wfr=efr;
 
-	   if (!is_extra_isolated){
+
+           float mufr2=0.0;
+           float mupt2=my_mu.Pt();
+           if (mupt2<5) mupt2=5;
+           if (mupt2>99) mupt2=99;//FIXME
+           if (fabs(my_mu.Eta())<1.2) mufr=h_mufrB->GetBinContent(h_mufrB->GetXaxis()->FindBin(mupt2));
+           else mufr2=h_mufrE->GetBinContent(h_mufrE->GetXaxis()->FindBin(mupt2));
+           mufr2*=fit_mufrnt->Eval(ntracks);
+           float efr2=0.0;
+           float ept2=my_ele.Pt();
+           if (ept2<10) ept2=10;
+           if (ept2>99) ept2=99;//FIXME
+           if (fabs(my_ele.Eta())<1.5) efr=h_efrB->GetBinContent(h_efrB->GetXaxis()->FindBin(ept2));
+           else efr2=h_efrE->GetBinContent(h_efrE->GetXaxis()->FindBin(ept2));
+           efr2*=fit_efrnt->Eval(ntracks);
+           float wfr2=mufr2;
+           if (n_extramu==1) wfr2=efr2;
+
+	   if (!is_extra_isolated and ((n_extrael==1 and !is_mu_isolated) or (n_extramu==1 and !is_ele_isolated))){
+             if (is_cat0) h0_anti0[k]->Fill(var0,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat1) h1_anti0[k]->Fill(var1,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat2) h2_anti0[k]->Fill(var2,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat3) h3_anti0[k]->Fill(var3,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat4) h4_anti0[k]->Fill(var4,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat5) h5_anti0[k]->Fill(var5,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat6) h6_anti0[k]->Fill(var6,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat7) h7_anti0[k]->Fill(var7,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat8) h8_anti0[k]->Fill(var8,weight*aweight*weight2*wfr*wfr2);
+
+             if (is_cat0R) h0R_anti0[k]->Fill(var0,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat1R) h1R_anti0[k]->Fill(var1,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat2R) h2R_anti0[k]->Fill(var2,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat3R) h3R_anti0[k]->Fill(var3,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat4R) h4R_anti0[k]->Fill(var4,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat5R) h5R_anti0[k]->Fill(var5,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat6R) h6R_anti0[k]->Fill(var6,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat7R) h7R_anti0[k]->Fill(var7,weight*aweight*weight2*wfr*wfr2);
+             if (is_cat8R) h8R_anti0[k]->Fill(var8,weight*aweight*weight2*wfr*wfr2);
+	   }
+
+           if (!is_extra_isolated and ((n_extrael==1 and is_mu_isolated) or (n_extramu==1 and is_ele_isolated))){
              if (is_cat0) h0_anti1[k]->Fill(var0,weight*aweight*weight2*wfr);
              if (is_cat1) h1_anti1[k]->Fill(var1,weight*aweight*weight2*wfr);
              if (is_cat2) h2_anti1[k]->Fill(var2,weight*aweight*weight2*wfr);
@@ -822,7 +978,29 @@ int main(int argc, char** argv) {
              if (is_cat6R) h6R_anti1[k]->Fill(var6,weight*aweight*weight2*wfr);
              if (is_cat7R) h7R_anti1[k]->Fill(var7,weight*aweight*weight2*wfr);
              if (is_cat8R) h8R_anti1[k]->Fill(var8,weight*aweight*weight2*wfr);
-	   }
+           }
+
+           if (is_extra_isolated and ((n_extrael==1 and !is_mu_isolated) or (n_extramu==1 and !is_ele_isolated))){
+             if (is_cat0) h0_anti2[k]->Fill(var0,weight*aweight*weight2*wfr2);
+             if (is_cat1) h1_anti2[k]->Fill(var1,weight*aweight*weight2*wfr2);
+             if (is_cat2) h2_anti2[k]->Fill(var2,weight*aweight*weight2*wfr2);
+             if (is_cat3) h3_anti2[k]->Fill(var3,weight*aweight*weight2*wfr2);
+             if (is_cat4) h4_anti2[k]->Fill(var4,weight*aweight*weight2*wfr2);
+             if (is_cat5) h5_anti2[k]->Fill(var5,weight*aweight*weight2*wfr2);
+             if (is_cat6) h6_anti2[k]->Fill(var6,weight*aweight*weight2*wfr2);
+             if (is_cat7) h7_anti2[k]->Fill(var7,weight*aweight*weight2*wfr2);
+             if (is_cat8) h8_anti2[k]->Fill(var8,weight*aweight*weight2*wfr2);
+
+             if (is_cat0R) h0R_anti2[k]->Fill(var0,weight*aweight*weight2*wfr2);
+             if (is_cat1R) h1R_anti2[k]->Fill(var1,weight*aweight*weight2*wfr2);
+             if (is_cat2R) h2R_anti2[k]->Fill(var2,weight*aweight*weight2*wfr2);
+             if (is_cat3R) h3R_anti2[k]->Fill(var3,weight*aweight*weight2*wfr2);
+             if (is_cat4R) h4R_anti2[k]->Fill(var4,weight*aweight*weight2*wfr2);
+             if (is_cat5R) h5R_anti2[k]->Fill(var5,weight*aweight*weight2*wfr2);
+             if (is_cat6R) h6R_anti2[k]->Fill(var6,weight*aweight*weight2*wfr2);
+             if (is_cat7R) h7R_anti2[k]->Fill(var7,weight*aweight*weight2*wfr2);
+             if (is_cat8R) h8R_anti2[k]->Fill(var8,weight*aweight*weight2*wfr2);
+           }
 	}
 
     } // end of loop over events
@@ -834,40 +1012,76 @@ int main(int argc, char** argv) {
     bool isMC=(name!="data_obs");
     WriteHistToFileEMu(fout, h0, name, "em_0", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h0R, name, "emR_0", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h0_anti0, name, "em_0_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h0R_anti0, name, "emR_0_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h0_anti1, name, "em_0_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h0R_anti1, name, "emR_0_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h0_anti2, name, "em_0_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h0R_anti2, name, "emR_0_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h1, name, "em_1", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h1R, name, "emR_1", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h1_anti0, name, "em_1_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h1R_anti0, name, "emR_1_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h1_anti1, name, "em_1_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h1R_anti1, name, "emR_1_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h1_anti2, name, "em_1_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h1R_anti2, name, "emR_1_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h2, name, "em_2", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h2R, name, "emR_2", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h2_anti0, name, "em_2_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h2R_anti0, name, "emR_2_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h2_anti1, name, "em_2_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h2R_anti1, name, "emR_2_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h2_anti2, name, "em_2_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h2R_anti2, name, "emR_2_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h3, name, "em_3", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h3R, name, "emR_3", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h3_anti0, name, "em_3_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h3R_anti0, name, "emR_3_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h3_anti1, name, "em_3_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h3R_anti1, name, "emR_3_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h3_anti2, name, "em_3_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h3R_anti2, name, "emR_3_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h4, name, "em_4", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h4R, name, "emR_4", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h4_anti0, name, "em_4_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h4R_anti0, name, "emR_4_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h4_anti1, name, "em_4_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h4R_anti1, name, "emR_4_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h4_anti2, name, "em_4_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h4R_anti2, name, "emR_4_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h5, name, "em_5", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h5R, name, "emR_5", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h5_anti0, name, "em_5_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h5R_anti0, name, "emR_5_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h5_anti1, name, "em_5_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h5R_anti1, name, "emR_5_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h5_anti2, name, "em_5_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h5R_anti2, name, "emR_5_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h6, name, "em_6", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h6R, name, "emR_6", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h6_anti0, name, "em_6_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h6R_anti0, name, "emR_6_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h6_anti1, name, "em_6_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h6R_anti1, name, "emR_6_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h6_anti2, name, "em_6_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h6R_anti2, name, "emR_6_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h7, name, "em_7", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h7R, name, "emR_7", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h7_anti0, name, "em_7_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h7R_anti0, name, "emR_7_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h7_anti1, name, "em_7_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h7R_anti1, name, "emR_7_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h7_anti2, name, "em_7_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h7R_anti2, name, "emR_7_anti2", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h8, name, "em_8", uncertainties, isMC, nbhist, isMC);
     WriteHistToFileEMu(fout, h8R, name, "emR_8", uncertainties, isMC, nbhist, isMC);
+    WriteHistToFileEMu(fout, h8_anti0, name, "em_8_anti0", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h8R_anti0, name, "emR_8_anti0", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h8_anti1, name, "em_8_anti1", uncertainties, isMC, nbhist, true);
     WriteHistToFileEMu(fout, h8R_anti1, name, "emR_8_anti1", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h8_anti2, name, "em_8_anti2", uncertainties, isMC, nbhist, true);
+    WriteHistToFileEMu(fout, h8R_anti2, name, "emR_8_anti2", uncertainties, isMC, nbhist, true);
 
     fout->Close();
 } 

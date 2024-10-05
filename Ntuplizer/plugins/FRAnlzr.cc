@@ -105,7 +105,8 @@ class FRAnlzr : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       TH1F *h_step;
 
       bool MC_;
-      int n_mu, n_el, mu_charge[5], el_charge[5], ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, hlt_isomu24, hlt_mu17_mu8;
+      int year_;
+      int n_mu, n_el, mu_charge[5], el_charge[5], ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, hlt_isomu24, hlt_mu17_mu8, hlt_isotkmu24, hlt_isomu27;
       float mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5];
       int mu_pfiso[5], mu_trigger[5], mu_trigger_doublemu[5], mu_genPart[5];
       float el_pt[5], el_eta[5], el_phi[5], el_dxy[5], el_dz[5];
@@ -151,6 +152,7 @@ FRAnlzr::FRAnlzr(const edm::ParameterSet& iConfig)
    //now do what ever initialization is needed
 
    MC_ = iConfig.getParameter<bool>("MC");
+   year_ = iConfig.getParameter<int>("year");
 
    Service<TFileService> fs;
    h_step = fs->make<TH1F>("step", "", 10, 0, 10);
@@ -204,6 +206,8 @@ FRAnlzr::FRAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("Pileup_puNumInteractions", &Pileup_puNumInteractions, "Pileup_puNumInteractions/I");
 
    tr->Branch("hlt_isomu24", &hlt_isomu24, "hlt_isomu24/I");
+   tr->Branch("hlt_isotkmu24", &hlt_isotkmu24, "hlt_isotkmu24/I");
+   tr->Branch("hlt_isomu27", &hlt_isomu27, "hlt_isomu27/I");
    tr->Branch("hlt_mu17_mu8", &hlt_mu17_mu8, "hlt_mu17_mu8/I");
 
 }
@@ -307,6 +311,8 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //////////
 
     hlt_isomu24 = 0;
+    hlt_isotkmu24 = 0;
+    hlt_isomu27 = 0;
     hlt_mu17_mu8 = 0;
 
     Handle<TriggerResults> triggerBitsH;
@@ -318,10 +324,15 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       string hltName = triggerNames.triggerName(i_hlt);
 
       if(!(hltName.find("HLT_IsoMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu24 = 1;}
+      if(!(hltName.find("HLT_IsoTkMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isotkmu24 = 1;}
+      if(!(hltName.find("HLT_IsoMu27_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu27 = 1;}
       if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8 = 1;}
     }
 
-    if (hlt_isomu24<0.5 and hlt_mu17_mu8<0.5) return;
+    if (year_==2018 and hlt_isomu24<0.5) return;
+    if (year_==2017 and hlt_isomu27<0.5) return;
+    if (year_==2016 and hlt_isotkmu24<0.5 and hlt_isomu24<0.5) return;
+
     h_step->Fill(2);
 
 

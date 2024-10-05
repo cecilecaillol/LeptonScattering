@@ -44,3 +44,24 @@ void WriteHistToFileEMu(TFile* myfile, std::vector<TH1F*> hist, std::string name
     }
 }
 
+void WriteHistToFileWZCR(TFile* myfile, std::vector<TH1F*> hist, std::string name, TString dir_name, TString uncertainties[1], bool isMC, int nbhist, bool write_uncertainties){
+    TString postfix="";
+    TDirectory *dir =myfile->mkdir(dir_name);
+    dir->cd();
+    if (!write_uncertainties) nbhist=1;
+    for (int k=0; k<nbhist; ++k){
+       for (int j=0; j<hist[k]->GetSize()-1; ++j){
+         if (hist[k]->GetBinContent(j)<0) hist[k]->SetBinContent(j,0);
+       }
+       //include overflow in last bin
+       hist[k]->SetBinContent(hist[k]->GetSize()-2,hist[k]->GetBinContent(hist[k]->GetSize()-2)+hist[k]->GetBinContent(hist[k]->GetSize()-1));
+       hist[k]->SetBinError(hist[k]->GetSize()-2,pow(hist[k]->GetBinError(hist[k]->GetSize()-2)*hist[k]->GetBinError(hist[k]->GetSize()-2)+hist[k]->GetBinError(hist[k]->GetSize()-1)*hist[k]->GetBinError(hist[k]->GetSize()-1),0.5));
+       hist[k]->SetBinContent(hist[k]->GetSize()-1,0);
+       hist[k]->SetBinError(hist[k]->GetSize()-1,0);
+
+       postfix=uncertainties[k];
+       hist[k]->SetName(name.c_str()+postfix);
+       hist[k]->Write();
+    }
+}
+

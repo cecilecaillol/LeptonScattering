@@ -113,6 +113,7 @@ process.muonsMCMatchForTable = cms.EDProducer("MCMatcher",       # cut on deltaR
 
 process.demo = cms.EDAnalyzer("SSEMAnlzr",
     MC = cms.bool(True), 
+    year = cms.int32(2018),
     vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
     muons = cms.InputTag("slimmedMuons"),
     mcmapmuons = cms.InputTag("muonsMCMatchForTable"),

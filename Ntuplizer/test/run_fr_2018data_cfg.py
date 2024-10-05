@@ -51,6 +51,7 @@ setupEgammaPostRecoSeq(process,era='2018-UL',
 
 process.demo = cms.EDAnalyzer("FRAnlzr",
     MC = cms.bool(False), #False
+    year = cms.int32(2018),
     vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
     muons = cms.InputTag("slimmedMuons"),
     mcmapmuons = cms.InputTag("muonsMCMatchForTable"),

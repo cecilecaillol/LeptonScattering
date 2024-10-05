@@ -1,4 +1,4 @@
-      int n_mu, n_el, hlt_isomu24, hlt_mu17_mu8,
+      int n_mu, n_el, hlt_isomu24, hlt_mu17_mu8, hlt_isomu27, hlt_isotkmu24,
              ntrk_prompt, ntrk_nonprompt;
       int mu_trigger[5], mu_charge[5], mu_tight[5], mu_pfiso[5], mu_genPart[5];
       float mu_pt[5], mu_eta[5], mu_phi[5], mu_dz[5], mu_dxy[5], mu_rawiso[5];

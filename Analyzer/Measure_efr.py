@@ -6,7 +6,7 @@ def add_lumi(year):
     lumi.SetFillStyle(    0 )
     lumi.SetTextAlign(   12 )
     lumi.SetTextColor(    1 )
-    lumi.SetTextSize(0.055)
+    lumi.SetTextSize(0.045)
     lumi.SetTextFont (   42 )
     if (year=="2018"): lumi.AddText("2018, 60 fb^{-1} (13 TeV)")
     if (year=="2017"): lumi.AddText("2017, 41 fb^{-1} (13 TeV)")
@@ -41,11 +41,23 @@ def add_Supplementary():
     lumi.AddText("Work in progress")
     return lumi
 
+def make_legend():
+        output = ROOT.TLegend(0.6, 0.5, 0.92, 0.86, "", "brNDC")
+        output.SetNColumns(1)
+        output.SetLineWidth(0)
+        output.SetLineStyle(0)
+        output.SetFillStyle(0)
+        output.SetBorderSize(0)
+        output.SetTextFont(62)
+        return output
+
 
 if __name__ == "__main__":
 
     import ROOT
     import argparse
+
+    ROOT.gStyle.SetOptStat(0)
 
     is_control=1
 
@@ -80,12 +92,21 @@ if __name__ == "__main__":
     c.cd()
     hBiso.SetMinimum(0.0)
     hBiso.SetMaximum(0.5)
+    hBiso.GetXaxis().SetTitle("e p_{T} (GeV)")
+    hBiso.GetYaxis().SetTitle("f_{e}")
+    hBiso.SetTitle("")
     hBiso.Draw("e0")
-    total1 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 80 )
+    total1 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 100 )
     total1.SetLineColor( ROOT.kMagenta )
     hBiso.Fit(total1,'R')
     total1.SetName("fit_efr_barrel")
-    c.SaveAs("efr_barrel.png")
+    lumi=add_lumi(options.year)
+    lumi.Draw("same")
+    cms=add_CMS()
+    cms.Draw("same")
+    sup=add_Supplementary()
+    sup.Draw("same")
+    c.SaveAs("efr_barrel_"+options.year+".png")
 
 
 
@@ -102,14 +123,23 @@ if __name__ == "__main__":
 
     c=ROOT.TCanvas("canvas","",0,0,800,600)
     c.cd()
+    hEiso.GetXaxis().SetTitle("e p_{T} (GeV)")
+    hEiso.GetYaxis().SetTitle("f_{e}")
     hEiso.SetMinimum(0.0)
     hEiso.SetMaximum(0.5)
+    hEiso.SetTitle("")
     hEiso.Draw("e0")
-    total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 80 )
+    total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 100 )
     total2.SetLineColor( ROOT.kMagenta )
     hEiso.Fit(total2,'R')
     total2.SetName("fit_efr_endcaps")
-    c.SaveAs("efr_endcaps.png")
+    lumi=add_lumi(options.year)
+    lumi.Draw("same")
+    cms=add_CMS()
+    cms.Draw("same")
+    sup=add_Supplementary()
+    sup.Draw("same")
+    c.SaveAs("efr_endcaps_"+options.year+".png")
 
 
     fout.cd()
@@ -166,7 +196,7 @@ if __name__ == "__main__":
     cms.Draw("same")
     sup=add_Supplementary()
     sup.Draw("same")
-    total = ROOT.TF1( 'total', 'pol5', 0, 100 )
+    total = ROOT.TF1( 'total', 'pol8', 0, 100 )
     total.SetLineColor( ROOT.kMagenta )
     h1iso.Fit(total,'R')
     total.SetName("fit_frnt")
@@ -198,7 +228,7 @@ if __name__ == "__main__":
     total.Write()
     c1.cd()
     c1.Modified()
-    c1.SaveAs("efr_nt.png")
+    c1.SaveAs("efr_nt_"+options.year+".png")
 
 
 
@@ -208,16 +238,38 @@ if __name__ == "__main__":
        wz=fWZ.Get(names[k])
        zz=fZZ.Get(names[k])
        data.SetMarkerStyle(20)
-       wz.SetFillColor(ROOT.TColor.GetColor("#7a21dd"))
-       zz.SetFillColor(ROOT.TColor.GetColor("#9c9ca1"))
+       wz.SetFillColor(ROOT.TColor.GetColor("#5790fc"))
+       zz.SetFillColor(ROOT.TColor.GetColor("#7a21dd"))
        stack=ROOT.THStack("stack","stack")
        stack.Add(wz)
        stack.Add(zz)
        c=ROOT.TCanvas("canvas","",0,0,800,600)
        c.cd()
+
+       data.GetXaxis().SetTitle("e p_{T} (GeV)")
+       data.GetYaxis().SetTitle("Events")
+       c.SetLogy()
+
+       data.SetTitle("")
+
        data.Draw("e")
        stack.Draw("histsame")
-       c.SaveAs("efr_"+names[k]+".png")
+
+       legende=make_legend()
+       legende.AddEntry(data,"Observed","elp")
+       legende.AddEntry(wz,"WZ","f")
+       legende.AddEntry(zz,"ZZ","f")
+       legende.Draw()
+
+       lumi=add_lumi(options.year)
+       lumi.Draw("same")
+       cms=add_CMS()
+       cms.Draw("same")
+       sup=add_Supplementary()
+       sup.Draw("same")
+
+       c.SaveAs("efr_"+names[k]+"_"+options.year+".png")
+
 
 
 

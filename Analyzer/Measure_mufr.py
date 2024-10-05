@@ -41,11 +41,23 @@ def add_Supplementary():
     lumi.AddText("Work in progress")
     return lumi
 
+def make_legend():
+        output = ROOT.TLegend(0.4, 0.5, 0.92, 0.86, "", "brNDC")
+        output.SetNColumns(2)
+        output.SetLineWidth(0)
+        output.SetLineStyle(0)
+        output.SetFillStyle(0)
+        output.SetBorderSize(0)
+        output.SetTextFont(62)
+        return output
+
 
 if __name__ == "__main__":
 
     import ROOT
     import argparse
+
+    ROOT.gStyle.SetOptStat(0)
 
     is_control=1
 
@@ -53,17 +65,9 @@ if __name__ == "__main__":
     parser.add_argument('--year')
     options = parser.parse_args()
 
-    year4=options.year
-    if options.year=="2016pre": year4="2016preVFP"
-    if options.year=="2016post": year4="2016postVFP"
-
-    postfixName=[""]
-
-    nbhist=1 
-
     fZZ=ROOT.TFile("output_mufr_"+options.year+"/ZZ4L.root","r")
     fWZ=ROOT.TFile("output_mufr_"+options.year+"/WZ3LNu.root","r")
-    fData=ROOT.TFile("output_mufr_"+options.year+"/Data.root","r")
+    fData=ROOT.TFile("output_mufr_"+options.year+"/SingleMuon.root","r")
     fout=ROOT.TFile("output_mufr_"+options.year+"/mufr.root","recreate")
 
     hBanti=fData.Get("pt_antimu_barrel").Clone()
@@ -81,11 +85,20 @@ if __name__ == "__main__":
     hBiso.SetMaximum(1.5)
     hBiso.SetMinimum(0.0)
     hBiso.Draw("e")
+    hBiso.SetTitle("")
+    hBiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    hBiso.GetYaxis().SetTitle("f_#mu")
     total1 = ROOT.TF1( 'total1', 'expo(0)+pol1(2)', 5, 100 )
     total1.SetLineColor( ROOT.kMagenta )
     hBiso.Fit(total1,'R')
     total1.SetName("fit_mufr_barrel")
-    c.SaveAs("mufr_barrel.png")
+    lumi=add_lumi(options.year)
+    lumi.Draw("same")
+    cms=add_CMS()
+    cms.Draw("same")
+    sup=add_Supplementary()
+    sup.Draw("same")
+    c.SaveAs("mufr_barrel_"+options.year+".png")
 
 
 
@@ -105,11 +118,20 @@ if __name__ == "__main__":
     hEiso.SetMaximum(1.5)
     hEiso.SetMinimum(0.0)
     hEiso.Draw("e")
+    hEiso.SetTitle("")
+    hEiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    hEiso.GetYaxis().SetTitle("f_{#mu}")
     total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 5, 100 )
     total2.SetLineColor( ROOT.kMagenta )
     hEiso.Fit(total2,'R')
     total2.SetName("fit_mufr_endcaps")
-    c.SaveAs("mufr_endcaps.png")
+    lumi=add_lumi(options.year)
+    lumi.Draw("same")
+    cms=add_CMS()
+    cms.Draw("same")
+    sup=add_Supplementary()
+    sup.Draw("same")
+    c.SaveAs("mufr_endcaps_"+options.year+".png")
 
 
     fout.cd()
@@ -147,7 +169,7 @@ if __name__ == "__main__":
     h1iso.SetMarkerColor(1)
     h1iso.SetLineColor(1)
     h1iso.GetXaxis().SetTitle("N_{#lower[-0.25]{tracks}}")
-    h1iso.GetYaxis().SetTitle("OS-to-SS weight correction ")
+    h1iso.GetYaxis().SetTitle("f_{#mu} correction ")
     h1iso.GetXaxis().SetTitleSize(0.06)
     h1iso.GetYaxis().SetTitleSize(0.06)
     h1iso.GetXaxis().SetLabelSize(0.04)
@@ -193,25 +215,45 @@ if __name__ == "__main__":
     total.Write()
     c1.cd()
     c1.Modified()
-    c1.SaveAs("mufr_nt.png")
+    c1.SaveAs("mufr_nt_"+options.year+".png")
 
     names=["pt_antimu_endcaps","pt_isomu_endcaps","pt_antimu_barrel","pt_isomu_barrel"]
     for k in range(0,len(names)):
        c=ROOT.TCanvas("canvas","",0,0,800,600)
        c.cd()
+       #c.SetLogy()
        data=fData.Get(names[k])
        wz=fWZ.Get(names[k])
        zz=fZZ.Get(names[k])
        data.SetMarkerStyle(20)
-       wz.SetFillColor(ROOT.TColor.GetColor("#7a21dd"))
-       zz.SetFillColor(ROOT.TColor.GetColor("#9c9ca1"))
+       wz.SetFillColor(ROOT.TColor.GetColor("#5790fc"))
+       zz.SetFillColor(ROOT.TColor.GetColor("#7a21dd"))
        stack=ROOT.THStack("stack","stack")
        stack.Add(wz)
        stack.Add(zz)
+       #data.SetMinimum(1.0)
+       data.SetTitle("")
+       data.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+       data.GetYaxis().SetTitle("Events")
+       c.SetLogy()
 
-       data.SetMinimum(0.0)
+       data.SetMinimum(1.0)
        data.Draw("e")
        stack.Draw("histsame")
-       c.SaveAs("mufr_"+names[k]+".png")
+
+       legende=make_legend()
+       legende.AddEntry(data,"Observed","elp")
+       legende.AddEntry(wz,"WZ","f")
+       legende.AddEntry(zz,"ZZ","f")
+       legende.Draw()
+
+       lumi=add_lumi(options.year)
+       lumi.Draw("same")
+       cms=add_CMS()
+       cms.Draw("same")
+       sup=add_Supplementary()
+       sup.Draw("same")
+
+       c.SaveAs("mufr_"+names[k]+"_"+options.year+".png")
 
 

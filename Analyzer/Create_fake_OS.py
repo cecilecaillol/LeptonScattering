@@ -43,7 +43,23 @@ if __name__ == "__main__":
           hPF.Add(fTTZ.Get("em_"+str(j)+"_anti1/TTV"),-1)
           hPF.Add(fTTW.Get("em_"+str(j)+"_anti1/TTV"),-1)
 
+          hFP=fData.Get("em_"+str(j)+"_anti2/data_obs"+postfix).Clone()
+          hFP.Add(fWZ.Get("em_"+str(j)+"_anti2/WZ3LNu"),-1)
+          hFP.Add(fZZ.Get("em_"+str(j)+"_anti2/ZZ4L"),-1)
+          hFP.Add(fWWW.Get("em_"+str(j)+"_anti2/VVV"),-1)
+          hFP.Add(fTTZ.Get("em_"+str(j)+"_anti2/TTV"),-1)
+          hFP.Add(fTTW.Get("em_"+str(j)+"_anti2/TTV"),-1)
+
+          hFF=fData.Get("em_"+str(j)+"_anti0/data_obs"+postfix).Clone()
+          hFF.Add(fWZ.Get("em_"+str(j)+"_anti0/WZ3LNu"),-1)
+          hFF.Add(fZZ.Get("em_"+str(j)+"_anti0/ZZ4L"),-1)
+          hFF.Add(fWWW.Get("em_"+str(j)+"_anti0/VVV"),-1)
+          hFF.Add(fTTZ.Get("em_"+str(j)+"_anti0/TTV"),-1)
+          hFF.Add(fTTW.Get("em_"+str(j)+"_anti0/TTV"),-1)
+
           h0=hPF.Clone()
+          h0.Add(hFP)
+          h0.Add(hFF,-1)
 
           hPFR=fData.Get("emR_"+str(j)+"_anti1/data_obs"+postfix).Clone()
           hPFR.Add(fWZ.Get("emR_"+str(j)+"_anti1/WZ3LNu"),-1)
@@ -52,10 +68,28 @@ if __name__ == "__main__":
           hPFR.Add(fTTZ.Get("emR_"+str(j)+"_anti1/TTV"),-1)
           hPFR.Add(fTTW.Get("emR_"+str(j)+"_anti1/TTV"),-1)
 
+          hFPR=fData.Get("emR_"+str(j)+"_anti2/data_obs"+postfix).Clone()
+          hFPR.Add(fWZ.Get("emR_"+str(j)+"_anti2/WZ3LNu"),-1)
+          hFPR.Add(fZZ.Get("emR_"+str(j)+"_anti2/ZZ4L"),-1)
+          hFPR.Add(fWWW.Get("emR_"+str(j)+"_anti2/VVV"),-1)
+          hFPR.Add(fTTZ.Get("emR_"+str(j)+"_anti2/TTV"),-1)
+          hFPR.Add(fTTW.Get("emR_"+str(j)+"_anti2/TTV"),-1)
+
+          hFFR=fData.Get("emR_"+str(j)+"_anti0/data_obs"+postfix).Clone()
+          hFFR.Add(fWZ.Get("emR_"+str(j)+"_anti0/WZ3LNu"),-1)
+          hFFR.Add(fZZ.Get("emR_"+str(j)+"_anti0/ZZ4L"),-1)
+          hFFR.Add(fWWW.Get("emR_"+str(j)+"_anti0/VVV"),-1)
+          hFFR.Add(fTTZ.Get("emR_"+str(j)+"_anti0/TTV"),-1)
+          hFFR.Add(fTTW.Get("emR_"+str(j)+"_anti0/TTV"),-1)
+
+          h0R=hPFR.Clone()
+          h0R.Add(hFPR)
+          h0R.Add(hFFR,-1)
+
           fout.cd()
           dir0.cd()
-          hPFR.SetName("nonprompt"+postfix)
-          hPFR.Scale(h0.Integral()/hPFR.Integral())
-          hPFR.Write()
+          h0R.SetName("nonprompt"+postfix)
+          h0R.Scale(h0.Integral()/h0R.Integral())
+          h0R.Write()
 
 
