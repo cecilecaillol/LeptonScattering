@@ -74,4 +74,3 @@ process.TFileService = cms.Service("TFileService",
     fileName = cms.string('tree_ssem.root'))
 
 process.p = cms.Path(process.egammaPostRecoSeq+process.demo)
-

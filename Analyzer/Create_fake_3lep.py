@@ -23,8 +23,6 @@ if __name__ == "__main__":
     fTTW=ROOT.TFile("output_3lep_"+options.year+"/TTW.root","r")
     fWWW=ROOT.TFile("output_3lep_"+options.year+"/WWW.root","r")
     fZG=ROOT.TFile("output_3lep_"+options.year+"/ZG.root","r")
-    fWG=ROOT.TFile("output_3lep_"+options.year+"/WG.root","r")
-    fDY=ROOT.TFile("output_3lep_"+options.year+"/DY.root","r")
     fData=ROOT.TFile("output_3lep_"+options.year+"/Data.root","r")
     fout=ROOT.TFile("output_3lep_"+options.year+"/nonprompt.root","recreate")
 
@@ -45,9 +43,7 @@ if __name__ == "__main__":
           hPF.Add(fWWW.Get("em3l_"+str(j)+"_anti1/VVV"),-1)
           hPF.Add(fTTZ.Get("em3l_"+str(j)+"_anti1/TTV"),-1)
           hPF.Add(fTTW.Get("em3l_"+str(j)+"_anti1/TTV"),-1)
-          hPF.Add(fWG.Get("em3l_"+str(j)+"_anti1/VG"),-1)
           hPF.Add(fZG.Get("em3l_"+str(j)+"_anti1/VG"),-1)
-          #hPF.Add(fDY.Get("em3l_"+str(j)+"_anti1/DY"),-1)
 
           hFP=fData.Get("em3l_"+str(j)+"_anti2/data_obs"+postfix).Clone()
           hFP.Add(fWZ.Get("em3l_"+str(j)+"_anti2/WZ3LNu"),-1)
@@ -55,9 +51,7 @@ if __name__ == "__main__":
           hFP.Add(fWWW.Get("em3l_"+str(j)+"_anti2/VVV"),-1)
           hFP.Add(fTTZ.Get("em3l_"+str(j)+"_anti2/TTV"),-1)
           hFP.Add(fTTW.Get("em3l_"+str(j)+"_anti2/TTV"),-1)
-          hFP.Add(fWG.Get("em3l_"+str(j)+"_anti2/VG"),-1)
           hFP.Add(fZG.Get("em3l_"+str(j)+"_anti2/VG"),-1)
-          #hFP.Add(fDY.Get("em3l_"+str(j)+"_anti2/DY"),-1)
 
           hFF=fData.Get("em3l_"+str(j)+"_anti0/data_obs"+postfix).Clone()
           hFF.Add(fWZ.Get("em3l_"+str(j)+"_anti0/WZ3LNu"),-1)
@@ -65,9 +59,7 @@ if __name__ == "__main__":
           hFF.Add(fWWW.Get("em3l_"+str(j)+"_anti0/VVV"),-1)
           hFF.Add(fTTZ.Get("em3l_"+str(j)+"_anti0/TTV"),-1)
           hFF.Add(fTTW.Get("em3l_"+str(j)+"_anti0/TTV"),-1)
-          hFF.Add(fWG.Get("em3l_"+str(j)+"_anti0/VG"),-1)
           hFF.Add(fZG.Get("em3l_"+str(j)+"_anti0/VG"),-1)
-          #hFF.Add(fDY.Get("em3l_"+str(j)+"_anti0/DY"),-1)
 
           h0=hPF.Clone()
           h0.Add(hFP)
@@ -82,9 +74,7 @@ if __name__ == "__main__":
           hPFR.Add(fWWW.Get("em3lR_"+str(j)+"_anti1/VVV"),-1)
           hPFR.Add(fTTZ.Get("em3lR_"+str(j)+"_anti1/TTV"),-1)
           hPFR.Add(fTTW.Get("em3lR_"+str(j)+"_anti1/TTV"),-1)
-          hPFR.Add(fWG.Get("em3lR_"+str(j)+"_anti1/VG"),-1)
           hPFR.Add(fZG.Get("em3lR_"+str(j)+"_anti1/VG"),-1)
-          #hPFR.Add(fDY.Get("em3lR_"+str(j)+"_anti1/DY"),-1)
 
           hFPR=fData.Get("em3lR_"+str(j)+"_anti2/data_obs"+postfix).Clone()
           hFPR.Add(fWZ.Get("em3lR_"+str(j)+"_anti2/WZ3LNu"),-1)
@@ -92,9 +82,7 @@ if __name__ == "__main__":
           hFPR.Add(fWWW.Get("em3lR_"+str(j)+"_anti2/VVV"),-1)
           hFPR.Add(fTTZ.Get("em3lR_"+str(j)+"_anti2/TTV"),-1)
           hFPR.Add(fTTW.Get("em3lR_"+str(j)+"_anti2/TTV"),-1)
-          hFPR.Add(fWG.Get("em3lR_"+str(j)+"_anti2/VG"),-1)
           hFPR.Add(fZG.Get("em3lR_"+str(j)+"_anti2/VG"),-1)
-          #hFPR.Add(fDY.Get("em3lR_"+str(j)+"_anti2/DY"),-1)
 
           hFFR=fData.Get("em3lR_"+str(j)+"_anti0/data_obs"+postfix).Clone()
           hFFR.Add(fWZ.Get("em3lR_"+str(j)+"_anti0/WZ3LNu"),-1)
@@ -102,9 +90,7 @@ if __name__ == "__main__":
           hFFR.Add(fWWW.Get("em3lR_"+str(j)+"_anti0/VVV"),-1)
           hFFR.Add(fTTZ.Get("em3lR_"+str(j)+"_anti0/TTV"),-1)
           hFFR.Add(fTTW.Get("em3lR_"+str(j)+"_anti0/TTV"),-1)
-          hFFR.Add(fWG.Get("em3lR_"+str(j)+"_anti0/VG"),-1)
           hFFR.Add(fZG.Get("em3lR_"+str(j)+"_anti0/VG"),-1)
-          #hFFR.Add(fDY.Get("em3lR_"+str(j)+"_anti0/DY"),-1)
 
           h0R=hPFR.Clone()
           h0R.Add(hFPR)
@@ -115,7 +101,7 @@ if __name__ == "__main__":
           fout.cd()
           dir0.cd()
           h0R.SetName("nonprompt"+postfix)
-          h0R.Scale(h0.Integral()/h0R.Integral())
+          h0R.Scale(h0.Integral()/(h0R.Integral()+0.00001))
           h0R.Write()
 
 

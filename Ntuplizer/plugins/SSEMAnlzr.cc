@@ -121,13 +121,16 @@ class SSEMAnlzr : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       bool MC_;
       int year_;
       size_t n_mu, n_el, n_pv, pv_ntrk2, pv_ntrk3, pv_nmu,
-	     ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, ntrk_signal, is_DYtauetaumu, is_ZG;
+	     ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, ntrk_signal, is_DYtauetaumu, is_ZG,
+             ntrk0p02_HS, ntrk0p02_PU, ntrk0p02_all, ntrk0p02_signal,
+             ntrk0p03_HS, ntrk0p03_PU, ntrk0p03_all, ntrk0p03_signal,
+             ntrk0p04_HS, ntrk0p04_PU, ntrk0p04_all, ntrk0p04_signal;
       size_t hlt_mu23_el12, hlt_mu23_el12_DZ, hlt_mu8_el23, hlt_mu8_el23_DZ, hlt_isomu24, hlt_isotkmu24, hlt_isomu27, hlt_mu17_mu8, hlt_mu17_mu8_DZ, hlt_mu17_tkmu8, hlt_mu17_tkmu8_DZ, hlt_tkmu17_tkmu8, hlt_tkmu17_tkmu8_DZ, hlt_mu17_mu8_DZ_mass3p8, hlt_mu17_mu8_DZ_mass8 = 0;
 
       int el_conversionveto[5], el_losthits[5], mu_trigger8[5], mu_trigger23[5], mu_triggerIsoMu24[5], mu_frompv[5], mu_charge[5], mu_tight[5],el_charge[5], el_frompv[5], el_trigger[5], el_chargeconsistent[5];
       int el_CBIDLoose[5],el_CBIDMedium[5],el_CBIDTight[5],el_CBIDVeto[5],el_MVAIDisoWP80[5],el_MVAIDisoWP90[5],el_MVAIDisoWPHZZ[5],el_MVAIDisoWPLoose[5],el_MVAIDnoisoWP80[5],el_MVAIDnoisoWP90[5],el_MVAIDnoisoWPLoose[5], mu_pfiso[5], el_genPart[5], mu_genPart[5];
-      double mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5], 
-             el_pt[5], el_eta[5], el_phi[5], el_dxy[5], el_dz[5], 
+      double mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5], mu_sip2d[5], mu_sip2dPV[5],
+             el_pt[5], el_eta[5], el_sceta[5], el_phi[5], el_dxy[5], el_dz[5], el_sip2d[5], el_sip2dPV[5], el_eInvMinusPInv[5], el_sieie[5], el_hoe[5],
 	     pv_d0, pv_dz, pv_ndof, pv_chi2,
          pt_2mu, pt_3mu_s, pt_3mu_v, mass_2mu, dphi_2mu, pv_charge, pt_vector, pt_scalar; // deta_trk; // pt2trk_1mm, pt2trk_3mm;
       float genWeight=1.0;
@@ -197,13 +200,21 @@ SSEMAnlzr::SSEMAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("mu_rawiso", mu_rawiso, "mu_rawiso[n_mu]/D");
    tr->Branch("mu_dxy", mu_dxy, "mu_dxy[n_mu]/D");
    tr->Branch("mu_dz", mu_dz, "mu_dz[n_mu]/D");
+   tr->Branch("mu_sip2d", mu_sip2d, "mu_sip2d[n_mu]/D");
+   tr->Branch("mu_sip2dPV", mu_sip2dPV, "mu_sip2dPV[n_mu]/D");
 
    tr->Branch("n_el", &n_el, "n_el/I");
    tr->Branch("el_pt", el_pt, "el_pt[n_el]/D");
    tr->Branch("el_dxy", el_dxy, "el_dxy[n_el]/D");
    tr->Branch("el_dz", el_dz, "el_dz[n_el]/D");
+   tr->Branch("el_sip2d", el_sip2d, "el_sip2d[n_el]/D");
+   tr->Branch("el_sip2dPV", el_sip2dPV, "el_sip2dPV[n_el]/D");
    tr->Branch("el_eta", el_eta, "el_eta[n_el]/D");
+   tr->Branch("el_sceta", el_sceta, "el_sceta[n_el]/D");
    tr->Branch("el_phi", el_phi, "el_phi[n_el]/D");
+   tr->Branch("el_eInvMinusPInv", el_eInvMinusPInv, "el_eInvMinusPInv[n_el]/D");
+   tr->Branch("el_hoe", el_hoe, "el_hoe[n_el]/D");
+   tr->Branch("el_sieie", el_sieie, "el_sieie[n_el]/D");
    tr->Branch("el_charge", el_charge, "el_charge[n_el]/I");
    tr->Branch("el_genPart", el_genPart, "el_genPart[n_el]/I");
    tr->Branch("el_frompv", el_frompv, "el_frompv[n_el]/I");
@@ -236,6 +247,18 @@ SSEMAnlzr::SSEMAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("ntrk_signal", &ntrk_signal, "ntrk_signal/I");
    tr->Branch("ntrk_all", &ntrk_all, "ntrk_all/I");
    tr->Branch("ntrk_PU", &ntrk_PU, "ntrk_PU/I");
+   tr->Branch("ntrk0p02_HS", &ntrk0p02_HS, "ntrk0p02_HS/I");
+   tr->Branch("ntrk0p02_signal", &ntrk0p02_signal, "ntrk0p02_signal/I");
+   tr->Branch("ntrk0p02_all", &ntrk0p02_all, "ntrk0p02_all/I");
+   tr->Branch("ntrk0p02_PU", &ntrk0p02_PU, "ntrk0p02_PU/I");
+   tr->Branch("ntrk0p03_HS", &ntrk0p03_HS, "ntrk0p03_HS/I");
+   tr->Branch("ntrk0p03_signal", &ntrk0p03_signal, "ntrk0p03_signal/I");
+   tr->Branch("ntrk0p03_all", &ntrk0p03_all, "ntrk0p03_all/I");
+   tr->Branch("ntrk0p03_PU", &ntrk0p03_PU, "ntrk0p03_PU/I");
+   tr->Branch("ntrk0p04_HS", &ntrk0p04_HS, "ntrk0p04_HS/I");
+   tr->Branch("ntrk0p04_signal", &ntrk0p04_signal, "ntrk0p04_signal/I");
+   tr->Branch("ntrk0p04_all", &ntrk0p04_all, "ntrk0p04_all/I");
+   tr->Branch("ntrk0p04_PU", &ntrk0p04_PU, "ntrk0p04_PU/I");
    //tr->Branch("pv_nmu", &pv_nmu, "pv_nmu/I");
    //tr->Branch("pv_charge", &pv_charge, "pv_charge/D");
    //tr->Branch("pt_vector", &pt_vector, "pt_vector/D");
@@ -470,7 +493,7 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //if(hlt_mu23_el12<0.5 && hlt_mu8_el23<0.5 && hlt_isomu24<0.5 && hlt_el23_el12<0.5 and hlt_el25_el25<0.5 and hlt_mu17_mu8<0.5 and hlt_mu12_el23<0.5 and hlt_el32<0.5 and hlt_mu9_mu9_el9<0.5) return;
     if (year_==2016 and !hlt_isomu24 and !hlt_isotkmu24 and !hlt_mu23_el12_DZ and !hlt_mu23_el12 and !hlt_mu8_el23_DZ and !hlt_mu8_el23 and !hlt_mu17_mu8_DZ and !hlt_mu17_mu8 and !hlt_mu17_tkmu8_DZ and !hlt_mu17_tkmu8 and !hlt_tkmu17_tkmu8_DZ and !hlt_tkmu17_tkmu8) return;
     if (year_==2017 and !hlt_isomu27 and !hlt_mu23_el12_DZ and !hlt_mu8_el23_DZ and !hlt_mu17_mu8_DZ_mass3p8 and !hlt_mu17_mu8_DZ_mass8) return;
-    if (year_==2018 and !hlt_isomu24 and !hlt_mu23_el12 and !hlt_mu8_el23 and !hlt_mu17_mu8) return;
+    if (year_==2018 and !hlt_isomu24 and !hlt_mu23_el12_DZ and !hlt_mu8_el23_DZ and !hlt_mu17_mu8_DZ_mass3p8) return;
     h_step->Fill(2);
 
 
@@ -584,6 +607,8 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         //if(fabs(mu.innerTrack()->dz(PV.position()))>0.1) continue;
         mu_dxy[n_mu] = fabs(mu.innerTrack()->dxy(PV.position()));
 	mu_dz[n_mu] = mu.innerTrack()->dz(PV.position());
+        mu_sip2d[n_mu]=fabs(mu.dB(pat::Muon::BS2D)/mu.edB(pat::Muon::BS2D));
+        mu_sip2dPV[n_mu]=fabs(mu.dB(pat::Muon::PV2D)/mu.edB(pat::Muon::PV2D));
         //if(!mu.passed(reco::Muon::PFIsoTight)) continue; // isolation
         mu_pt[n_mu] = mu.pt();
         mu_eta[n_mu] = mu.eta();
@@ -632,9 +657,11 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     bool has_overlap=false;
     for (const pat::Electron &el : *electrons) {
         i_el++;
-	if (el.pt()<10) continue;
+	if (el.pt()<7) continue;
         if (!el.electronID("mvaEleID-Fall17-iso-V2-wpLoose")) continue;
 	if (fabs(el.eta())>1.442 and fabs(el.eta())<1.556) continue;
+	if (el.gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS)>1) continue; //at most one missing hit 
+
 	tmp_el.SetPtEtaPhiM(el.pt(),el.eta(),el.phi(),0.0);
 
 	has_overlap=false;
@@ -657,8 +684,11 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	el_dxy[n_el]=fabs(el.gsfTrack()->dxy(PV.position()));
 	el_dz[n_el]=el.gsfTrack()->dz(PV.position());
+        el_sip2d[n_el]=fabs(el.dB(pat::Electron::BS2D)/el.edB(pat::Electron::BS2D));
+        el_sip2dPV[n_el]=fabs(el.dB(pat::Electron::PV2D)/el.edB(pat::Electron::PV2D));
         el_pt[n_el] = el.pt();
         el_eta[n_el] = el.eta();
+        el_sceta[n_el] = el.superCluster()->eta();
         el_phi[n_el] = el.phi();
         el_charge[n_el] = el.charge();
 	el_conversionveto[n_el]=el.passConversionVeto();
@@ -675,6 +705,11 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         el_MVAIDnoisoWP80[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wp80");
         el_MVAIDnoisoWP90[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wp90");
         el_MVAIDnoisoWPLoose[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wpLoose");
+
+        el_sieie[n_el]=el.full5x5_sigmaIetaIeta();
+        el_eInvMinusPInv[n_el] = (1-el.eSuperClusterOverP())/el.ecalEnergy();
+        el_hoe[n_el] = el.hadronicOverEm();
+
 
         //el_trigger[n_el] = el.triggered("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*") or el.triggered("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*");
 
@@ -710,6 +745,19 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     ntrk_HS = 0;
     ntrk_PU = 0;
     ntrk_signal=0;
+    ntrk0p02_all = 0;
+    ntrk0p02_HS = 0;
+    ntrk0p02_PU = 0;
+    ntrk0p02_signal=0;
+    ntrk0p03_all = 0;
+    ntrk0p03_HS = 0;
+    ntrk0p03_PU = 0;
+    ntrk0p03_signal=0;
+    ntrk0p04_all = 0;
+    ntrk0p04_HS = 0;
+    ntrk0p04_PU = 0;
+    ntrk0p04_signal=0;
+
     float emu_dz=(mu_dz[0]+el_dz[0])/2;
     TLorentzVector my_el; my_el.SetPtEtaPhiM(el_pt[0],el_eta[0],el_phi[0],0.);
     TLorentzVector my_mu; my_mu.SetPtEtaPhiM(mu_pt[0],mu_eta[0],mu_phi[0],0.);
@@ -750,13 +798,31 @@ SSEMAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
           if(!pf.hasTrackDetails()) continue;
 	  if (!isMatchedToEM and fabs(pf.dz(PV.position())-emu_dz)<0.05 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
-             if(fabs(pf.dz(PV.position())-emu_dz)<0.05 && fabs(pf.dxy(PV.position()))<0.02) ntrk_prompt++;
-             if(fabs(pf.dz(PV.position())-emu_dz)<0.05 && fabs(pf.dxy(PV.position()))>0.02) ntrk_nonprompt++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.05 && fabs(pf.dxy(PV.position()))<0.02) ntrk_prompt++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.05 && fabs(pf.dxy(PV.position()))>0.02) ntrk_nonprompt++;
 	     if (fabs(pf.dz(PV.position())-emu_dz)<0.05) ntrk_all++;
              if (fabs(pf.dz(PV.position())-emu_dz)<0.05 and isMatchedToGen) ntrk_HS++;
              if (fabs(pf.dz(PV.position())-emu_dz)<0.05 and !isMatchedToGen) ntrk_PU++;
              if (fabs(pf.dz(PV.position())-emu_dz)<0.05 and isMatchedTo4L) ntrk_signal++;
 	  }
+          if (!isMatchedToEM and fabs(pf.dz(PV.position())-emu_dz)<0.02 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.02) ntrk0p02_all++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.02 and isMatchedToGen) ntrk0p02_HS++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.02 and !isMatchedToGen) ntrk0p02_PU++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.02 and isMatchedTo4L) ntrk0p02_signal++;
+          }
+          if (!isMatchedToEM and fabs(pf.dz(PV.position())-emu_dz)<0.03 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.03) ntrk0p03_all++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.03 and isMatchedToGen) ntrk0p03_HS++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.03 and !isMatchedToGen) ntrk0p03_PU++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.03 and isMatchedTo4L) ntrk0p03_signal++;
+          }
+          if (!isMatchedToEM and fabs(pf.dz(PV.position())-emu_dz)<0.04 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.04) ntrk0p04_all++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.04 and isMatchedToGen) ntrk0p04_HS++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.04 and !isMatchedToGen) ntrk0p04_PU++;
+             if (fabs(pf.dz(PV.position())-emu_dz)<0.04 and isMatchedTo4L) ntrk0p04_signal++;
+          }
        }
     }
     //std::cout<<std::endl;

@@ -1,0 +1,4 @@
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/WZ3LNu.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/crab_WZ3LNu_2017/2*/0000/*.root
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/ZZ4L.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/crab_ZZ4L_2017/2*/0000/*.root
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/SingleMuon.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/SingleMuon/crab_SingleMuon_2017*/*/*/*.root
+#hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/DoubleMuon.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/FR2017/DoubleMuon/crab_DoubleMuon_2017*/*/*/*.root

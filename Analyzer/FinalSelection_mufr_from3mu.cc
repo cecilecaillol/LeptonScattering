@@ -114,9 +114,21 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("hlt_isomu27", &hlt_isomu27);
     arbre->SetBranchAddress("hlt_isotkmu24", &hlt_isotkmu24);
     arbre->SetBranchAddress("hlt_mu17_mu8", &hlt_mu17_mu8);
+
+    arbre->SetBranchAddress("hlt_mu17_mu8_DZ", &hlt_mu17_mu8_DZ);
+    arbre->SetBranchAddress("hlt_mu17_tkmu8", &hlt_mu17_tkmu8);
+    arbre->SetBranchAddress("hlt_mu17_tkmu8_DZ", &hlt_mu17_tkmu8_DZ);
+    arbre->SetBranchAddress("hlt_tkmu17_tkmu8", &hlt_tkmu17_tkmu8);
+    arbre->SetBranchAddress("hlt_tkmu17_tkmu8_DZ", &hlt_tkmu17_tkmu8_DZ);
+    arbre->SetBranchAddress("hlt_mu17_mu8_DZ_mass3p8", &hlt_mu17_mu8_DZ_mass3p8);
+    arbre->SetBranchAddress("hlt_mu17_mu8_DZ_mass8", &hlt_mu17_mu8_DZ_mass8);
+
     arbre->SetBranchAddress("ntrk_prompt", &ntrk_prompt);
     arbre->SetBranchAddress("ntrk_nonprompt", &ntrk_nonprompt);
+    arbre->SetBranchAddress("ntrk_all", &ntrk_all);
     arbre->SetBranchAddress("mu_trigger", &mu_trigger);
+    arbre->SetBranchAddress("mu_trigger_doublemu", &mu_trigger_doublemu);
+    arbre->SetBranchAddress("mu_sip2d", &mu_sip2d);
     arbre->SetBranchAddress("mu_charge", &mu_charge);
     arbre->SetBranchAddress("mu_genPart", &mu_genPart);
     arbre->SetBranchAddress("mu_rawiso", &mu_rawiso);
@@ -183,22 +195,36 @@ int main(int argc, char** argv) {
 
    reweight::LumiReWeighting* LumiWeights_12;
    LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2018.root", "PileupHistogram-UL2018-100bins_withVar.root", "pu_mc", "pileup");
+   if (year=="2017"){
+      LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2017.root", "PileupHistogram-UL2017-100bins_withVar.root", "pu_mc", "pileup");
+   }
+   else if (year=="2016pre" or year=="2016post"){
+      LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2016.root", "PileupHistogram-UL2016-100bins_withVar.root", "pu_mc", "pileup");
+   }
 
    //float bins0[]
-   float bins0[] = {0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,35,40,50,60,70,80,120};
+   float bins0[] = {0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,35,40,100};
    //float bins0[]={5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,50,75,100};
    int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
 
+   float bins2[] = {5,10,15,20,25,30,35,40,50,60,100};
+   int  binnum2 = sizeof(bins2)/sizeof(Float_t) - 1;
 
-   float bins1[] = {-1,0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100};
+
+   float bins1[] = {-1,0,3,6,9,12,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100};
 //1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80};
    int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
 
 
-   TH1F*  h_ptB_anti = new TH1F("h_ptB_anti","h_ptB_anti",binnum0,bins0); h_ptB_anti->Sumw2();
-   TH1F*  h_ptB_iso = new TH1F("h_ptB_iso","h_ptB_iso",binnum0,bins0); h_ptB_iso->Sumw2();
-   TH1F*  h_ptE_iso = new TH1F("h_ptE_iso","h_ptE_iso",binnum0,bins0); h_ptE_iso->Sumw2();
-   TH1F*  h_ptE_anti = new TH1F("h_ptE_anti","h_ptE_anti",binnum0,bins0); h_ptE_anti->Sumw2();
+   TH1F*  h_ptB_singlemutrg_anti = new TH1F("h_ptB_singlemutrg_anti","h_ptB_singlemutrg_anti",binnum0,bins0); h_ptB_singlemutrg_anti->Sumw2();
+   TH1F*  h_ptB_singlemutrg_iso = new TH1F("h_ptB_singlemutrg_iso","h_ptB_singlemutrg_iso",binnum0,bins0); h_ptB_singlemutrg_iso->Sumw2();
+   TH1F*  h_ptE_singlemutrg_iso = new TH1F("h_ptE_singlemutrg_iso","h_ptE_singlemutrg_iso",binnum0,bins0); h_ptE_singlemutrg_iso->Sumw2();
+   TH1F*  h_ptE_singlemutrg_anti = new TH1F("h_ptE_singlemutrg_anti","h_ptE_singlemutrg_anti",binnum0,bins0); h_ptE_singlemutrg_anti->Sumw2();
+
+   TH1F*  h_ptB_doublemutrg_iso = new TH1F("h_ptB_doublemutrg_iso","h_ptB_doublemutrg_iso",binnum2,bins2); h_ptB_doublemutrg_iso->Sumw2();
+   TH1F*  h_ptE_doublemutrg_iso = new TH1F("h_ptE_doublemutrg_iso","h_ptE_doublemutrg_iso",binnum2,bins2); h_ptE_doublemutrg_iso->Sumw2();
+   TH1F*  h_ptB_doublemutrg_anti = new TH1F("h_ptB_doublemutrg_anti","h_ptB_doublemutrg_anti",binnum2,bins2); h_ptB_doublemutrg_anti->Sumw2();
+   TH1F*  h_ptE_doublemutrg_anti = new TH1F("h_ptE_doublemutrg_anti","h_ptE_doublemutrg_anti",binnum2,bins2); h_ptE_doublemutrg_anti->Sumw2();
 
    TH1F*  h_mumumass = new TH1F("h_mumumass","h_mumumass",20,70,110); h_mumumass->Sumw2();
 
@@ -223,8 +249,7 @@ int main(int argc, char** argv) {
 	   for (int k=j+1; k<n_mu; ++k){
 	      TLorentzVector tmp2;
 	      tmp2.SetPtEtaPhiM(mu_pt[k], mu_eta[k], mu_phi[k], 0.105);
-	      //cout<<j<<" "<<k<<" "<<mu_charge[j]*mu_charge[k]<<" "<<fabs((tmp1+tmp2).M()-90)<<" "<<tmp1.DeltaR(tmp2)<<" "<<mu_pfiso[j]<<" "<<mu_pt[j]<<" "<<mu_pt[k]<<endl;
-	      if ((mu_trigger[j] or mu_trigger[k]) and fabs(mu_dz[j])<0.1 and fabs(mu_dz[k])<0.1 and mu_dxy[j]<0.05 and mu_dxy[k]<0.05 and mu_charge[j]*mu_charge[k]<0 and fabs((tmp1+tmp2).M()-91.1876)<best_Zmass and tmp1.DeltaR(tmp2)>0.5 and mu_rawiso[j]<0.25 and mu_rawiso[k]<0.25 and (mu_pt[j]>26 or mu_pt[k]>26) and mu_pt[j]>10 and mu_pt[k]>10){ idx1=j; idx2=k; best_Zmass= fabs((tmp1+tmp2).M()-91.1876);}
+	      if (fabs(mu_dz[j])<0.03 and fabs(mu_dz[k])<0.03 and mu_sip2d[j]<4 and mu_sip2d[k]<4 and mu_charge[j]*mu_charge[k]<0 and fabs((tmp1+tmp2).M()-91.1876)<best_Zmass and tmp1.DeltaR(tmp2)>0.3 and mu_rawiso[j]<0.25 and mu_rawiso[k]<0.25 and (mu_pt[j]>20 or mu_pt[k]>20) and mu_pt[j]>10 and mu_pt[k]>10){ idx1=j; idx2=k; best_Zmass= fabs((tmp1+tmp2).M()-91.1876);}
 	   }
 	}
 	if (idx1==-1 or idx2==-1) continue;
@@ -237,7 +262,7 @@ int main(int argc, char** argv) {
         for (int l=0; l<n_mu; ++l){
            TLorentzVector tmp3;
            tmp3.SetPtEtaPhiM(mu_pt[l], mu_eta[l], mu_phi[l], 0.);
-           if (mu_pt[l]>5 and tmp3.DeltaR(my_mu1)>0.3 and tmp3.DeltaR(my_mu2)>0.3 and fabs(mu_dz[l])<0.1 and mu_dxy[l]<0.05 and idx3<0 and l!=idx1 and l!=idx2) idx3=l;
+           if (mu_pt[l]>5 and tmp3.DeltaR(my_mu1)>0.5 and tmp3.DeltaR(my_mu2)>0.3 and fabs(mu_dz[l])<0.03 and mu_sip2d[l]<4 and idx3<0 and l!=idx1 and l!=idx2) idx3=l;
 	}
 	if (idx3==-1) continue;
 	//cout<<idx1<<" "<<idx2<<" "<<idx3<<endl;
@@ -246,17 +271,20 @@ int main(int argc, char** argv) {
 	    if (mu_genPart[idx3]==0) continue;
 	}
 
-	if (year=="2018" and !hlt_isomu24) continue;
-        if (year=="2017" and !hlt_isomu27) continue;
-	if (year=="2017" and my_mu1.Pt()<29 and my_mu2.Pt()<29) continue;
-        if ((year=="2016pre" or year=="2016post") and !hlt_isomu24 and !hlt_isotkmu24) continue;
-	//if (!hlt_mu17_mu8) continue;
+	bool pass_singlemutrg;
+	bool pass_doublemutrg;
+	if (year=="2018"){
+	   pass_doublemutrg = hlt_mu17_mu8_DZ_mass3p8;
+	   pass_singlemutrg = hlt_isomu24;
+	   if (sample=="Muon" or sample=="SingleMuon") pass_doublemutrg = false;
+	   if (sample=="DoubleMuon") pass_singlemutrg = false;
+	}
 
         // Block weights
         float aweight=1.0;
+	float weight_singlemutrg=1.0;
+	float weight_doublemutrg=1.0;
         if (name!="data_obs"){
-           //aweight=aweight*L1PreFiringWeight_Nom;
-           //aweight=aweight*puWeight;
            aweight*=LumiWeights_12->weight(Pileup_trueNumInteractions);
            aweight=aweight*genWeight;
 
@@ -272,16 +300,22 @@ int main(int argc, char** argv) {
            float muisosf_nom2 = h_muonIsoSF->GetBinContent(h_muonIsoSF->GetXaxis()->FindBin(fabs(mu_eta[idx2])),h_muonIsoSF->GetYaxis()->FindBin(mu2pt));
            aweight=aweight*muidsf_nom1*muisosf_nom2*muidsf_nom1*muisosf_nom2;//*GetMuRecoSF(year,my_mu.Eta());
 
+           float mu3pt=mu_pt[idx3];
+           if (mu3pt>120) mu3pt=119;
+           if (mu3pt<15) mu3pt=16;
+           float muidsf_nom3 = h_muonIDSF->GetBinContent(h_muonIDSF->GetXaxis()->FindBin(fabs(mu_eta[idx3])),h_muonIDSF->GetYaxis()->FindBin(mu3pt));
+           float muisosf_nom3 = h_muonIsoSF->GetBinContent(h_muonIsoSF->GetXaxis()->FindBin(fabs(mu_eta[idx3])),h_muonIsoSF->GetYaxis()->FindBin(mu3pt));
+           aweight=aweight*muidsf_nom3*muidsf_nom3;
+
            float trgsf1 = h_muonTrgSF->GetBinContent(h_muonTrgSF->GetXaxis()->FindBin(fabs(my_mu1.Eta())),h_muonTrgSF->GetYaxis()->FindBin(mu1pt));
            float trgsf2 = h_muonTrgSF->GetBinContent(h_muonTrgSF->GetXaxis()->FindBin(fabs(my_mu2.Eta())),h_muonTrgSF->GetYaxis()->FindBin(mu2pt));
-	   if (my_mu1.Pt()>26 and my_mu2.Pt()>26) aweight*=1.0-(1-trgsf1)*(1-trgsf2);
-	   else if (my_mu1.Pt()>26) aweight*=trgsf1;
-	   else if (my_mu2.Pt()>26) aweight*=trgsf2;
+	   if (my_mu1.Pt()>26 and my_mu2.Pt()>26) weight_singlemutrg=1.0-(1-trgsf1)*(1-trgsf2);
+	   else if (my_mu1.Pt()>26) weight_singlemutrg=trgsf1;
+	   else if (my_mu2.Pt()>26) weight_singlemutrg=trgsf2;
 
-           if (sample=="TTTo2L2Nu" or sample=="TTToSemiLeptonic" or sample=="TTToHadronic") {float toppt_reweighting=pow((TMath::Exp(0.0615-0.0005*gentop_pt)*TMath::Exp(0.0615-0.0005*genantitop_pt)),0.5); aweight*=toppt_reweighting; }
         }
 
-	if (mu_rawiso[idx3]>0.4) continue;//FIXME
+	//if (mu_rawiso[idx3]>0.4) continue;//FIXME
 	bool is_isolated=mu_pfiso[idx3]>0.5;
 
 	TLorentzVector mu1; mu1.SetPtEtaPhiM(mu_pt[idx1],mu_eta[idx1],mu_phi[idx1], 0.105);
@@ -293,13 +327,25 @@ int main(int argc, char** argv) {
 	float var=mu3.Pt();
 	if (mt>50) continue;
 	//float var=mt;
-	if (!is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_anti->Fill(var,weight*aweight);
-        if (is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_iso->Fill(var,weight*aweight);
-        if (!is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_anti->Fill(var,weight*aweight);
-        if (is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_iso->Fill(var,weight*aweight);
+	if (!mu_trigger_doublemu[idx3]) continue;
+	//if (mu_pt[idx3]>26 and !mu_trigger[idx3]) continue;
+	//if (mu_pt[idx3]<26 and !mu_trigger_doublemu[idx3]) continue;
 
-        if (is_isolated) {h_ntracks_iso->Fill(ntrk_prompt+ntrk_nonprompt,weight*aweight); h_ntracks_iso->Fill(-1,weight*aweight);}
-        if (!is_isolated) {h_ntracks_anti->Fill(ntrk_prompt+ntrk_nonprompt,weight*aweight); h_ntracks_anti->Fill(-1,weight*aweight);}
+	if (pass_singlemutrg and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singlemutrg_anti->Fill(var,weight*aweight);
+        if (pass_singlemutrg and is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singlemutrg_iso->Fill(var,weight*aweight);
+        if (pass_singlemutrg and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singlemutrg_anti->Fill(var,weight*aweight);
+        if (pass_singlemutrg and is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singlemutrg_iso->Fill(var,weight*aweight);
+
+        if (pass_doublemutrg and mu_trigger_doublemu[idx3] and is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_doublemutrg_iso->Fill(var,weight*aweight);
+        if (pass_doublemutrg and mu_trigger_doublemu[idx3] and is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_doublemutrg_iso->Fill(var,weight*aweight);
+        if (pass_doublemutrg and mu_trigger_doublemu[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_doublemutrg_anti->Fill(var,weight*aweight);
+        if (pass_doublemutrg and mu_trigger_doublemu[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_doublemutrg_anti->Fill(var,weight*aweight);
+
+	int ntracks=(ntrk_all);
+	if (ntracks>0) ntracks=ntracks-1; //remove track from probe muon
+	else ntracks=0;
+        if (is_isolated) {h_ntracks_iso->Fill(ntracks,weight*aweight); h_ntracks_iso->Fill(-1,weight*aweight);}
+        if (!is_isolated) {h_ntracks_anti->Fill(ntracks,weight*aweight); h_ntracks_anti->Fill(-1,weight*aweight);}
 
 
     } // end of loop over events
@@ -309,16 +355,26 @@ int main(int argc, char** argv) {
     h_ntracks_iso->Write();
     h_ntracks_anti->Write();
 
-    h_ptB_anti->SetName("pt_antimu_barrel");
-    h_ptB_anti->Write();
-    h_ptB_iso->SetName("pt_isomu_barrel");
-    h_ptB_iso->Write();
+    h_ptB_singlemutrg_anti->SetName("pt_antimu_singlemutrg_barrel");
+    h_ptB_singlemutrg_anti->Write();
+    h_ptB_singlemutrg_iso->SetName("pt_isomu_singlemutrg_barrel");
+    h_ptB_singlemutrg_iso->Write();
     h_mumumass->Write();
 
-    h_ptE_anti->SetName("pt_antimu_endcaps");
-    h_ptE_anti->Write();
-    h_ptE_iso->SetName("pt_isomu_endcaps");
-    h_ptE_iso->Write();
+    h_ptE_singlemutrg_anti->SetName("pt_antimu_singlemutrg_endcaps");
+    h_ptE_singlemutrg_anti->Write();
+    h_ptE_singlemutrg_iso->SetName("pt_isomu_singlemutrg_endcaps");
+    h_ptE_singlemutrg_iso->Write();
+
+    h_ptB_doublemutrg_anti->SetName("pt_antimu_doublemutrg_barrel");
+    h_ptB_doublemutrg_anti->Write();
+    h_ptB_doublemutrg_iso->SetName("pt_isomu_doublemutrg_barrel");
+    h_ptB_doublemutrg_iso->Write();
+
+    h_ptE_doublemutrg_anti->SetName("pt_antimu_doublemutrg_endcaps");
+    h_ptE_doublemutrg_anti->Write();
+    h_ptE_doublemutrg_iso->SetName("pt_isomu_doublemutrg_endcaps");
+    h_ptE_doublemutrg_iso->Write();
 
     fout->Close();
 } 

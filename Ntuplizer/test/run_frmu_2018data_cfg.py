@@ -51,18 +51,21 @@ setupEgammaPostRecoSeq(process,era='2018-UL',
 
 process.demo = cms.EDAnalyzer("FRmuAnlzr",
     MC = cms.bool(False), #False
+    year = cms.int32(2018),
     vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
     muons = cms.InputTag("slimmedMuons"),
     mcmapmuons = cms.InputTag("muonsMCMatchForTable"),
     electrons = cms.InputTag("slimmedElectrons"),
     mcmapelectrons = cms.InputTag("electronsMCMatchForTable"),
     pfCands = cms.InputTag("packedPFCandidates"),
+    packedgens = cms.InputTag("packedGenParticles"),
     pruned = cms.InputTag("prunedGenParticles"),
     beamSpotHandle = cms.InputTag("offlineBeamSpot"),
     triggerBitsH = cms.InputTag("TriggerResults", "", "HLT"),
     metfilterBitsH = cms.InputTag("TriggerResults", "", "PAT"),
     generatorLabel       = cms.InputTag("generator"),
-    pileupInfo=cms.InputTag('slimmedAddPileupInfo')
+    pileupInfo=cms.InputTag('slimmedAddPileupInfo'),
+    mets = cms.InputTag("slimmedMETsPuppi"),
 )
 
 process.TFileService = cms.Service("TFileService",

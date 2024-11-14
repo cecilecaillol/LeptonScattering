@@ -1,0 +1,4 @@
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2018/EGamma.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2018/EGamma/crab_*/24*/000*/tree_chargemisid_*.root
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2017/SingleElectron.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2017/SingleElectron/crab_*/24*/000*/tree_chargemisid_*.root
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2016post/SingleElectron.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2016post/SingleElectron/crab_*/24*/000*/tree_chargemisid_*.root
+hadd -f /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2016pre/SingleElectron.root /eos/cms/store/group/cmst3/user/ccaillol/LeptonScattering/ChargeMisid2016pre/SingleElectron/crab_*/24*/000*/tree_chargemisid_*.root

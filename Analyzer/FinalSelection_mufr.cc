@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 
     TFile *f_Double = new TFile(input.c_str());
     cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<endl;
-    TTree *arbre = (TTree*) f_Double->Get("demo/data");
+    TTree *arbre = (TTree*) f_Double->Get("demo/tree_fr");
 
     //TTree *arbre2 = (TTree*) f_Double->Get("Runs");
     float ngen=0;
@@ -83,10 +83,10 @@ int main(int argc, char** argv) {
     else if (sample=="TTTo2L2Nu"){ xs=833.0*0.1061; weight=luminosity*xs/ngen;}
     else if (sample=="TTToSemiLeptonic"){ xs=791*0.4392; weight=luminosity*xs/ngen;}
     else if (sample=="TTToHadronic"){ xs=791*0.4544; weight=luminosity*xs/ngen;}
-    else if (sample=="ZZ4L"){ xs=1.21; weight=luminosity*xs/ngen;}
+    else if (sample=="ZZ4L"){ xs=1.325; weight=luminosity*xs/ngen;}
     else if (sample=="ZZ2L2Q"){ xs=3.22; weight=luminosity*xs/ngen;}
     else if (sample=="ZZ2Q2L"){ xs=3.22; weight=luminosity*xs/ngen;}
-    else if (sample=="WZ3LNu"){ xs=4.71; weight=luminosity*xs/ngen;}
+    else if (sample=="WZ3LNu"){ xs=5.056; weight=luminosity*xs/ngen;}
     else if (sample=="VV2L2Nu"){ xs=11.09+0.9738; weight=luminosity*xs/ngen;}
     else if (sample=="WW2L2Nu"){ xs=11.09; weight=luminosity*xs/ngen;}
     else if (sample=="WZ2L2Q"){ xs=6.419; weight=luminosity*xs/ngen;}
@@ -111,10 +111,23 @@ int main(int argc, char** argv) {
 
     arbre->SetBranchAddress("n_mu", &n_mu);
     arbre->SetBranchAddress("hlt_isomu24", &hlt_isomu24);
+    arbre->SetBranchAddress("hlt_isomu27", &hlt_isomu27);
+    arbre->SetBranchAddress("hlt_isotkmu24", &hlt_isotkmu24);
     arbre->SetBranchAddress("hlt_mu17_mu8", &hlt_mu17_mu8);
+
+    arbre->SetBranchAddress("hlt_mu23_el12", &hlt_mu23_el12);
+    arbre->SetBranchAddress("hlt_mu23_el12_DZ", &hlt_mu23_el12_DZ);
+    arbre->SetBranchAddress("hlt_mu8_el23", &hlt_mu8_el23);
+    arbre->SetBranchAddress("hlt_mu8_el23_DZ", &hlt_mu8_el23_DZ);
+    arbre->SetBranchAddress("hlt_ele32", &hlt_ele32);
+
     arbre->SetBranchAddress("ntrk_prompt", &ntrk_prompt);
     arbre->SetBranchAddress("ntrk_nonprompt", &ntrk_nonprompt);
+    arbre->SetBranchAddress("ntrk_all", &ntrk_all);
     arbre->SetBranchAddress("mu_trigger", &mu_trigger);
+    arbre->SetBranchAddress("mu_triggeremu", &mu_triggeremu);
+    arbre->SetBranchAddress("mu_trigger_doublemu", &mu_trigger_doublemu);
+    arbre->SetBranchAddress("mu_sip2d", &mu_sip2d);
     arbre->SetBranchAddress("mu_charge", &mu_charge);
     arbre->SetBranchAddress("mu_genPart", &mu_genPart);
     arbre->SetBranchAddress("mu_rawiso", &mu_rawiso);
@@ -128,8 +141,11 @@ int main(int argc, char** argv) {
    arbre->SetBranchAddress("gentop_pt", &gentop_pt);
    arbre->SetBranchAddress("genantitop_pt", &genantitop_pt);
    arbre->SetBranchAddress("Pileup_trueNumInteractions", &Pileup_trueNumInteractions);
+   arbre->SetBranchAddress("PuppiMET_pt", &PuppiMET_pt);
+   arbre->SetBranchAddress("PuppiMET_phi", &PuppiMET_phi);
 
    arbre->SetBranchAddress("el_conversionveto", &el_conversionveto);
+   arbre->SetBranchAddress("el_losthits", &el_losthits);
    arbre->SetBranchAddress("el_charge", &el_charge);
    arbre->SetBranchAddress("el_genPart", &el_genPart);
    arbre->SetBranchAddress("el_chargeconsistent", &el_chargeconsistent);
@@ -151,6 +167,112 @@ int main(int argc, char** argv) {
    arbre->SetBranchAddress("el_dz", &el_dz);
    arbre->SetBranchAddress("n_el", &n_el);
 
+   arbre->SetBranchAddress("PuppiMET_pt", &PuppiMET_pt);
+   arbre->SetBranchAddress("PuppiMET_phi", &PuppiMET_phi);
+
+   TFile* f_e_trg24_c=new TFile("scalefactors/sf_el_2018_HLTMu8Ele23.root","read");
+   TFile* f_e_trg12_c=new TFile("scalefactors/sf_el_2018_HLTMu23Ele12.root","read");
+   TFile* f_mu_trg24_c=new TFile("scalefactors/sf_mu_2018_HLTMu23Ele12.root","read");
+   TFile* f_mu_trg8_c=new TFile("scalefactors/sf_mu_2018_HLTMu8Ele23.root","read");
+   TH2F* h_mu_trg24_data_c= (TH2F*) f_mu_trg24_c->Get("eff_data");
+   TH2F* h_mu_trg24_zll_c= (TH2F*) f_mu_trg24_c->Get("eff_mc");
+   TH2F* h_mu_trg8_data_c= (TH2F*) f_mu_trg8_c->Get("eff_data");
+   TH2F* h_mu_trg8_zll_c= (TH2F*) f_mu_trg8_c->Get("eff_mc");
+   TH2F* h_e_trg24_data_c= (TH2F*) f_e_trg24_c->Get("eff_data");
+   TH2F* h_e_trg24_zll_c= (TH2F*) f_e_trg24_c->Get("eff_mc");
+   TH2F* h_e_trg12_data_c= (TH2F*) f_e_trg12_c->Get("eff_data");
+   TH2F* h_e_trg12_zll_c= (TH2F*) f_e_trg12_c->Get("eff_mc");
+   if (year=="2017"){
+      TFile* f_e_trg24_c=new TFile("scalefactors/sf_el_2017_HLTMu8Ele23.root","read");
+      TFile* f_e_trg12_c=new TFile("scalefactors/sf_el_2017_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg24_c=new TFile("scalefactors/sf_mu_2017_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg8_c=new TFile("scalefactors/sf_mu_2017_HLTMu8Ele23.root","read");
+      h_mu_trg24_data_c= (TH2F*) f_mu_trg24_c->Get("eff_data");
+      h_mu_trg24_zll_c= (TH2F*) f_mu_trg24_c->Get("eff_mc");
+      h_mu_trg8_data_c= (TH2F*) f_mu_trg8_c->Get("eff_data");
+      h_mu_trg8_zll_c= (TH2F*) f_mu_trg8_c->Get("eff_mc");
+      h_e_trg24_data_c= (TH2F*) f_e_trg24_c->Get("eff_data");
+      h_e_trg24_zll_c= (TH2F*) f_e_trg24_c->Get("eff_mc");
+      h_e_trg12_data_c= (TH2F*) f_e_trg12_c->Get("eff_data");
+      h_e_trg12_zll_c= (TH2F*) f_e_trg12_c->Get("eff_mc");
+   }
+   else if (year=="2016post"){
+      TFile* f_e_trg24_c=new TFile("scalefactors/sf_el_2016post_HLTMu8Ele23.root","read");
+      TFile* f_e_trg12_c=new TFile("scalefactors/sf_el_2016post_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg24_c=new TFile("scalefactors/sf_mu_2016post_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg8_c=new TFile("scalefactors/sf_mu_2016post_HLTMu8Ele23.root","read");
+      h_mu_trg24_data_c= (TH2F*) f_mu_trg24_c->Get("eff_data");
+      h_mu_trg24_zll_c= (TH2F*) f_mu_trg24_c->Get("eff_mc");
+      h_mu_trg8_data_c= (TH2F*) f_mu_trg8_c->Get("eff_data");
+      h_mu_trg8_zll_c= (TH2F*) f_mu_trg8_c->Get("eff_mc");
+      h_e_trg24_data_c= (TH2F*) f_e_trg24_c->Get("eff_data");
+      h_e_trg24_zll_c= (TH2F*) f_e_trg24_c->Get("eff_mc");
+      h_e_trg12_data_c= (TH2F*) f_e_trg12_c->Get("eff_data");
+      h_e_trg12_zll_c= (TH2F*) f_e_trg12_c->Get("eff_mc");
+   }
+   else if (year=="2016pre"){
+      TFile* f_e_trg24_c=new TFile("scalefactors/sf_el_2016pre_HLTMu8Ele23.root","read");
+      TFile* f_e_trg12_c=new TFile("scalefactors/sf_el_2016pre_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg24_c=new TFile("scalefactors/sf_mu_2016pre_HLTMu23Ele12.root","read");
+      TFile* f_mu_trg8_c=new TFile("scalefactors/sf_mu_2016pre_HLTMu8Ele23.root","read");
+      h_mu_trg24_data_c= (TH2F*) f_mu_trg24_c->Get("eff_data");
+      h_mu_trg24_zll_c= (TH2F*) f_mu_trg24_c->Get("eff_mc");
+      h_mu_trg8_data_c= (TH2F*) f_mu_trg8_c->Get("eff_data");
+      h_mu_trg8_zll_c= (TH2F*) f_mu_trg8_c->Get("eff_mc");
+      h_e_trg24_data_c= (TH2F*) f_e_trg24_c->Get("eff_data");
+      h_e_trg24_zll_c= (TH2F*) f_e_trg24_c->Get("eff_mc");
+      h_e_trg12_data_c= (TH2F*) f_e_trg12_c->Get("eff_data");
+      h_e_trg12_zll_c= (TH2F*) f_e_trg12_c->Get("eff_mc");
+   }
+
+
+   TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root","read");
+   TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root","read");
+   TFile* f_muonTrg=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers.root","read"); //FIXME add other years
+   TH2F* h_muonTrgSF= (TH2F*) f_muonTrg->Get("NUM_IsoMu24_DEN_CutBasedIdMedium_and_PFIsoMedium_abseta_pt");
+   TH2F* h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
+   TH2F* h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
+   TH2F* h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
+   TH2F* h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
+   TH2F* h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
+   TH2F* h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
+
+   if (year=="2016pre"){
+      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root","read");
+      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root","read");
+      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
+      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
+      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
+      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
+      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
+      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
+      TFile* f_muonTrg=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_SingleMuonTriggers.root","read");
+      h_muonTrgSF= (TH2F*) f_muonTrg->Get("NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdMedium_and_PFIsoMedium_abseta_pt");
+   }
+   if (year=="2016post"){
+      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root","read");
+      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root","read");
+      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
+      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
+      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
+      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
+      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
+      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
+      TFile* f_muonTrg=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_SingleMuonTriggers.root","read");
+      h_muonTrgSF= (TH2F*) f_muonTrg->Get("NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdMedium_and_PFIsoMedium_abseta_pt");
+   }
+   if (year=="2017"){
+      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2017_UL_ID.root","read");
+      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2017_UL_ISO.root","read");
+      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
+      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
+      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
+      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
+      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
+      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
+      TFile* f_muonTrg=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2017_UL_SingleMuonTriggers.root","read");
+      h_muonTrgSF= (TH2F*) f_muonTrg->Get("NUM_IsoMu27_DEN_CutBasedIdMedium_and_PFIsoMedium_abseta_pt");
+   }
 
    TFile* f_eleIDSF=new TFile("scalefactors/egammaEffi.txt_Ele_wp80iso_EGM2D.root","read");
    TH2F* h_eleIDSF= (TH2F*) f_eleIDSF->Get("EGamma_SF2D");
@@ -184,60 +306,50 @@ int main(int argc, char** argv) {
       h_eleRecoBelowSF= (TH2F*) f_eleRecoBelowSF->Get("EGamma_SF2D");
    }
 
-   TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root","read");
-   TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root","read");
-   TH2F* h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
-   TH2F* h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
-   TH2F* h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
-   TH2F* h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
-   TH2F* h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
-   TH2F* h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
-
-   if (year=="2016pre"){
-      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root","read");
-      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root","read");
-      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
-      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
-      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
-      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
-      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
-      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
-   }
-   if (year=="2016post"){
-      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root","read");
-      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root","read");
-      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
-      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
-      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
-      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
-      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
-      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
-   }
-   if (year=="2017"){
-      TFile* f_muonID=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2017_UL_ID.root","read");
-      TFile* f_muonIso=new TFile("scalefactors/Efficiencies_muon_generalTracks_Z_Run2017_UL_ISO.root","read");
-      h_muonIsoSF= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt");
-      h_muonIDSF= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt");
-      h_muonIsoSF_stat= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_stat");
-      h_muonIDSF_stat= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_stat");
-      h_muonIsoSF_syst= (TH2F*) f_muonIso->Get("NUM_LooseRelIso_DEN_MediumID_abseta_pt_syst");
-      h_muonIDSF_syst= (TH2F*) f_muonID->Get("NUM_MediumID_DEN_TrackerMuons_abseta_pt_syst");
-   }
 
    reweight::LumiReWeighting* LumiWeights_12;
    LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2018.root", "PileupHistogram-UL2018-100bins_withVar.root", "pu_mc", "pileup");
+   if (year=="2017"){
+      LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2017.root", "PileupHistogram-UL2017-100bins_withVar.root", "pu_mc", "pileup");
+   }
+   else if (year=="2016pre" or year=="2016post"){
+      LumiWeights_12 = new reweight::LumiReWeighting("mcPileupUL2016.root", "PileupHistogram-UL2016-100bins_withVar.root", "pu_mc", "pileup");
+   }
 
    //float bins0[]
-   float bins0[] = {8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100};
+   float bins0[] = {0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,35,40,100};
    //float bins0[]={5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,50,75,100};
    int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
 
-   TH1F*  h_ptB_anti = new TH1F("h_ptB_anti","h_ptB_anti",binnum0,bins0); h_ptB_anti->Sumw2();
-   TH1F*  h_ptB_iso = new TH1F("h_ptB_iso","h_ptB_iso",binnum0,bins0); h_ptB_iso->Sumw2();
-   TH1F*  h_ptE_iso = new TH1F("h_ptE_iso","h_ptE_iso",binnum0,bins0); h_ptE_iso->Sumw2();
-   TH1F*  h_ptE_anti = new TH1F("h_ptE_anti","h_ptE_anti",binnum0,bins0); h_ptE_anti->Sumw2();
+   float bins2[] = {5,10,15,20,25,30,35,40,50,60,100};
+   int  binnum2 = sizeof(bins2)/sizeof(Float_t) - 1;
+
+
+   float bins1[] = {-1,0,3,6,9,12,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100};
+//1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80};
+   int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
+
+
+   TH1F*  h_ptB_emutrg_anti = new TH1F("h_ptB_emutrg_anti","h_ptB_emutrg_anti",binnum0,bins0); h_ptB_emutrg_anti->Sumw2();
+   TH1F*  h_ptB_emutrg_iso = new TH1F("h_ptB_emutrg_iso","h_ptB_emutrg_iso",binnum0,bins0); h_ptB_emutrg_iso->Sumw2();
+   TH1F*  h_ptE_emutrg_iso = new TH1F("h_ptE_emutrg_iso","h_ptE_emutrg_iso",binnum0,bins0); h_ptE_emutrg_iso->Sumw2();
+   TH1F*  h_ptE_emutrg_anti = new TH1F("h_ptE_emutrg_anti","h_ptE_emutrg_anti",binnum0,bins0); h_ptE_emutrg_anti->Sumw2();
+
+   TH1F*  h_ptB_singleeltrg_anti = new TH1F("h_ptB_singleeltrg_anti","h_ptB_singleeltrg_anti",binnum0,bins0); h_ptB_singleeltrg_anti->Sumw2();
+   TH1F*  h_ptB_singleeltrg_iso = new TH1F("h_ptB_singleeltrg_iso","h_ptB_singleeltrg_iso",binnum0,bins0); h_ptB_singleeltrg_iso->Sumw2();
+   TH1F*  h_ptE_singleeltrg_iso = new TH1F("h_ptE_singleeltrg_iso","h_ptE_singleeltrg_iso",binnum0,bins0); h_ptE_singleeltrg_iso->Sumw2();
+   TH1F*  h_ptE_singleeltrg_anti = new TH1F("h_ptE_singleeltrg_anti","h_ptE_singleeltrg_anti",binnum0,bins0); h_ptE_singleeltrg_anti->Sumw2();
+
+   TH1F*  h_ptB_singlemutrg_anti = new TH1F("h_ptB_singlemutrg_anti","h_ptB_singlemutrg_anti",binnum0,bins0); h_ptB_singlemutrg_anti->Sumw2();
+   TH1F*  h_ptB_singlemutrg_iso = new TH1F("h_ptB_singlemutrg_iso","h_ptB_singlemutrg_iso",binnum0,bins0); h_ptB_singlemutrg_iso->Sumw2();
+   TH1F*  h_ptE_singlemutrg_iso = new TH1F("h_ptE_singlemutrg_iso","h_ptE_singlemutrg_iso",binnum0,bins0); h_ptE_singlemutrg_iso->Sumw2();
+   TH1F*  h_ptE_singlemutrg_anti = new TH1F("h_ptE_singlemutrg_anti","h_ptE_singlemutrg_anti",binnum0,bins0); h_ptE_singlemutrg_anti->Sumw2();
+
 
    TH1F*  h_mumumass = new TH1F("h_mumumass","h_mumumass",20,70,110); h_mumumass->Sumw2();
+
+   TH1F*  h_ntracks_anti = new TH1F("h_ntracks_anti","h_ntracks_anti",binnum1,bins1); h_ntracks_anti->Sumw2();
+   TH1F*  h_ntracks_iso = new TH1F("h_ntracks_iso","h_ntracks_iso",binnum1,bins1); h_ntracks_iso->Sumw2();
 
    Int_t nentries_wtn = (Int_t) arbre->GetEntries();
 
@@ -247,98 +359,165 @@ int main(int argc, char** argv) {
         if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
         fflush(stdout);
 
-	int idx1=-1; int idx2=-1; float best_Zmass=15.000001;
-	for (int j=0; j<n_el-1; ++j){
-	   TLorentzVector tmp1;
+	if (n_mu!=1) continue;
+	if (n_el!=2) continue;
+
+        int idx1=-1; int idx2=-1; float best_Zmass=15.000001;
+        for (int j=0; j<n_el-1; ++j){
+           TLorentzVector tmp1;
            tmp1.SetPtEtaPhiM(el_pt[j], el_eta[j], el_phi[j], 0.105);
-	   for (int k=j+1; k<n_el; ++k){
-	      TLorentzVector tmp2;
-	      tmp2.SetPtEtaPhiM(el_pt[k], el_eta[k], el_phi[k], 0.105);
-	      if (fabs(el_dz[j])<0.1 and fabs(el_dz[k])<0.1 and el_dxy[j]<0.05 and el_dxy[k]<0.05 and el_charge[j]*el_charge[k]<0 and fabs((tmp1+tmp2).M()-90)<best_Zmass and tmp1.DeltaR(tmp2)>0.3 and el_MVAIDisoWP80[j] and el_MVAIDisoWP80[k] and (el_pt[j]>33 or el_pt[k]>33)){ idx1=j; idx2=k; best_Zmass= fabs((tmp1+tmp2).M()-90);}
-	   }
-	}
-	if (idx1==-1 or idx2==-1) continue;
+           for (int k=j+1; k<n_el; ++k){
+              TLorentzVector tmp2;
+              tmp2.SetPtEtaPhiM(el_pt[k], el_eta[k], el_phi[k], 0.105);
+              if (fabs(el_dz[j])<0.1 and fabs(el_dz[k])<0.1 and el_dxy[j]<0.05 and el_dxy[k]<0.05 and el_charge[j]*el_charge[k]<0 and fabs((tmp1+tmp2).M()-90)<best_Zmass and tmp1.DeltaR(tmp2)>0.3 and el_MVAIDisoWP80[j] and el_MVAIDisoWP80[k] and el_pt[j]>20 and el_pt[k]>20){ idx1=j; idx2=k; best_Zmass= fabs((tmp1+tmp2).M()-91);}
+           }
+        }
+        if (idx1==-1 or idx2==-1) continue;
         TLorentzVector my_el1;
-         my_el1.SetPtEtaPhiM(el_pt[idx1], el_eta[idx1], el_phi[idx1], 0.105);
+        my_el1.SetPtEtaPhiM(el_pt[idx1], el_eta[idx1], el_phi[idx1], 0.);
         TLorentzVector my_el2;
-         my_el2.SetPtEtaPhiM(el_pt[idx2], el_eta[idx2], el_phi[idx2], 0.105);
-        h_mumumass->Fill((my_el1+my_el2).M());
+        my_el2.SetPtEtaPhiM(el_pt[idx2], el_eta[idx2], el_phi[idx2], 0.);
 
 	int idx3=-1;
         for (int l=0; l<n_mu; ++l){
            TLorentzVector tmp3;
            tmp3.SetPtEtaPhiM(mu_pt[l], mu_eta[l], mu_phi[l], 0.);
-           if (mu_pt[l]>8 and tmp3.DeltaR(my_el1)>0.3 and tmp3.DeltaR(my_el2)>0.3 and mu_dz[l]<0.1 and mu_dxy[l]<0.05 and idx3<0) idx3=l;
+           if (mu_pt[l]>5 and tmp3.DeltaR(my_el1)>0.5 and tmp3.DeltaR(my_el2)>0.3 and fabs(mu_dz[l])<0.03 and mu_sip2d[l]<4 and idx3<0) idx3=l;
 	}
 	if (idx3==-1) continue;
-
 
         if (name!="data_obs"){
 	    if (mu_genPart[idx3]==0) continue;
 	}
 
-        //h_mumumass->Fill((my_el1+my_el2).M());
-
-
-	//if (!hlt_isomu24) continue;
-	if (!hlt_mu17_mu8) continue;
-
         // Block weights
         float aweight=1.0;
+	float weight_singlemutrg=1.0;
+	float weight_emutrg=1.0;
+	float weight_singleeltrg=1.0;
+
         if (name!="data_obs"){
-           //aweight=aweight*L1PreFiringWeight_Nom;
            aweight*=LumiWeights_12->weight(Pileup_trueNumInteractions);
            aweight=aweight*genWeight;
 
-	   //FIXME add trigger 
 
            float ept1=my_el1.Pt();
            if (ept1>120) ept1=119;
            float elidsf1_nom = h_eleIDSF->GetBinContent(h_eleIDSF->GetXaxis()->FindBin(my_el1.Eta()),h_eleIDSF->GetYaxis()->FindBin(ept1));
-           float elRecoSF1 = 1.0;
-           if (ept1<20) elRecoSF1 = h_eleRecoBelowSF->GetBinContent(h_eleRecoBelowSF->GetXaxis()->FindBin(my_el1.Eta()),h_eleRecoBelowSF->GetYaxis()->FindBin(ept1));
-           else elRecoSF1 = h_eleRecoSF->GetBinContent(h_eleRecoSF->GetXaxis()->FindBin(my_el1.Eta()),h_eleRecoSF->GetYaxis()->FindBin(ept1));
+           float elRecoSF1 = h_eleRecoSF->GetBinContent(h_eleRecoSF->GetXaxis()->FindBin(my_el1.Eta()),h_eleRecoSF->GetYaxis()->FindBin(ept1));
            aweight=aweight*elidsf1_nom*elRecoSF1;
 
            float ept2=my_el2.Pt();
            if (ept2>120) ept2=119;
            float elidsf2_nom = h_eleIDSF->GetBinContent(h_eleIDSF->GetXaxis()->FindBin(my_el2.Eta()),h_eleIDSF->GetYaxis()->FindBin(ept2));
-           float elRecoSF2 = 1.0;
-           if (ept2<20) elRecoSF2 = h_eleRecoBelowSF->GetBinContent(h_eleRecoBelowSF->GetXaxis()->FindBin(my_el2.Eta()),h_eleRecoBelowSF->GetYaxis()->FindBin(ept2));
-           else elRecoSF2 = h_eleRecoSF->GetBinContent(h_eleRecoSF->GetXaxis()->FindBin(my_el2.Eta()),h_eleRecoSF->GetYaxis()->FindBin(ept2));
+           float elRecoSF2 = h_eleRecoSF->GetBinContent(h_eleRecoSF->GetXaxis()->FindBin(my_el2.Eta()),h_eleRecoSF->GetYaxis()->FindBin(ept2));
            aweight=aweight*elidsf2_nom*elRecoSF2;
 
-	   // FIXME add 3rd mu SF iso
+           float mu3pt=mu_pt[idx3];
+           if (mu3pt>120) mu3pt=119;
+           if (mu3pt<15) mu3pt=16;
+           float muidsf_nom3 = h_muonIDSF->GetBinContent(h_muonIDSF->GetXaxis()->FindBin(fabs(mu_eta[idx3])),h_muonIDSF->GetYaxis()->FindBin(mu3pt));
+           float muisosf_nom3 = h_muonIsoSF->GetBinContent(h_muonIsoSF->GetXaxis()->FindBin(fabs(mu_eta[idx3])),h_muonIsoSF->GetYaxis()->FindBin(mu3pt));
+           aweight=aweight*muidsf_nom3*muidsf_nom3;
 
-           if (sample=="TTTo2L2Nu" or sample=="TTToSemiLeptonic" or sample=="TTToHadronic") {float toppt_reweighting=pow((TMath::Exp(0.0615-0.0005*gentop_pt)*TMath::Exp(0.0615-0.0005*genantitop_pt)),0.5); aweight*=toppt_reweighting; }
+           float weight_singlemutrg = h_muonTrgSF->GetBinContent(h_muonTrgSF->GetXaxis()->FindBin(fabs(mu_eta[idx3])),h_muonTrgSF->GetYaxis()->FindBin(mu3pt));
 
-	   aweight*=0.95;// trigger and 3rd lepton //FIXME
+	   bool is_mu8ele23=hlt_mu8_el23_DZ;
+           bool is_mu23ele12=hlt_mu23_el12_DZ;
+           float eff_e_trg24_data=h_e_trg24_data_c->GetBinContent(h_e_trg24_data_c->GetXaxis()->FindBin(ept1),h_e_trg24_data_c->GetYaxis()->FindBin(fabs(my_el1.Eta())));
+           float eff_e_trg12_data=h_e_trg12_data_c->GetBinContent(h_e_trg12_data_c->GetXaxis()->FindBin(ept1),h_e_trg12_data_c->GetYaxis()->FindBin(fabs(my_el1.Eta())));
+           float eff_mu_trg24_data=h_mu_trg24_data_c->GetBinContent(h_mu_trg24_data_c->GetXaxis()->FindBin(mu3pt),h_mu_trg24_data_c->GetYaxis()->FindBin(fabs(mu_eta[idx3])));
+           float eff_mu_trg8_data=h_mu_trg8_data_c->GetBinContent(h_mu_trg8_data_c->GetXaxis()->FindBin(mu3pt),h_mu_trg8_data_c->GetYaxis()->FindBin(fabs(mu_eta[idx3])));
+           float eff_e_trg24_zll=h_e_trg24_zll_c->GetBinContent(h_e_trg24_zll_c->GetXaxis()->FindBin(ept1),h_e_trg24_zll_c->GetYaxis()->FindBin(fabs(my_el1.Eta())));
+           float eff_e_trg12_zll=h_e_trg12_zll_c->GetBinContent(h_e_trg12_zll_c->GetXaxis()->FindBin(ept1),h_e_trg12_zll_c->GetYaxis()->FindBin(fabs(my_el1.Eta())));
+           float eff_mu_trg24_zll=h_mu_trg24_zll_c->GetBinContent(h_mu_trg24_zll_c->GetXaxis()->FindBin(mu3pt),h_mu_trg24_zll_c->GetYaxis()->FindBin(fabs(mu_eta[idx3])));
+           float eff_mu_trg8_zll=h_mu_trg8_zll_c->GetBinContent(h_mu_trg8_zll_c->GetXaxis()->FindBin(mu3pt),h_mu_trg8_zll_c->GetYaxis()->FindBin(fabs(mu_eta[idx3])));
+           float probData =eff_e_trg24_data*eff_mu_trg8_data*int(is_mu8ele23)+eff_mu_trg24_data*eff_e_trg12_data*int(is_mu23ele12)-eff_e_trg24_data*eff_mu_trg24_data*int(is_mu8ele23 && is_mu23ele12);
+           float probMC =eff_e_trg24_zll*eff_mu_trg8_zll*int(is_mu8ele23)+eff_mu_trg24_zll*eff_e_trg12_zll*int(is_mu23ele12)-eff_e_trg24_zll*eff_mu_trg24_zll*int(is_mu8ele23 && is_mu23ele12);
+           float weight_emutrg=probData/probMC;
+           if (probMC==0) weight_emutrg=1.0;
+
         }
 
-	if (mu_rawiso[idx3]>1.0) continue;
+	//if (mu_rawiso[idx3]>0.4) continue;//FIXME
 	bool is_isolated=mu_pfiso[idx3]>0.5;
 
-	if (!is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_anti->Fill(mu_pt[idx3],weight*aweight);
-        if (is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_iso->Fill(mu_pt[idx3],weight*aweight);
-        if (!is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_anti->Fill(mu_pt[idx3],weight*aweight);
-        if (is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_iso->Fill(mu_pt[idx3],weight*aweight);
+        TLorentzVector mu3; mu3.SetPtEtaPhiM(mu_pt[idx3],mu_eta[idx3],mu_phi[idx3], 0.105);
+
+	float mt = TMass_F(mu3.Pt(), mu3.Px(), mu3.Py(), PuppiMET_pt, PuppiMET_phi);
+	float var=mu3.Pt();
+	if (mt>50) continue;
+
+	bool pass_emutrg, pass_singlemutrg, pass_singleeltrg;
+	if (year=="2018"){
+	   pass_singlemutrg = (mu3.Pt()>26 and hlt_isomu24);
+	   pass_emutrg = (mu3.Pt()>10 and (hlt_mu23_el12_DZ or hlt_mu8_el23_DZ) and (my_el1.Pt()>24 or my_el2.Pt()>24 or mu3.Pt()>24));
+	   pass_singleeltrg = (mu3.Pt()>5 and hlt_ele32 and (my_el1.Pt()>33 or my_el2.Pt()>33));
+	   if (sample=="MuonEG" or sample=="EGamma") pass_singlemutrg = false;
+           if (sample=="SingleMuon" or sample=="EGamma") pass_emutrg = false;
+           if (sample=="MuonEG" or sample=="SingleMuon") pass_singleeltrg = false;
+	}
+
+	if (pass_emutrg and mu_triggeremu[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_emutrg_anti->Fill(var,weight*aweight*weight_emutrg);
+        if (pass_emutrg and mu_triggeremu[idx3] and is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_emutrg_iso->Fill(var,weight*aweight*weight_emutrg);
+        if (pass_emutrg and mu_triggeremu[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_emutrg_anti->Fill(var,weight*aweight*weight_emutrg);
+        if (pass_emutrg and mu_triggeremu[idx3] and is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_emutrg_iso->Fill(var,weight*aweight*weight_emutrg);
+
+        if (pass_singlemutrg and mu_trigger[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singlemutrg_anti->Fill(var,weight*aweight*weight_singlemutrg);
+        if (pass_singlemutrg and mu_trigger[idx3] and is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singlemutrg_iso->Fill(var,weight*aweight*weight_singlemutrg);
+        if (pass_singlemutrg and mu_trigger[idx3] and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singlemutrg_anti->Fill(var,weight*aweight*weight_singlemutrg);
+        if (pass_singlemutrg and mu_trigger[idx3] and is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singlemutrg_iso->Fill(var,weight*aweight*weight_singlemutrg);
+
+        if (pass_singleeltrg and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singleeltrg_anti->Fill(var,weight*aweight*weight_singleeltrg);
+        if (pass_singleeltrg and is_isolated and fabs(mu_eta[idx3])<1.2) h_ptB_singleeltrg_iso->Fill(var,weight*aweight*weight_singleeltrg);
+        if (pass_singleeltrg and mu_rawiso[idx3]<1.0 and !is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singleeltrg_anti->Fill(var,weight*aweight*weight_singleeltrg);
+        if (pass_singleeltrg and is_isolated and fabs(mu_eta[idx3])>1.2) h_ptE_singleeltrg_iso->Fill(var,weight*aweight*weight_singleeltrg);
+
+
+	int ntracks=(ntrk_all);
+	if (ntracks>0) ntracks=ntracks-1; //remove track from probe muon
+	else ntracks=0;
+        if (is_isolated) {h_ntracks_iso->Fill(ntracks,weight*aweight); h_ntracks_iso->Fill(-1,weight*aweight);}
+        if (!is_isolated) {h_ntracks_anti->Fill(ntracks,weight*aweight); h_ntracks_anti->Fill(-1,weight*aweight);}
+
 
     } // end of loop over events
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
 
-cout<<h_mumumass->GetEntries()<<endl;
+    h_ntracks_iso->Write();
+    h_ntracks_anti->Write();
 
-    h_ptB_anti->SetName("pt_antimu_barrel");
-    h_ptB_anti->Write();
-    h_ptB_iso->SetName("pt_isomu_barrel");
-    h_ptB_iso->Write();
-    h_mumumass->Write();
+    h_ptB_emutrg_anti->SetName("pt_antimu_emutrg_barrel");
+    h_ptB_emutrg_anti->Write();
+    h_ptB_emutrg_iso->SetName("pt_isomu_emutrg_barrel");
+    h_ptB_emutrg_iso->Write();
 
-    h_ptE_anti->SetName("pt_antimu_endcaps");
-    h_ptE_anti->Write();
-    h_ptE_iso->SetName("pt_isomu_endcaps");
-    h_ptE_iso->Write();
+    h_ptE_emutrg_anti->SetName("pt_antimu_emutrg_endcaps");
+    h_ptE_emutrg_anti->Write();
+    h_ptE_emutrg_iso->SetName("pt_isomu_emutrg_endcaps");
+    h_ptE_emutrg_iso->Write();
+
+    h_ptB_singleeltrg_anti->SetName("pt_antimu_singleeltrg_barrel");
+    h_ptB_singleeltrg_anti->Write();
+    h_ptB_singleeltrg_iso->SetName("pt_isomu_singleeltrg_barrel");
+    h_ptB_singleeltrg_iso->Write();
+
+    h_ptE_singleeltrg_anti->SetName("pt_antimu_singleeltrg_endcaps");
+    h_ptE_singleeltrg_anti->Write();
+    h_ptE_singleeltrg_iso->SetName("pt_isomu_singleeltrg_endcaps");
+    h_ptE_singleeltrg_iso->Write();
+
+    h_ptB_singlemutrg_anti->SetName("pt_antimu_singlemutrg_barrel");
+    h_ptB_singlemutrg_anti->Write();
+    h_ptB_singlemutrg_iso->SetName("pt_isomu_singlemutrg_barrel");
+    h_ptB_singlemutrg_iso->Write();
+
+    h_ptE_singlemutrg_anti->SetName("pt_antimu_singlemutrg_endcaps");
+    h_ptE_singlemutrg_anti->Write();
+    h_ptE_singlemutrg_iso->SetName("pt_isomu_singlemutrg_endcaps");
+    h_ptE_singlemutrg_iso->Write();
+
 
     fout->Close();
 } 

@@ -67,81 +67,197 @@ if __name__ == "__main__":
 
     fZZ=ROOT.TFile("output_mufr_"+options.year+"/ZZ4L.root","r")
     fWZ=ROOT.TFile("output_mufr_"+options.year+"/WZ3LNu.root","r")
-    fData=ROOT.TFile("output_mufr_"+options.year+"/SingleMuon.root","r")
-    fout=ROOT.TFile("output_mufr_"+options.year+"/mufr.root","recreate")
+    fData=ROOT.TFile("output_mufr_"+options.year+"/Data.root","r")
+    fout=ROOT.TFile("output_mufr_"+options.year+"/mufr_mmm.root","recreate")
 
-    hBanti=fData.Get("pt_antimu_barrel").Clone()
-    hBanti.Add(fWZ.Get("pt_antimu_barrel"),-1)
-    hBanti.Add(fZZ.Get("pt_antimu_barrel"),-1)
-
-    hBiso=fData.Get("pt_isomu_barrel").Clone()
-    hBiso.Add(fWZ.Get("pt_isomu_barrel"),-1)
-    hBiso.Add(fZZ.Get("pt_isomu_barrel"),-1)
-
-    hBiso.Divide(hBanti)
-
-    c=ROOT.TCanvas("canvas","",0,0,800,600)
-    c.cd()
-    hBiso.SetMaximum(1.5)
-    hBiso.SetMinimum(0.0)
-    hBiso.Draw("e")
-    hBiso.SetTitle("")
-    hBiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
-    hBiso.GetYaxis().SetTitle("f_#mu")
-    total1 = ROOT.TF1( 'total1', 'expo(0)+pol1(2)', 5, 100 )
-    total1.SetLineColor( ROOT.kMagenta )
-    hBiso.Fit(total1,'R')
-    total1.SetName("fit_mufr_barrel")
     lumi=add_lumi(options.year)
-    lumi.Draw("same")
     cms=add_CMS()
-    cms.Draw("same")
     sup=add_Supplementary()
-    sup.Draw("same")
-    c.SaveAs("mufr_barrel_"+options.year+".png")
+
+    denom=["pt_antimu_doublemutrg_barrel","pt_antimu_doublemutrg_endcaps","pt_antimu_singlemutrg_barrel","pt_antimu_singlemutrg_endcaps"]
+    num=["pt_isomu_doublemutrg_barrel","pt_isomu_doublemutrg_endcaps","pt_isomu_singlemutrg_barrel","pt_isomu_singlemutrg_endcaps"]
+
+    for k in range(0,len(num)):
+
+       hanti=fData.Get(denom[k]).Clone()
+       hanti.Add(fWZ.Get(denom[k]),-1)
+       hanti.Add(fZZ.Get(denom[k]),-1)
+
+       hiso=fData.Get(num[k]).Clone()
+       hiso.Add(fWZ.Get(num[k]),-1)
+       hiso.Add(fZZ.Get(num[k]),-1)
+
+       hiso.Divide(hanti)
+
+       c=ROOT.TCanvas("canvas","",0,0,800,600)
+       c.cd()
+       hiso.SetMaximum(3.5)
+       hiso.SetMinimum(0.0)
+       hiso.Draw("e")
+       hiso.SetTitle("")
+       hiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+       hiso.GetYaxis().SetTitle("f_#mu")
+       total1 = ROOT.TF1( 'total1', 'expo(0)+pol0(2)', 5, 60 )
+       total1.SetLineColor( ROOT.kMagenta )
+       hiso.Fit(total1,'R')
+       total1.SetName("fit_"+num[k])
+       lumi.Draw("same")
+       cms.Draw("same")
+       sup.Draw("same")
+       c.SaveAs("mufr_mmm_"+num[k]+".png")
+
+
+       fout.cd()
+       hiso.SetName("mufr_"+num[k])
+       hiso.Write()
+       total1.Write()
+
+
+    ###hBanti=fData.Get("pt_antimu_barrel").Clone()
+    ###hBanti.Add(fWZ.Get("pt_antimu_barrel"),-1)
+    ###hBanti.Add(fZZ.Get("pt_antimu_barrel"),-1)
+
+    ###hBiso=fData.Get("pt_isomu_barrel").Clone()
+    ###hBiso.Add(fWZ.Get("pt_isomu_barrel"),-1)
+    ###hBiso.Add(fZZ.Get("pt_isomu_barrel"),-1)
+
+    ###hBiso.Divide(hBanti)
+
+    ###c=ROOT.TCanvas("canvas","",0,0,800,600)
+    ###c.cd()
+    ###hBiso.SetMaximum(1.5)
+    ###hBiso.SetMinimum(0.0)
+    ###hBiso.Draw("e")
+    ###hBiso.SetTitle("")
+    ###hBiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    ###hBiso.GetYaxis().SetTitle("f_#mu")
+    ####total1 = ROOT.TF1( 'total1', 'expo(0)+pol1(2)', 5, 100 )
+    ###total1 = ROOT.TF1( 'total1', 'expo(0)+pol0(2)', 8, 100 )
+    ###total1.SetLineColor( ROOT.kMagenta )
+    ###hBiso.Fit(total1,'R')
+    ###total1.SetName("fit_mufr_barrel")
+    ###lumi=add_lumi(options.year)
+    ###lumi.Draw("same")
+    ###cms=add_CMS()
+    ###cms.Draw("same")
+    ###sup=add_Supplementary()
+    ###sup.Draw("same")
+    ###c.SaveAs("mufr_barrel_"+options.year+".png")
 
 
 
 
-    hEanti=fData.Get("pt_antimu_endcaps").Clone()
-    hEanti.Add(fWZ.Get("pt_antimu_endcaps"),-1)
-    hEanti.Add(fZZ.Get("pt_antimu_endcaps"),-1)
+    ###hBanti2=fData.Get("pt_anti2mu_barrel").Clone()
+    ###hBanti2.Add(fWZ.Get("pt_anti2mu_barrel"),-1)
+    ###hBanti2.Add(fZZ.Get("pt_anti2mu_barrel"),-1)
 
-    hEiso=fData.Get("pt_isomu_endcaps").Clone()
-    hEiso.Add(fWZ.Get("pt_isomu_endcaps"),-1)
-    hEiso.Add(fZZ.Get("pt_isomu_endcaps"),-1)
+    ###hBiso2=fData.Get("pt_iso2mu_barrel").Clone()
+    ###hBiso2.Add(fWZ.Get("pt_iso2mu_barrel"),-1)
+    ###hBiso2.Add(fZZ.Get("pt_iso2mu_barrel"),-1)
 
-    hEiso.Divide(hEanti)
+    ###hBiso2.Divide(hBanti2)
 
-    c=ROOT.TCanvas("canvas","",0,0,800,600)
-    c.cd()
-    hEiso.SetMaximum(1.5)
-    hEiso.SetMinimum(0.0)
-    hEiso.Draw("e")
-    hEiso.SetTitle("")
-    hEiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
-    hEiso.GetYaxis().SetTitle("f_{#mu}")
-    total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 5, 100 )
-    total2.SetLineColor( ROOT.kMagenta )
-    hEiso.Fit(total2,'R')
-    total2.SetName("fit_mufr_endcaps")
-    lumi=add_lumi(options.year)
-    lumi.Draw("same")
-    cms=add_CMS()
-    cms.Draw("same")
-    sup=add_Supplementary()
-    sup.Draw("same")
-    c.SaveAs("mufr_endcaps_"+options.year+".png")
+    ####hBiso2.SetMaximum(1.5)
+    ###hBiso2.SetMinimum(0.0)
+    ###hBiso2.Draw("e")
+    ###hBiso2.SetTitle("")
+    ###hBiso2.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    ###hBiso2.GetYaxis().SetTitle("f_#mu")
+    ###total12 = ROOT.TF1( 'total12', 'pol0', 5, 40 )
+    ###total12.SetLineColor( ROOT.kMagenta )
+    ###hBiso2.Fit(total12,'R')
+    ###total12.SetName("fit_mufr2_barrel")
+    ###lumi.Draw("same")
+    ###cms.Draw("same")
+    ###sup.Draw("same")
+    ###c.SaveAs("mufr2_barrel_"+options.year+".png")
 
 
-    fout.cd()
-    hBiso.SetName("mufr_barrel")
-    hBiso.Write()
-    total1.Write()
 
-    hEiso.SetName("mufr_endcaps")
-    hEiso.Write()
-    total2.Write()
+
+
+
+
+    ###hEanti=fData.Get("pt_antimu_endcaps").Clone()
+    ###hEanti.Add(fWZ.Get("pt_antimu_endcaps"),-1)
+    ###hEanti.Add(fZZ.Get("pt_antimu_endcaps"),-1)
+
+    ###hEiso=fData.Get("pt_isomu_endcaps").Clone()
+    ###hEiso.Add(fWZ.Get("pt_isomu_endcaps"),-1)
+    ###hEiso.Add(fZZ.Get("pt_isomu_endcaps"),-1)
+
+    ###hEiso.Divide(hEanti)
+
+    ###c=ROOT.TCanvas("canvas","",0,0,800,600)
+    ###c.cd()
+    ###hEiso.SetMaximum(1.5)
+    ###hEiso.SetMinimum(0.0)
+    ###hEiso.Draw("e")
+    ###hEiso.SetTitle("")
+    ###hEiso.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    ###hEiso.GetYaxis().SetTitle("f_{#mu}")
+    ####total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 5, 100 )
+    ###total2 = ROOT.TF1( 'total2', 'expo(0)+pol0(2)', 5, 100 )
+    ###total2.SetLineColor( ROOT.kMagenta )
+    ###hEiso.Fit(total2,'R')
+    ###total2.SetName("fit_mufr_endcaps")
+    ###lumi=add_lumi(options.year)
+    ###lumi.Draw("same")
+    ###cms=add_CMS()
+    ###cms.Draw("same")
+    ###sup=add_Supplementary()
+    ###sup.Draw("same")
+    ###c.SaveAs("mufr_endcaps_"+options.year+".png")
+
+
+
+
+    ###hEanti2=fData.Get("pt_anti2mu_endcaps").Clone()
+    ###hEanti2.Add(fWZ.Get("pt_anti2mu_endcaps"),-1)
+    ###hEanti2.Add(fZZ.Get("pt_anti2mu_endcaps"),-1)
+
+    ###hEiso2=fData.Get("pt_iso2mu_endcaps").Clone()
+    ###hEiso2.Add(fWZ.Get("pt_iso2mu_endcaps"),-1)
+    ###hEiso2.Add(fZZ.Get("pt_iso2mu_endcaps"),-1)
+
+    ###hEiso2.Divide(hEanti2)
+
+    ####hEiso2.SetMaximum(1.5)
+    ###hEiso2.SetMinimum(0.0)
+    ###hEiso2.Draw("e")
+    ###hEiso2.SetTitle("")
+    ###hEiso2.GetXaxis().SetTitle("#mu p_{T} (GeV)")
+    ###hEiso2.GetYaxis().SetTitle("f_{#mu}")
+    ###total22 = ROOT.TF1( 'total22', 'pol0', 5, 50 )
+    ###total22.SetLineColor( ROOT.kMagenta )
+    ###hEiso2.Fit(total22,'R')
+    ###total22.SetName("fit_mufr2_endcaps")
+    ###lumi.Draw("same")
+    ###cms.Draw("same")
+    ###sup.Draw("same")
+    ###c.SaveAs("mufr2_endcaps_"+options.year+".png")
+
+
+
+
+
+    ###fout.cd()
+    ###hBiso.SetName("mufr_barrel")
+    ###hBiso.Write()
+    ###total1.Write()
+
+    ###hEiso.SetName("mufr_endcaps")
+    ###hEiso.Write()
+    ###total2.Write()
+
+    ###hBiso2.SetName("mufr2_barrel")
+    ###hBiso2.Write()
+    ###total12.Write()
+
+    ###hEiso2.SetName("mufr2_endcaps")
+    ###hEiso2.Write()
+    ###total22.Write()
+
 
     h1anti=fData.Get("h_ntracks_anti").Clone()
     h1anti.Sumw2()
@@ -185,7 +301,8 @@ if __name__ == "__main__":
     cms.Draw("same")
     sup=add_Supplementary()
     sup.Draw("same")
-    total = ROOT.TF1( 'total', 'pol5', 0, 100 )
+    #total = ROOT.TF1( 'total', 'pol5', 0, 100 )
+    total = ROOT.TF1( 'total', 'pol6', 0, 100 )
     total.SetLineColor( ROOT.kMagenta )
     h1iso.Fit(total,'R')
     total.SetName("fit_frnt")
@@ -217,7 +334,8 @@ if __name__ == "__main__":
     c1.Modified()
     c1.SaveAs("mufr_nt_"+options.year+".png")
 
-    names=["pt_antimu_endcaps","pt_isomu_endcaps","pt_antimu_barrel","pt_isomu_barrel"]
+    names=["pt_antimu_singlemutrg_endcaps","pt_isomu_singlemutrg_endcaps","pt_antimu_singlemutrg_barrel","pt_isomu_singlemutrg_barrel",
+           "pt_antimu_doublemutrg_endcaps","pt_isomu_doublemutrg_endcaps","pt_antimu_doublemutrg_barrel","pt_isomu_doublemutrg_barrel"]
     for k in range(0,len(names)):
        c=ROOT.TCanvas("canvas","",0,0,800,600)
        c.cd()
@@ -254,6 +372,6 @@ if __name__ == "__main__":
        sup=add_Supplementary()
        sup.Draw("same")
 
-       c.SaveAs("mufr_"+names[k]+"_"+options.year+".png")
+       c.SaveAs("mufr_mmm_"+names[k]+"_"+options.year+".png")
 
 

@@ -35,7 +35,9 @@
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 
 #include "FWCore/Common/interface/TriggerNames.h"
@@ -90,27 +92,38 @@ class FRmuAnlzr : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       EDGetTokenT<edm::Association<GenParticleCollection>> mcmapelectronToken_;
       EDGetTokenT<reco::CandidateView> candelectronToken_;
       EDGetTokenT<pat::PackedCandidateCollection> pfToken_;
+      EDGetTokenT<edm::View<pat::PackedGenParticle>> packedgenToken_;
       EDGetTokenT<GenParticleCollection> prunedGenToken_;
       EDGetTokenT<TriggerResults> triggerToken_;
       EDGetTokenT<TriggerResults> metfilterToken_;
       EDGetTokenT<BeamSpot> bsToken_;
       EDGetTokenT<GenEventInfoProduct> generatorLabel_;
       EDGetTokenT<std::vector<PileupSummaryInfo>> pileupSummaryToken_;
+      EDGetTokenT<std::vector<pat::MET>> metToken_;
 
       TTree *tr;
       TH1F *h_step;
 
       bool MC_;
+      int year_;
       int n_mu, n_el, mu_charge[5], el_charge[5], ntrk_prompt, ntrk_nonprompt;
-      float mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5];
-      int mu_pfiso[5], mu_trigger[5], mu_genPart[5];
+      int ntrk_HS, ntrk_PU, ntrk_all, hlt_isomu24, hlt_mu17_mu8, hlt_isotkmu24, hlt_isomu27,
+      ntrk0p02_HS, ntrk0p02_PU, ntrk0p02_all,
+      ntrk0p03_HS, ntrk0p03_PU, ntrk0p03_all,
+      ntrk0p04_HS, ntrk0p04_PU, ntrk0p04_all;
+
+      float mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5], mu_sip2d[5];
+      int mu_pfiso[5], mu_trigger[5], mu_genPart[5], mu_triggeremu[5];
       float el_pt[5], el_eta[5], el_phi[5], el_dxy[5], el_dz[5];
-      int el_conversionveto[5], el_chargeconsistent[5], el_CBIDLoose[5],el_CBIDMedium[5], el_CBIDTight[5],el_CBIDVeto[5],el_MVAIDisoWP80[5],el_MVAIDisoWP90[5],el_MVAIDisoWPHZZ[5],el_MVAIDisoWPLoose[5],el_MVAIDnoisoWP80[5],el_MVAIDnoisoWP90[5],el_MVAIDnoisoWPLoose[5], el_genPart[5];
+      int el_conversionveto[5], el_chargeconsistent[5], el_CBIDLoose[5],el_CBIDMedium[5], el_CBIDTight[5],el_CBIDVeto[5],el_MVAIDisoWP80[5],el_MVAIDisoWP90[5],el_MVAIDisoWPHZZ[5],el_MVAIDisoWPLoose[5],el_MVAIDnoisoWP80[5],el_MVAIDnoisoWP90[5],el_MVAIDnoisoWPLoose[5], el_genPart[5], el_losthits[5];
       float genWeight=1.0;
 
       float Pileup_trueNumInteractions = -1;
       int Pileup_puNumInteractions = -1;
-      
+     
+      int hlt_mu23_el12, hlt_mu23_el12_DZ, hlt_mu8_el23, hlt_mu8_el23_DZ, hlt_ele32; 
+
+      float PuppiMET_pt, PuppiMET_phi;
 };
 
 //
@@ -134,20 +147,23 @@ FRmuAnlzr::FRmuAnlzr(const edm::ParameterSet& iConfig)
     mcmapelectronToken_(consumes<edm::Association<GenParticleCollection>>(iConfig.getParameter<edm::InputTag>("mcmapelectrons"))),
     candelectronToken_(consumes<reco::CandidateView>(iConfig.getParameter<edm::InputTag>("electrons"))),
     pfToken_(consumes<pat::PackedCandidateCollection>(iConfig.getParameter<edm::InputTag>("pfCands"))),
+    packedgenToken_(consumes<edm::View<pat::PackedGenParticle>>(iConfig.getParameter<edm::InputTag>("packedgens"))),
     prunedGenToken_(consumes<GenParticleCollection>(iConfig.getParameter<InputTag>("pruned"))),
     triggerToken_(consumes<TriggerResults>(iConfig.getParameter<InputTag>("triggerBitsH"))),
     metfilterToken_(consumes<TriggerResults>(iConfig.getParameter<InputTag>("metfilterBitsH"))),
     bsToken_(consumes<BeamSpot>(iConfig.getParameter<InputTag>("beamSpotHandle"))),
     generatorLabel_(consumes<GenEventInfoProduct>(iConfig.getParameter<InputTag>("generatorLabel"))),
-    pileupSummaryToken_(consumes<std::vector<PileupSummaryInfo>>(iConfig.getParameter<InputTag>("pileupInfo")))
+    pileupSummaryToken_(consumes<std::vector<PileupSummaryInfo>>(iConfig.getParameter<InputTag>("pileupInfo"))),
+    metToken_(consumes<std::vector<pat::MET>>(iConfig.getParameter<InputTag>("mets")))
 {
    //now do what ever initialization is needed
 
    MC_ = iConfig.getParameter<bool>("MC");
+   year_ = iConfig.getParameter<int>("year");
 
    Service<TFileService> fs;
    h_step = fs->make<TH1F>("step", "", 10, 0, 10);
-   tr = fs->make<TTree>("data", "");
+   tr = fs->make<TTree>("tree_fr", "");
    tr->Branch("n_mu", &n_mu, "n_mu/I");
    tr->Branch("mu_pt", &mu_pt, "mu_pt[n_mu]/F");
    tr->Branch("mu_eta", &mu_eta, "mu_eta[n_mu]/F");
@@ -155,7 +171,9 @@ FRmuAnlzr::FRmuAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("mu_charge", &mu_charge, "mu_charge[n_mu]/I");
    tr->Branch("mu_genPart", &mu_genPart, "mu_genPart[n_mu]/I");
    tr->Branch("mu_pfiso", &mu_pfiso, "mu_pfiso[n_mu]/I");
+   tr->Branch("mu_sip2d", &mu_sip2d, "mu_sip2d[n_mu]/F");
    tr->Branch("mu_trigger", &mu_trigger, "mu_trigger[n_mu]/I");
+   tr->Branch("mu_triggeremu", &mu_triggeremu, "mu_triggeremu[n_mu]/I");
    tr->Branch("mu_rawiso", &mu_rawiso, "mu_rawiso[n_mu]/F");
    tr->Branch("mu_dxy", &mu_dxy, "mu_dxy[n_mu]/F");
    tr->Branch("mu_dz", &mu_dz, "mu_dz[n_mu]/F");
@@ -181,16 +199,40 @@ FRmuAnlzr::FRmuAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("el_MVAIDnoisoWP90", &el_MVAIDnoisoWP90, "el_MVAIDnoisoWP90[n_el]/I");
    tr->Branch("el_MVAIDnoisoWPLoose", &el_MVAIDnoisoWPLoose, "el_MVAIDnoisoWPLoose[n_el]/I");
    tr->Branch("el_chargeconsistent", &el_chargeconsistent, "el_chargeconsistent[n_el]/I");
+   tr->Branch("el_losthits", el_losthits, "el_losthits[n_el]/I");
 
    tr->Branch("ntrk_prompt", &ntrk_prompt, "ntrk_prompt/I");
    tr->Branch("ntrk_nonprompt", &ntrk_nonprompt, "ntrk_nonprompt/I");
+   tr->Branch("ntrk_HS", &ntrk_HS, "ntrk_HS/I");
+   tr->Branch("ntrk_all", &ntrk_all, "ntrk_all/I");
+   tr->Branch("ntrk_PU", &ntrk_PU, "ntrk_PU/I");
+   tr->Branch("ntrk0p02_HS", &ntrk0p02_HS, "ntrk0p02_HS/I");
+   tr->Branch("ntrk0p02_all", &ntrk0p02_all, "ntrk0p02_all/I");
+   tr->Branch("ntrk0p02_PU", &ntrk0p02_PU, "ntrk0p02_PU/I");
+   tr->Branch("ntrk0p03_HS", &ntrk0p03_HS, "ntrk0p03_HS/I");
+   tr->Branch("ntrk0p03_all", &ntrk0p03_all, "ntrk0p03_all/I");
+   tr->Branch("ntrk0p03_PU", &ntrk0p03_PU, "ntrk0p03_PU/I");
+   tr->Branch("ntrk0p04_HS", &ntrk0p04_HS, "ntrk0p04_HS/I");
+   tr->Branch("ntrk0p04_all", &ntrk0p04_all, "ntrk0p04_all/I");
+   tr->Branch("ntrk0p04_PU", &ntrk0p04_PU, "ntrk0p04_PU/I");
    tr->Branch("genWeight", &genWeight, "genWeight/F");
 
    tr->Branch("Pileup_trueNumInteractions", &Pileup_trueNumInteractions, "Pileup_trueNumInteractions/F");
    tr->Branch("Pileup_puNumInteractions", &Pileup_puNumInteractions, "Pileup_puNumInteractions/I");
 
-}
+   tr->Branch("hlt_mu23_el12", &hlt_mu23_el12, "hlt_mu23_el12/I");
+   tr->Branch("hlt_mu23_el12_DZ", &hlt_mu23_el12_DZ, "hlt_mu23_el12_DZ/I");
+   tr->Branch("hlt_mu8_el23", &hlt_mu8_el23, "hlt_mu8_el23/I");
+   tr->Branch("hlt_mu8_el23_DZ", &hlt_mu8_el23_DZ, "hlt_mu8_el23_DZ/I");
+   tr->Branch("hlt_isomu24", &hlt_isomu24, "hlt_isomu24/I");
+   tr->Branch("hlt_isotkmu24", &hlt_isotkmu24, "hlt_isotkmu24/I");
+   tr->Branch("hlt_isomu27", &hlt_isomu27, "hlt_isomu27/I");
+   tr->Branch("hlt_ele32", &hlt_ele32, "hlt_ele32/I");
 
+   tr->Branch("PuppiMET_pt", &PuppiMET_pt, "PuppiMET_pt/F");
+   tr->Branch("PuppiMET_phi", &PuppiMET_phi, "PuppiMET_phi/F");
+
+}
 
 FRmuAnlzr::~FRmuAnlzr()
 {
@@ -284,7 +326,17 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     // HLT
     //////////
 
-    int hlt_el32 = 0;
+    hlt_ele32 = 0;
+
+    hlt_mu23_el12 = 0;
+    hlt_mu23_el12_DZ = 0;
+    hlt_mu8_el23 = 0;
+    hlt_mu8_el23_DZ = 0;
+
+    hlt_isomu24 = 0;
+    hlt_isotkmu24 = 0;
+    hlt_isomu27 = 0;
+
 
     Handle<TriggerResults> triggerBitsH;
     iEvent.getByToken(triggerToken_, triggerBitsH);
@@ -294,11 +346,33 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     {
       string hltName = triggerNames.triggerName(i_hlt);
 
-      if(!(hltName.find("HLT_Ele32_WPTight_Gsf_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_el32 = 1;
+      if(!(hltName.find("HLT_Ele32_WPTight_Gsf_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_ele32 = 1;
       }
+
+      if(!(hltName.find("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu23_el12_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu23_el12 = 1;
+      }
+      if(!(hltName.find("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu8_el23_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu8_el23 = 1;
+      }
+
+
+      if(!(hltName.find("HLT_IsoMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu24 = 1;
+      }
+      if(!(hltName.find("HLT_IsoTkMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isotkmu24 = 1;
+      }
+      if(!(hltName.find("HLT_IsoMu27_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu27 = 1;
+      }
+
     }
 
-    if(hlt_el32<0.5) return;
+    if (year_==2016 and !hlt_ele32 and !hlt_isomu24 and !hlt_isotkmu24 and !hlt_mu23_el12_DZ and !hlt_mu23_el12 and !hlt_mu8_el23_DZ and !hlt_mu8_el23) return; //FIXME correct single ele trigger
+    if (year_==2017 and !hlt_ele32 and !hlt_isomu27 and !hlt_mu23_el12_DZ and !hlt_mu8_el23_DZ) return; //FIXME correct single ele trigger
+    if (year_==2018 and !hlt_ele32 and !hlt_isomu24 and !hlt_mu23_el12_DZ and !hlt_mu8_el23_DZ) return;
+
+    //if(hlt_el32<0.5) return;
     h_step->Fill(2);
 
 
@@ -372,8 +446,16 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         mu_phi[n_mu] = mu.phi();
         mu_charge[n_mu] = mu.charge();
         mu_trigger[n_mu] = mu.triggered("HLT_IsoMu24_v*");
+	if (year_==2016) mu_trigger[n_mu] = (mu.triggered("HLT_IsoMu24_v*") or mu.triggered("HLT_IsoTkMu24_v*"));
+        if (year_==2017) mu_trigger[n_mu] = mu.triggered("HLT_IsoMu27_v*");
+
+	if (year_==2016) mu_triggeremu[n_mu] = ((mu.triggered("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*") or mu.triggered("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v*") or mu.triggered("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*") or mu.triggered("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v*")));
+	if (year_==2017) mu_triggeremu[n_mu] = (mu.triggered("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*") or mu.triggered("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*"));
+        if (year_==2018) mu_triggeremu[n_mu] = (mu.triggered("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*") or mu.triggered("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v*"));
+
         mu_pfiso[n_mu] = mu.passed(reco::Muon::PFIsoTight);
         mu_rawiso[n_mu] = (mu.pfIsolationR04().sumChargedHadronPt + TMath::Max(mu.pfIsolationR04().sumNeutralHadronEt + mu.pfIsolationR04().sumPhotonEt - mu.pfIsolationR04().sumPUPt/2,float(0.0)))/mu.pt();
+        mu_sip2d[n_mu]=fabs(mu.dB(pat::Muon::BS2D)/mu.edB(pat::Muon::BS2D));
 
         n_mu ++;
         if(n_mu==5) break;
@@ -399,7 +481,7 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
     for (const pat::Electron &el : *electrons) {
 	i_el++;
-	if (el.pt()<10) continue;
+	if (el.pt()<10) continue; 
 	if (!el.electronID("mvaEleID-Fall17-iso-V2-wpLoose")) continue;
 
         if (MC_){
@@ -424,6 +506,7 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         el_charge[n_el] = el.charge();
 	el_conversionveto[n_el]=el.passConversionVeto();
 	el_chargeconsistent[n_el]=el.isGsfCtfScPixChargeConsistent();
+        el_losthits[n_el]=el.gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS);
 	el_CBIDLoose[n_el]=el.electronID("cutBasedElectronID-Fall17-94X-V2-loose");
         el_CBIDMedium[n_el]=el.electronID("cutBasedElectronID-Fall17-94X-V2-medium");
         el_CBIDTight[n_el]=el.electronID("cutBasedElectronID-Fall17-94X-V2-tight");
@@ -441,7 +524,10 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     }
     if(n_el<2) return;
 
+    float ee_dz=(el_dz[0]+el_dz[1])/2;
     int is_Z=false;
+    TLorentzVector my_el1;
+    TLorentzVector my_el2;
 
     for (int i=0; i<n_el; ++i){
        TLorentzVector el1;
@@ -449,10 +535,22 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        for (int j=i+1; j<n_el; ++j){
           TLorentzVector el2;
           el2.SetPtEtaPhiM(el_pt[j],el_eta[j],el_phi[j],0.105);
-          if ((el_pt[j]>32 or el_pt[i]>32) and fabs((el1+el2).M()-90)<15 and el_charge[i]*el_charge[j]<0 and el_MVAIDisoWP80[i] and el_MVAIDisoWP80[j]) is_Z=true;
+          if (el_pt[j]>20 and el_pt[i]>20 and (el_pt[j]>24 or el_pt[i]>24) and fabs((el1+el2).M()-91.1876)<15 and el_charge[i]*el_charge[j]<0 and el_MVAIDisoWP80[i] and el_MVAIDisoWP80[j]){ 
+	     is_Z=true;
+             ee_dz=(el_dz[i]+el_dz[j])/2;
+             my_el1=el1;
+             my_el2=el2;
+	  }
        }
     }
     if (!is_Z) return;
+
+
+    Handle<std::vector<pat::MET>> mets;
+    iEvent.getByToken(metToken_, mets);
+    const pat::MET &met = mets->front();
+    PuppiMET_pt=met.pt();
+    PuppiMET_phi=met.phi();
 
     //////////
     // tracks
@@ -461,15 +559,79 @@ FRmuAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     Handle<pat::PackedCandidateCollection> pfs;
     iEvent.getByToken(pfToken_, pfs);
 
+    Handle<edm::View<pat::PackedGenParticle>> gp_handle;
+    iEvent.getByToken( packedgenToken_, gp_handle );
+
     ntrk_prompt = 0;
     ntrk_nonprompt = 0;
+    ntrk_all = 0;
+    ntrk_HS = 0;
+    ntrk_PU = 0;
+    ntrk0p02_all = 0;
+    ntrk0p02_HS = 0;
+    ntrk0p02_PU = 0;
+    ntrk0p03_all = 0;
+    ntrk0p03_HS = 0;
+    ntrk0p03_PU = 0;
+    ntrk0p04_all = 0;
+    ntrk0p04_HS = 0;
+    ntrk0p04_PU = 0;
+
 
     for(size_t i = 0; i < pfs->size(); i++) {
+
+       const pat::PackedCandidate & pf = (*pfs)[i];
+
+       bool isMatchedToGen=false;
+       bool isMatchedToEE=false;
+
+       if (pf.charge()!=0){
+          TLorentzVector recotk; recotk.SetPtEtaPhiM(pf.pt(),pf.eta(),pf.phi(),0);
+          if (gp_handle.isValid()){
+             for (unsigned int j = 0; j<gp_handle->size(); ++j){
+                pat::PackedGenParticle const& pk = gp_handle->at(j);
+                TLorentzVector genp;
+                genp.SetPtEtaPhiM(pk.pt(),pk.eta(),pk.phi(),0);
+                if (recotk.DeltaR(genp)<0.1 and (fabs(recotk.Pt()-genp.Pt())/recotk.Pt())<0.5){
+                   isMatchedToGen=true;
+                }
+             }
+          }
+          if (fabs(pf.pt()-my_el1.Pt())/my_el1.Pt()<0.1 and my_el1.DeltaR(recotk)<0.002) {isMatchedToEE=true;}
+          if (fabs(pf.pt()-my_el2.Pt())/my_el2.Pt()<0.1 and my_el2.DeltaR(recotk)<0.002) {isMatchedToEE=true;}
+
+          if(!pf.hasTrackDetails()) continue;
+          if (!isMatchedToEE and fabs(pf.dz(PV.position())-ee_dz)<0.05 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if(fabs(pf.dz(PV.position())-ee_dz)<0.05 && fabs(pf.dxy(PV.position()))<0.02) ntrk_prompt++;
+             if(fabs(pf.dz(PV.position())-ee_dz)<0.05 && fabs(pf.dxy(PV.position()))>0.02) ntrk_nonprompt++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.05) ntrk_all++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.05 and isMatchedToGen) ntrk_HS++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.05 and !isMatchedToGen) ntrk_PU++;
+          }
+          if (!isMatchedToEE and fabs(pf.dz(PV.position())-ee_dz)<0.02 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.02) ntrk0p02_all++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.02 and isMatchedToGen) ntrk0p02_HS++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.02 and !isMatchedToGen) ntrk0p02_PU++;
+          }
+          if (!isMatchedToEE and fabs(pf.dz(PV.position())-ee_dz)<0.03 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.03) ntrk0p03_all++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.03 and isMatchedToGen) ntrk0p03_HS++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.03 and !isMatchedToGen) ntrk0p03_PU++;
+          }
+          if (!isMatchedToEE and fabs(pf.dz(PV.position())-ee_dz)<0.04 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.04) ntrk0p04_all++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.04 and isMatchedToGen) ntrk0p04_HS++;
+             if (fabs(pf.dz(PV.position())-ee_dz)<0.04 and !isMatchedToGen) ntrk0p04_PU++;
+          }
+       }
+    }
+
+    /*for(size_t i = 0; i < pfs->size(); i++) {
        const pat::PackedCandidate & pf = (*pfs)[i];
        if(!pf.hasTrackDetails()) continue;
        if(fabs(pf.dz(PV.position()))<0.05 && fabs(pf.dxy(PV.position()))<0.02) ntrk_prompt++;
        if(fabs(pf.dz(PV.position()))<0.05 && fabs(pf.dxy(PV.position()))>0.02) ntrk_nonprompt++;
-    }
+    }*/
 
     tr->Fill();
 

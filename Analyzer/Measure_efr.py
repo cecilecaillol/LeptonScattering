@@ -76,80 +76,123 @@ if __name__ == "__main__":
     fZZ=ROOT.TFile("output_efr_"+options.year+"/ZZ4L.root","r")
     fWZ=ROOT.TFile("output_efr_"+options.year+"/WZ3LNu.root","r")
     fData=ROOT.TFile("output_efr_"+options.year+"/Data.root","r")
-    fout=ROOT.TFile("output_efr_"+options.year+"/efr.root","recreate")
+    fout=ROOT.TFile("output_efr_"+options.year+"/efr_emm.root","recreate")
 
-    hBanti=fData.Get("pt_antiel_barrel")
-    hBanti.Add(fWZ.Get("pt_antiel_barrel"),-1)
-    hBanti.Add(fZZ.Get("pt_antiel_barrel"),-1)
-
-    hBiso=fData.Get("pt_isoel_barrel")
-    hBiso.Add(fWZ.Get("pt_isoel_barrel"),-1)
-    hBiso.Add(fZZ.Get("pt_isoel_barrel"),-1)
-
-    hBiso.Divide(hBanti)
-
-    c=ROOT.TCanvas("canvas","",0,0,800,600)
-    c.cd()
-    hBiso.SetMinimum(0.0)
-    hBiso.SetMaximum(0.5)
-    hBiso.GetXaxis().SetTitle("e p_{T} (GeV)")
-    hBiso.GetYaxis().SetTitle("f_{e}")
-    hBiso.SetTitle("")
-    hBiso.Draw("e0")
-    total1 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 100 )
-    total1.SetLineColor( ROOT.kMagenta )
-    hBiso.Fit(total1,'R')
-    total1.SetName("fit_efr_barrel")
     lumi=add_lumi(options.year)
-    lumi.Draw("same")
     cms=add_CMS()
-    cms.Draw("same")
     sup=add_Supplementary()
-    sup.Draw("same")
-    c.SaveAs("efr_barrel_"+options.year+".png")
+
+    denom=["pt_antiel_emutrg_barrel","pt_antiel_emutrg_endcaps","pt_antiel_singlemutrg_barrel","pt_antiel_singlemutrg_endcaps"]
+    num=["pt_isoel_emutrg_barrel","pt_isoel_emutrg_endcaps","pt_isoel_singlemutrg_barrel","pt_isoel_singlemutrg_endcaps"]
+
+    for k in range(0,len(num)):
+
+       hanti=fData.Get(denom[k]).Clone()
+       hanti.Add(fWZ.Get(denom[k]),-1)
+       hanti.Add(fZZ.Get(denom[k]),-1)
+
+       hiso=fData.Get(num[k]).Clone()
+       hiso.Add(fWZ.Get(num[k]),-1)
+       hiso.Add(fZZ.Get(num[k]),-1)
+
+       hiso.Divide(hanti)
+
+       c=ROOT.TCanvas("canvas","",0,0,800,600)
+       c.cd()
+       hiso.SetMaximum(0.5)
+       hiso.SetMinimum(0.0)
+       hiso.Draw("e")
+       hiso.SetTitle("")
+       hiso.GetXaxis().SetTitle("e p_{T} (GeV)")
+       hiso.GetYaxis().SetTitle("f_e")
+       total1 = ROOT.TF1( 'total1', 'expo(0)+pol0(2)', 7, 60 )
+       total1.SetLineColor( ROOT.kMagenta )
+       hiso.Fit(total1,'R')
+       total1.SetName("fit_"+num[k])
+       lumi.Draw("same")
+       cms.Draw("same")
+       sup.Draw("same")
+       c.SaveAs("efr_"+num[k]+".png")
+
+
+       fout.cd()
+       hiso.SetName("efr_"+num[k])
+       hiso.Write()
+       total1.Write()
+
+
+    #####hBanti=fData.Get("pt_antiel_barrel")
+    #####hBanti.Add(fWZ.Get("pt_antiel_barrel"),-1)
+    #####hBanti.Add(fZZ.Get("pt_antiel_barrel"),-1)
+
+    #####hBiso=fData.Get("pt_isoel_barrel")
+    #####hBiso.Add(fWZ.Get("pt_isoel_barrel"),-1)
+    #####hBiso.Add(fZZ.Get("pt_isoel_barrel"),-1)
+
+    #####hBiso.Divide(hBanti)
+
+    #####c=ROOT.TCanvas("canvas","",0,0,800,600)
+    #####c.cd()
+    #####hBiso.SetMinimum(0.0)
+    #####hBiso.SetMaximum(0.5)
+    #####hBiso.GetXaxis().SetTitle("e p_{T} (GeV)")
+    #####hBiso.GetYaxis().SetTitle("f_{e}")
+    #####hBiso.SetTitle("")
+    #####hBiso.Draw("e0")
+    #####total1 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 7, 100 )
+    #####total1.SetLineColor( ROOT.kMagenta )
+    #####hBiso.Fit(total1,'R')
+    #####total1.SetName("fit_efr_barrel")
+    #####lumi=add_lumi(options.year)
+    #####lumi.Draw("same")
+    #####cms=add_CMS()
+    #####cms.Draw("same")
+    #####sup=add_Supplementary()
+    #####sup.Draw("same")
+    #####c.SaveAs("efr_barrel_"+options.year+".png")
 
 
 
 
-    hEanti=fData.Get("pt_antiel_endcaps")
-    hEanti.Add(fWZ.Get("pt_antiel_endcaps"),-1)
-    hEanti.Add(fZZ.Get("pt_antiel_endcaps"),-1)
+    #####hEanti=fData.Get("pt_antiel_endcaps")
+    #####hEanti.Add(fWZ.Get("pt_antiel_endcaps"),-1)
+    #####hEanti.Add(fZZ.Get("pt_antiel_endcaps"),-1)
 
-    hEiso=fData.Get("pt_isoel_endcaps")
-    hEiso.Add(fWZ.Get("pt_isoel_endcaps"),-1)
-    hEiso.Add(fZZ.Get("pt_isoel_endcaps"),-1)
+    #####hEiso=fData.Get("pt_isoel_endcaps")
+    #####hEiso.Add(fWZ.Get("pt_isoel_endcaps"),-1)
+    #####hEiso.Add(fZZ.Get("pt_isoel_endcaps"),-1)
 
-    hEiso.Divide(hEanti)
+    #####hEiso.Divide(hEanti)
 
-    c=ROOT.TCanvas("canvas","",0,0,800,600)
-    c.cd()
-    hEiso.GetXaxis().SetTitle("e p_{T} (GeV)")
-    hEiso.GetYaxis().SetTitle("f_{e}")
-    hEiso.SetMinimum(0.0)
-    hEiso.SetMaximum(0.5)
-    hEiso.SetTitle("")
-    hEiso.Draw("e0")
-    total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 10, 100 )
-    total2.SetLineColor( ROOT.kMagenta )
-    hEiso.Fit(total2,'R')
-    total2.SetName("fit_efr_endcaps")
-    lumi=add_lumi(options.year)
-    lumi.Draw("same")
-    cms=add_CMS()
-    cms.Draw("same")
-    sup=add_Supplementary()
-    sup.Draw("same")
-    c.SaveAs("efr_endcaps_"+options.year+".png")
+    #####c=ROOT.TCanvas("canvas","",0,0,800,600)
+    #####c.cd()
+    #####hEiso.GetXaxis().SetTitle("e p_{T} (GeV)")
+    #####hEiso.GetYaxis().SetTitle("f_{e}")
+    #####hEiso.SetMinimum(0.0)
+    #####hEiso.SetMaximum(0.5)
+    #####hEiso.SetTitle("")
+    #####hEiso.Draw("e0")
+    #####total2 = ROOT.TF1( 'total2', 'expo(0)+pol1(2)', 7, 100 )
+    #####total2.SetLineColor( ROOT.kMagenta )
+    #####hEiso.Fit(total2,'R')
+    #####total2.SetName("fit_efr_endcaps")
+    #####lumi=add_lumi(options.year)
+    #####lumi.Draw("same")
+    #####cms=add_CMS()
+    #####cms.Draw("same")
+    #####sup=add_Supplementary()
+    #####sup.Draw("same")
+    #####c.SaveAs("efr_endcaps_"+options.year+".png")
 
 
-    fout.cd()
-    hBiso.SetName("efr_barrel")
-    hBiso.Write()
-    total1.Write()
+    #####fout.cd()
+    #####hBiso.SetName("efr_barrel")
+    #####hBiso.Write()
+    #####total1.Write()
 
-    hEiso.SetName("efr_endcaps")
-    hEiso.Write()
-    total2.Write()
+    #####hEiso.SetName("efr_endcaps")
+    #####hEiso.Write()
+    #####total2.Write()
 
 
 
@@ -232,7 +275,8 @@ if __name__ == "__main__":
 
 
 
-    names=["pt_antiel_endcaps","pt_isoel_endcaps","pt_antiel_barrel","pt_isoel_barrel"]
+    names=["pt_antiel_singlemutrg_endcaps","pt_isoel_singlemutrg_endcaps","pt_antiel_singlemutrg_barrel","pt_isoel_singlemutrg_barrel",
+           "pt_antiel_emutrg_endcaps","pt_isoel_emutrg_endcaps","pt_antiel_emutrg_barrel","pt_isoel_emutrg_barrel"]
     for k in range(0,len(names)):
        data=fData.Get(names[k])
        wz=fWZ.Get(names[k])

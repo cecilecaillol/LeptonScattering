@@ -106,11 +106,16 @@ class FRAnlzr : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 
       bool MC_;
       int year_;
-      int n_mu, n_el, mu_charge[5], el_charge[5], ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, hlt_isomu24, hlt_mu17_mu8, hlt_isotkmu24, hlt_isomu27;
-      float mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5];
+      int n_mu, n_el, mu_charge[5], el_charge[5], ntrk_prompt, ntrk_nonprompt, ntrk_HS, ntrk_PU, ntrk_all, hlt_isomu24, hlt_mu17_mu8, hlt_isotkmu24, hlt_isomu27,
+
+      hlt_mu23_el12, hlt_mu23_el12_DZ, hlt_mu8_el23, hlt_mu8_el23_DZ, hlt_mu17_mu8_DZ, hlt_mu17_tkmu8, hlt_mu17_tkmu8_DZ, hlt_tkmu17_tkmu8, hlt_tkmu17_tkmu8_DZ, hlt_mu17_mu8_DZ_mass3p8, hlt_mu17_mu8_DZ_mass8,
+      ntrk0p02_HS, ntrk0p02_PU, ntrk0p02_all,
+      ntrk0p03_HS, ntrk0p03_PU, ntrk0p03_all,
+      ntrk0p04_HS, ntrk0p04_PU, ntrk0p04_all;
+      float mu_pt[5], mu_eta[5], mu_phi[5], mu_dxy[5], mu_dz[5], mu_rawiso[5], mu_sip2d[5];
       int mu_pfiso[5], mu_trigger[5], mu_trigger_doublemu[5], mu_genPart[5];
-      float el_pt[5], el_eta[5], el_phi[5], el_dxy[5], el_dz[5];
-      int el_conversionveto[5], el_chargeconsistent[5], el_CBIDLoose[5],el_CBIDMedium[5], el_CBIDTight[5],el_CBIDVeto[5],el_MVAIDisoWP80[5],el_MVAIDisoWP90[5],el_MVAIDisoWPHZZ[5],el_MVAIDisoWPLoose[5],el_MVAIDnoisoWP80[5],el_MVAIDnoisoWP90[5],el_MVAIDnoisoWPLoose[5], el_genPart[5];
+      float el_pt[5], el_eta[5], el_sceta[5], el_phi[5], el_dxy[5], el_dz[5], el_sip2d[5], el_eInvMinusPInv[5], el_sieie[5], el_hoe[5];
+      int el_conversionveto[5], el_chargeconsistent[5], el_CBIDLoose[5],el_CBIDMedium[5], el_CBIDTight[5],el_CBIDVeto[5],el_MVAIDisoWP80[5],el_MVAIDisoWP90[5],el_MVAIDisoWPHZZ[5],el_MVAIDisoWPLoose[5],el_MVAIDnoisoWP80[5],el_MVAIDnoisoWP90[5],el_MVAIDnoisoWPLoose[5], el_genPart[5], el_losthits[5];
       float genWeight=1.0;
       float PuppiMET_pt, PuppiMET_phi;
 
@@ -169,12 +174,14 @@ FRAnlzr::FRAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("mu_rawiso", &mu_rawiso, "mu_rawiso[n_mu]/F");
    tr->Branch("mu_dxy", &mu_dxy, "mu_dxy[n_mu]/F");
    tr->Branch("mu_dz", &mu_dz, "mu_dz[n_mu]/F");
+   tr->Branch("mu_sip2d", mu_sip2d, "mu_sip2d[n_mu]/F");
 
    tr->Branch("n_el", &n_el, "n_el/I");
    tr->Branch("el_pt", &el_pt, "el_pt[n_el]/F");
    tr->Branch("el_dxy", &el_dxy, "el_dxy[n_el]/F");
    tr->Branch("el_dz", &el_dz, "el_dz[n_el]/F");
    tr->Branch("el_eta", &el_eta, "el_eta[n_el]/F");
+   tr->Branch("el_sceta", &el_sceta, "el_sceta[n_el]/F");
    tr->Branch("el_phi", &el_phi, "el_phi[n_el]/F");
    tr->Branch("el_charge", &el_charge, "el_charge[n_el]/I");
    tr->Branch("el_genPart", &el_genPart, "el_genPart[n_el]/I");
@@ -191,12 +198,26 @@ FRAnlzr::FRAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("el_MVAIDnoisoWP90", &el_MVAIDnoisoWP90, "el_MVAIDnoisoWP90[n_el]/I");
    tr->Branch("el_MVAIDnoisoWPLoose", &el_MVAIDnoisoWPLoose, "el_MVAIDnoisoWPLoose[n_el]/I");
    tr->Branch("el_chargeconsistent", &el_chargeconsistent, "el_chargeconsistent[n_el]/I");
+   tr->Branch("el_eInvMinusPInv", el_eInvMinusPInv, "el_eInvMinusPInv[n_el]/F");
+   tr->Branch("el_hoe", el_hoe, "el_hoe[n_el]/F");
+   tr->Branch("el_sieie", el_sieie, "el_sieie[n_el]/F");
+   tr->Branch("el_losthits", el_losthits, "el_losthits[n_el]/I");
+   tr->Branch("el_sip2d", el_sip2d, "el_sip2d[n_el]/F");
 
    tr->Branch("ntrk_prompt", &ntrk_prompt, "ntrk_prompt/I");
    tr->Branch("ntrk_nonprompt", &ntrk_nonprompt, "ntrk_nonprompt/I");
    tr->Branch("ntrk_HS", &ntrk_HS, "ntrk_HS/I");
    tr->Branch("ntrk_all", &ntrk_all, "ntrk_all/I");
    tr->Branch("ntrk_PU", &ntrk_PU, "ntrk_PU/I");
+   tr->Branch("ntrk0p02_HS", &ntrk0p02_HS, "ntrk0p02_HS/I");
+   tr->Branch("ntrk0p02_all", &ntrk0p02_all, "ntrk0p02_all/I");
+   tr->Branch("ntrk0p02_PU", &ntrk0p02_PU, "ntrk0p02_PU/I");
+   tr->Branch("ntrk0p03_HS", &ntrk0p03_HS, "ntrk0p03_HS/I");
+   tr->Branch("ntrk0p03_all", &ntrk0p03_all, "ntrk0p03_all/I");
+   tr->Branch("ntrk0p03_PU", &ntrk0p03_PU, "ntrk0p03_PU/I");
+   tr->Branch("ntrk0p04_HS", &ntrk0p04_HS, "ntrk0p04_HS/I");
+   tr->Branch("ntrk0p04_all", &ntrk0p04_all, "ntrk0p04_all/I");
+   tr->Branch("ntrk0p04_PU", &ntrk0p04_PU, "ntrk0p04_PU/I");
    tr->Branch("genWeight", &genWeight, "genWeight/F");
 
    tr->Branch("PuppiMET_pt", &PuppiMET_pt, "PuppiMET_pt/F");
@@ -205,10 +226,21 @@ FRAnlzr::FRAnlzr(const edm::ParameterSet& iConfig)
    tr->Branch("Pileup_trueNumInteractions", &Pileup_trueNumInteractions, "Pileup_trueNumInteractions/F");
    tr->Branch("Pileup_puNumInteractions", &Pileup_puNumInteractions, "Pileup_puNumInteractions/I");
 
+   tr->Branch("hlt_mu23_el12", &hlt_mu23_el12, "hlt_mu23_el12/I");
+   tr->Branch("hlt_mu23_el12_DZ", &hlt_mu23_el12_DZ, "hlt_mu23_el12_DZ/I");
+   tr->Branch("hlt_mu8_el23", &hlt_mu8_el23, "hlt_mu8_el23/I");
+   tr->Branch("hlt_mu8_el23_DZ", &hlt_mu8_el23_DZ, "hlt_mu8_el23_DZ/I");
    tr->Branch("hlt_isomu24", &hlt_isomu24, "hlt_isomu24/I");
    tr->Branch("hlt_isotkmu24", &hlt_isotkmu24, "hlt_isotkmu24/I");
    tr->Branch("hlt_isomu27", &hlt_isomu27, "hlt_isomu27/I");
    tr->Branch("hlt_mu17_mu8", &hlt_mu17_mu8, "hlt_mu17_mu8/I");
+   tr->Branch("hlt_mu17_mu8_DZ", &hlt_mu17_mu8_DZ, "hlt_mu17_mu8_DZ/I");
+   tr->Branch("hlt_mu17_tkmu8", &hlt_mu17_tkmu8, "hlt_mu17_tkmu8/I");
+   tr->Branch("hlt_mu17_tkmu8_DZ", &hlt_mu17_tkmu8_DZ, "hlt_mu17_tkmu8_DZ/I");
+   tr->Branch("hlt_tkmu17_tkmu8", &hlt_tkmu17_tkmu8, "hlt_tkmu17_tkmu8/I");
+   tr->Branch("hlt_tkmu17_tkmu8_DZ", &hlt_tkmu17_tkmu8_DZ, "hlt_tkmu17_tkmu8_DZ/I");
+   tr->Branch("hlt_mu17_mu8_DZ_mass3p8", &hlt_mu17_mu8_DZ_mass3p8, "hlt_mu17_mu8_DZ_mass3p8/I");
+   tr->Branch("hlt_mu17_mu8_DZ_mass8", &hlt_mu17_mu8_DZ_mass8, "hlt_mu17_mu8_DZ_mass8/I");
 
 }
 
@@ -310,10 +342,23 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     // HLT
     //////////
 
+    hlt_mu23_el12 = 0;
+    hlt_mu23_el12_DZ = 0;
+    hlt_mu8_el23 = 0;
+    hlt_mu8_el23_DZ = 0;
+
     hlt_isomu24 = 0;
     hlt_isotkmu24 = 0;
     hlt_isomu27 = 0;
+
     hlt_mu17_mu8 = 0;
+    hlt_mu17_mu8_DZ = 0;
+    hlt_mu17_tkmu8 = 0;
+    hlt_mu17_tkmu8_DZ = 0;
+    hlt_tkmu17_tkmu8 = 0;
+    hlt_tkmu17_tkmu8_DZ = 0;
+    hlt_mu17_mu8_DZ_mass3p8 = 0;
+    hlt_mu17_mu8_DZ_mass8 = 0;
 
     Handle<TriggerResults> triggerBitsH;
     iEvent.getByToken(triggerToken_, triggerBitsH);
@@ -323,15 +368,45 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     {
       string hltName = triggerNames.triggerName(i_hlt);
 
-      if(!(hltName.find("HLT_IsoMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu24 = 1;}
-      if(!(hltName.find("HLT_IsoTkMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isotkmu24 = 1;}
-      if(!(hltName.find("HLT_IsoMu27_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu27 = 1;}
-      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8 = 1;}
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8_DZ_mass3p8 = 1;
+      }
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8_DZ_mass8 = 1;
+      }
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_mu8 = 1;
+      }
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_tkmu8_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu17_tkmu8 = 1;
+      }
+      if(!(hltName.find("HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_tkmu17_tkmu8_DZ = 1;
+      }
+      if(!(hltName.find("HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_tkmu17_tkmu8 = 1;
+      }
+
+      if(!(hltName.find("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu23_el12_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu23_el12 = 1;
+      }
+      if(!(hltName.find("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu8_el23_DZ = 1;
+      }
+      if(!(hltName.find("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_mu8_el23 = 1;
+      }
+
+
+      if(!(hltName.find("HLT_IsoMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu24 = 1;
+      }
+      if(!(hltName.find("HLT_IsoTkMu24_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isotkmu24 = 1;
+      }
+      if(!(hltName.find("HLT_IsoMu27_v") == string::npos)){      if( triggerBitsH->wasrun(i_hlt) && !triggerBitsH->error(i_hlt) && triggerBitsH->accept(i_hlt )) hlt_isomu27 = 1;
+      }
+
     }
 
-    if (year_==2018 and hlt_isomu24<0.5) return;
-    if (year_==2017 and hlt_isomu27<0.5) return;
-    if (year_==2016 and hlt_isotkmu24<0.5 and hlt_isomu24<0.5) return;
+    //if (year_==2018 and hlt_isomu24<0.5) return;
+    //if (year_==2017 and hlt_isomu27<0.5) return;
+    //if (year_==2016 and hlt_isotkmu24<0.5 and hlt_isomu24<0.5) return;
 
     h_step->Fill(2);
 
@@ -407,9 +482,15 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         mu_phi[n_mu] = mu.phi();
         mu_charge[n_mu] = mu.charge();
         mu_trigger[n_mu] = mu.triggered("HLT_IsoMu24_v*");
+        if (year_==2016) mu_trigger[n_mu] = (mu.triggered("HLT_IsoMu24_v*") or mu.triggered("HLT_IsoTkMu24_v*"));
+        if (year_==2017) mu_trigger[n_mu] = mu.triggered("HLT_IsoMu27_v*");
         mu_trigger_doublemu[n_mu] = mu.triggered("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v*");
+        if (year_==2016) mu_trigger_doublemu[n_mu] = (mu.triggered("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v*") or mu.triggered("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v*") or mu.triggered("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v*") or mu.triggered("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v*") or mu.triggered("HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v*") or mu.triggered("HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v*"));
+        if (year_==2016) mu_trigger_doublemu[n_mu] = (mu.triggered("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v*") or mu.triggered("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v*"));
+
         mu_pfiso[n_mu] = mu.passed(reco::Muon::PFIsoTight);
         mu_rawiso[n_mu] = (mu.pfIsolationR04().sumChargedHadronPt + TMath::Max(mu.pfIsolationR04().sumNeutralHadronEt + mu.pfIsolationR04().sumPhotonEt - mu.pfIsolationR04().sumPUPt/2,float(0.0)))/mu.pt();
+        mu_sip2d[n_mu]=fabs(mu.dB(pat::Muon::BS2D)/mu.edB(pat::Muon::BS2D));
 
         n_mu ++;
         if(n_mu==5) break;
@@ -428,7 +509,7 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
           TLorentzVector mu2;
           mu2.SetPtEtaPhiM(mu_pt[j],mu_eta[j],mu_phi[j],0.105);
 	  //if (fabs((mu1+mu2).M()-90)<15 and mu_charge[i]*mu_charge[j]<0 and mu_pfiso[i] and mu_pfiso[j] and (mu_trigger[i] or mu_trigger[j])){ 
-	  if (fabs((mu1+mu2).M()-91.1876)<15 and mu_charge[i]*mu_charge[j]<0 and mu_rawiso[i]<0.25 and mu_rawiso[j]<0.25){
+	  if (mu_pt[i]>20 and mu_pt[j]>20 and fabs((mu1+mu2).M()-91.1876)<15 and mu_charge[i]*mu_charge[j]<0 and mu_rawiso[i]<0.25 and mu_rawiso[j]<0.25){
 	     is_Z=true;
 	     mumu_dz=(mu_dz[i]+mu_dz[j])/2;
 	     my_mu1=mu1;
@@ -478,9 +559,11 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	el_dz[n_el]=el.gsfTrack()->dz(PV.position());
         el_pt[n_el] = el.pt();
         el_eta[n_el] = el.eta();
+        el_sceta[n_el] = el.superCluster()->eta();
         el_phi[n_el] = el.phi();
         el_charge[n_el] = el.charge();
 	el_conversionveto[n_el]=el.passConversionVeto();
+        el_losthits[n_el]=el.gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS);
 	el_chargeconsistent[n_el]=el.isGsfCtfScPixChargeConsistent();
 	el_CBIDLoose[n_el]=el.electronID("cutBasedElectronID-Fall17-94X-V2-loose");
         el_CBIDMedium[n_el]=el.electronID("cutBasedElectronID-Fall17-94X-V2-medium");
@@ -493,6 +576,10 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         el_MVAIDnoisoWP80[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wp80");
         el_MVAIDnoisoWP90[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wp90");
         el_MVAIDnoisoWPLoose[n_el]=el.electronID("mvaEleID-Fall17-noIso-V2-wpLoose");
+        el_sip2d[n_el]=fabs(el.dB(pat::Electron::BS2D)/el.edB(pat::Electron::BS2D));
+        el_sieie[n_el]=el.full5x5_sigmaIetaIeta();
+        el_eInvMinusPInv[n_el] = (1-el.eSuperClusterOverP())/el.ecalEnergy();
+        el_hoe[n_el] = el.hadronicOverEm();
 
         n_el ++;
         if(n_el==5) break;
@@ -515,6 +602,15 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     ntrk_all = 0;
     ntrk_HS = 0;
     ntrk_PU = 0;
+    ntrk0p02_all = 0;
+    ntrk0p02_HS = 0;
+    ntrk0p02_PU = 0;
+    ntrk0p03_all = 0;
+    ntrk0p03_HS = 0;
+    ntrk0p03_PU = 0;
+    ntrk0p04_all = 0;
+    ntrk0p04_HS = 0;
+    ntrk0p04_PU = 0;
 
     for(size_t i = 0; i < pfs->size(); i++) {
 
@@ -545,6 +641,21 @@ FRAnlzr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
              if (fabs(pf.dz(PV.position())-mumu_dz)<0.05) ntrk_all++;
              if (fabs(pf.dz(PV.position())-mumu_dz)<0.05 and isMatchedToGen) ntrk_HS++;
              if (fabs(pf.dz(PV.position())-mumu_dz)<0.05 and !isMatchedToGen) ntrk_PU++;
+          }
+          if (!isMatchedToMM and fabs(pf.dz(PV.position())-mumu_dz)<0.02 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.02) ntrk0p02_all++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.02 and isMatchedToGen) ntrk0p02_HS++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.02 and !isMatchedToGen) ntrk0p02_PU++;
+          }
+          if (!isMatchedToMM and fabs(pf.dz(PV.position())-mumu_dz)<0.03 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.03) ntrk0p03_all++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.03 and isMatchedToGen) ntrk0p03_HS++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.03 and !isMatchedToGen) ntrk0p03_PU++;
+          }
+          if (!isMatchedToMM and fabs(pf.dz(PV.position())-mumu_dz)<0.04 and pf.pt()>0.5 and fabs(pf.eta())<2.5){
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.04) ntrk0p04_all++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.04 and isMatchedToGen) ntrk0p04_HS++;
+             if (fabs(pf.dz(PV.position())-mumu_dz)<0.04 and !isMatchedToGen) ntrk0p04_PU++;
           }
        }
     }

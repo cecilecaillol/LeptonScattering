@@ -31,7 +31,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-    int is_control=1;
+    int is_control=0;
 
     std::string year = *(argv + 1);
     std::string input = *(argv + 2);
@@ -136,11 +136,20 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("ntrk_signal", &ntrk_signal);
     arbre->SetBranchAddress("ntrk_all", &ntrk_all);
     arbre->SetBranchAddress("ntrk_PU", &ntrk_PU);
+    arbre->SetBranchAddress("ntrk0p02_HS", &ntrk0p02_HS);
+    arbre->SetBranchAddress("ntrk0p02_signal", &ntrk0p02_signal);
+    arbre->SetBranchAddress("ntrk0p02_all", &ntrk0p02_all);
+    arbre->SetBranchAddress("ntrk0p02_PU", &ntrk0p02_PU);
+    arbre->SetBranchAddress("ntrk0p03_HS", &ntrk0p03_HS);
+    arbre->SetBranchAddress("ntrk0p03_signal", &ntrk0p03_signal);
+    arbre->SetBranchAddress("ntrk0p03_all", &ntrk0p03_all);
+    arbre->SetBranchAddress("ntrk0p03_PU", &ntrk0p03_PU);
     arbre->SetBranchAddress("pv_dz", &pv_dz);
 
     arbre->SetBranchAddress("el_conversionveto", &el_conversionveto);
     arbre->SetBranchAddress("el_losthits", &el_losthits);
     arbre->SetBranchAddress("mu_trigger23", &mu_trigger23);
+    arbre->SetBranchAddress("mu_sip2d", &mu_sip2d);
     arbre->SetBranchAddress("mu_trigger8", &mu_trigger8);
     arbre->SetBranchAddress("mu_frompv", &mu_frompv);
     arbre->SetBranchAddress("mu_charge", &mu_charge);
@@ -254,9 +263,11 @@ int main(int argc, char** argv) {
    std::vector<TH1F*> h8R_anti2;
 
    // Control 0
-   /*float bins0[] = {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100};
-   float bins1[] = {2,4,6,8,10,12,14,16,18,20,25,30,35,40,45,50,55,60,65,70,75,80};
-   float bins2[] = {2,4,6,8,10,12,14,16,18,20,25,30,35,40,45,50,55,60,65,70,75,80};
+   float bins0[] = {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100};
+   float bins1[] = {2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,35,40,45,50,55,60,65,70,75,80};
+   float bins2[] = {2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,35,40,45,50,55,60,65,70,75,80};
+   //float bins1[] = {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80};
+   //float bins2[] = {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80};
    float bins3[] = {-2.5,-2.3,-2.1,-1.9,-1.7,-1.5,-1.3,-1.1,-0.9,-0.7,-0.5,-0.3,-0.1,0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5,1.7,1.9,2.1,2.3,2.5};
    float bins4[] = {-2.5,-2.3,-2.1,-1.9,-1.7,-1.5,-1.3,-1.1,-0.9,-0.7,-0.5,-0.3,-0.1,0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5,1.7,1.9,2.1,2.3,2.5};
    float bins5[] = {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0};
@@ -264,18 +275,18 @@ int main(int argc, char** argv) {
    //float bins7[] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200};
    //float bins8[] = {0,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1.0};
    float bins7[] = {2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,85,90,95,100,105,110,115,120};
-   float bins8[] = {2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,85,90,95,100,105,110,115,120};*/
+   float bins8[] = {2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,85,90,95,100,105,110,115,120};
 
    // Control 1
-   float bins0[] = {0,0.1,0.4,0.7,1.0};
+   /*float bins0[] = {0,0.1,0.4,0.7,1.0};
    float bins1[] = {0,0.1,0.4,0.7,1.0};
-   float bins2[] = {70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100};//{1,3,5,7,9,11};
-   float bins3[] = {70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100};//{1,3,5,7,9,11};
+   float bins2[] = {1,3,5,7,9,11};
+   float bins3[] = {1,3,5,7,9,11};
    float bins4[] = {0,0.1,0.4,0.7,1.0};
    float bins5[] = {0,0.1,0.4,0.7,1.0};
-   float bins6[] = {70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100};//{1,4,7,10};
-   float bins7[] = {70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100};//{1,4,7,10};
-   float bins8[] = {0,0.1,0.4,0.7,1.0};
+   float bins6[] = {1,3,5,7,9,11};//{1,4,7,10};
+   float bins7[] = {1,3,5,7,9,11};//{1,4,7,10};
+   float bins8[] = {0,0.1,0.4,0.7,1.0};*/
 
    
    int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
@@ -587,17 +598,30 @@ int main(int argc, char** argv) {
    }
 
 
-   TFile *f_mufr=new TFile("output_mufr_2018/mufr.root","read");
-   TFile *f_efr=new TFile("output_efr_2018/efr.root","read");
+   TFile *f_mufr=new TFile("output_mufr_eem_2018/mufr_eem.root","read");
+   TFile *f_efr=new TFile("output_efr_2018/efr_emm.root","read");
    TH1F* h_mufrB = (TH1F*) f_mufr->Get("mufr_barrel");
    TH1F* h_mufrE = (TH1F*) f_mufr->Get("mufr_endcaps");
-   TF1* fit_mufrB = (TF1*) f_mufr->Get("fit_mufr_barrel");
-   TF1* fit_mufrE = (TF1*) f_mufr->Get("fit_mufr_endcaps");
+   //TF1* fit_mufrB = (TF1*) f_mufr->Get("fit_mufr_barrel");
+   //TF1* fit_mufrE = (TF1*) f_mufr->Get("fit_mufr_endcaps");
+   TF1* fit_mufrB = (TF1*) f_mufr->Get("fit_pt_isomu_emutrg_barrel");
+   TF1* fit_mufrE = (TF1*) f_mufr->Get("fit_pt_isomu_emutrg_endcaps");
+   TF1* fit_mufrB_notrg = (TF1*) f_mufr->Get("fit_pt_isomu_singleeltrg_barrel");
+   TF1* fit_mufrE_notrg = (TF1*) f_mufr->Get("fit_pt_isomu_singleeltrg_endcaps");
+   TF1* fit_mufrB_emutrg = (TF1*) f_mufr->Get("fit_pt_isomu_emutrg_barrel");
+   TF1* fit_mufrE_emutrg = (TF1*) f_mufr->Get("fit_pt_isomu_emutrg_endcaps");
    TF1* fit_mufrnt = (TF1*) f_mufr->Get("fit_frnt");
    TH1F* h_efrB = (TH1F*) f_efr->Get("efr_barrel");
    TH1F* h_efrE = (TH1F*) f_efr->Get("efr_endcaps");
-   TF1* fit_efrB = (TF1*) f_efr->Get("fit_efr_barrel");
-   TF1* fit_efrE = (TF1*) f_efr->Get("fit_efr_endcaps");
+   //TF1* fit_efrB = (TF1*) f_efr->Get("fit_efr_barrel");
+   //TF1* fit_efrE = (TF1*) f_efr->Get("fit_efr_endcaps");
+   TF1* fit_efrB = (TF1*) f_efr->Get("fit_pt_isoel_singlemutrg_barrel");
+   TF1* fit_efrE = (TF1*) f_efr->Get("fit_pt_isoel_singlemutrg_endcaps");
+   TF1* fit_efrB_notrg = (TF1*) f_efr->Get("fit_pt_isoel_singlemutrg_barrel");
+   TF1* fit_efrE_notrg = (TF1*) f_efr->Get("fit_pt_isoel_singlemutrg_endcaps");
+   TF1* fit_efrB_emutrg = (TF1*) f_efr->Get("fit_pt_isoel_emutrg_barrel");
+   TF1* fit_efrE_emutrg = (TF1*) f_efr->Get("fit_pt_isoel_emutrg_endcaps");
+
    TF1* fit_efrnt = (TF1*) f_efr->Get("fit_frnt");
    if (year=="2017"){
       TFile *f_mufr=new TFile("output_mufr_2017/mufr.root","read");
@@ -701,47 +725,20 @@ int main(int argc, char** argv) {
 	if (fabs(my_mu.Eta())>2.4) continue;
         if (fabs(my_ele.Eta())>1.4442 and fabs(my_ele.Eta())<1.5660) continue;
         if (fabs(my_ele.Eta())>2.5) continue;
-	//if (my_mu.DeltaR(my_ele)<1.0) continue;
-	if (my_mu.DeltaR(my_ele)<0.5) continue; //FIXME was 1.0
-	if (fabs(mu_dz[0]-el_dz[0])>0.1) continue;
-	if (mu_dxy[0]>0.05 or el_dxy[0]>0.05) continue;
-	if (my_ele.DeltaR(my_mu)<0.3) continue;
+	if (my_mu.DeltaR(my_ele)<0.5) continue;
+	//if (fabs(mu_dz[0]-el_dz[0])>0.1) continue;
+        if (fabs(mu_dz[0]-el_dz[0])>0.03) continue;
+	if (mu_sip2d[0]>4 or el_dxy[0]>0.05) continue;
 
 	pv_dz=0.0;//FIXME
         float simple_ditau_z=0.5*(2*pv_dz+el_dz[0]+mu_dz[0]);
 
-	// Trigger block
-	/*bool is_mu8ele23=false;
-	bool is_mu23ele12=false;
- 	bool is_isomu24=false;
-	is_mu8ele23=(hlt_mu8_el23 and my_ele.Pt()>23 and my_mu.Pt()>8 and mu_trigger8[0]);
-	is_mu23ele12=(hlt_mu23_el12 and my_ele.Pt()>12 and my_mu.Pt()>23 and mu_trigger23[0]);
-	is_isomu24=(hlt_isomu24 and my_mu.Pt()>24);
-	if (!is_mu8ele23 and !is_mu23ele12 and !is_isomu24) continue;
-	if (sample=="MuonEG" and is_isomu24) continue;
-        if (sample=="SingleMuon" and !is_isomu24) continue;*/
-
-	/*if (!hlt_mu8_el23 and !hlt_mu23_el12 and !hlt_isomu24 and !hlt_mu17_mu8 and !hlt_mu12_el23) continue;
-	if (sample=="MuonEG" and (hlt_isomu24 or hlt_mu17_mu8)) continue;
-        if (sample=="DoubleMuon" and ((hlt_isomu24 or hlt_mu8_el23 or hlt_mu23_el12) or !hlt_mu17_mu8)) continue;
-        if (sample=="SingleMuon" and !hlt_isomu24) continue;*/
-
-        /*bool is_mu8ele23=false;
-        bool is_mu23ele12=false;
-        bool is_isomu24=false;
-	bool is_mu17_mu8=false;
-        is_mu8ele23=(hlt_mu8_el23 and my_ele.Pt()>24 and my_mu.Pt()>9 and my_mu.Pt()<26);
-        is_mu23ele12=(hlt_mu23_el12 and my_ele.Pt()>13 and my_mu.Pt()>23 and my_mu.Pt()<26);
-        is_isomu24=(hlt_isomu24 and my_mu.Pt()>26);
-	is_mu17_mu8 = (hlt_mu17_mu8 and my_mu.Pt()>18 and extramu.Pt()>9 and my_mu.Pt()<26);*/
-
 	// Block ID/iso/charge
 	if (!el_MVAIDisoWPLoose[0]) continue;
-	if (mu_rawiso[0]>0.4) continue;
-	bool is_ele_isolated=el_MVAIDisoWP80[0];
+	if (mu_rawiso[0]>1.0) continue;
+	bool is_ele_isolated=(el_losthits[0]==0 and el_MVAIDisoWP80[0]);
 	bool is_mu_isolated=(mu_pfiso[0]>0.50);
 	if (!el_conversionveto[0]) continue;//FIXME
-	//if (el_losthits[0]>0) continue;
 	bool is_mu_real=false;
 	bool is_el_real=false;
         if (name!="data_obs"){
@@ -759,10 +756,10 @@ int main(int argc, char** argv) {
 	int index_extra=-1;
         for (int ii=1; ii<n_mu; ++ii){
            TLorentzVector tmp_mu; tmp_mu.SetPtEtaPhiM(mu_pt[ii], mu_eta[ii], mu_phi[ii], 0.105);
-           if (mu_rawiso[ii]<0.4 and mu_charge[ii]*charge_mu<0 and my_mu.DeltaR(tmp_mu)>0.3 and my_ele.DeltaR(tmp_mu)>0.3 and fabs((my_mu+tmp_mu).M()-91.15)<15 and fabs(mu_dz[0]-mu_dz[ii])<0.1 and mu_dxy[ii]<0.05 and mu_pt[ii]>5 and fabs(mu_eta[ii])<2.4){ 
+           if (mu_rawiso[ii]<1.0 and mu_charge[ii]*charge_mu<0 and my_mu.DeltaR(tmp_mu)>0.3 and my_ele.DeltaR(tmp_mu)>0.3 and fabs((my_mu+tmp_mu).M()-91.15)<15 and fabs(mu_dz[0]-mu_dz[ii])<0.03 and mu_sip2d[ii]<4 and mu_pt[ii]>5 and fabs(mu_eta[ii])<2.4){ 
 		has_ZLL=true;
            }
-           if (mu_rawiso[ii]<0.4 and mu_charge[ii]*charge_mu<0 and my_mu.DeltaR(tmp_mu)>0.3 and my_ele.DeltaR(tmp_mu)>0.3 and fabs(mu_dz[0]-mu_dz[ii])<0.1 and mu_dxy[ii]<0.05 and mu_pt[ii]>5 and fabs(mu_eta[ii])<2.4){
+           if (mu_rawiso[ii]<1.0 and mu_charge[ii]*charge_mu<0 and my_mu.DeltaR(tmp_mu)>0.3 and my_ele.DeltaR(tmp_mu)>0.3 and fabs(mu_dz[0]-mu_dz[ii])<0.03 and mu_sip2d[ii]<4 and mu_pt[ii]>5 and fabs(mu_eta[ii])<2.4){
 	      extramu=tmp_mu;
 	      is_extra_isolated = (mu_pfiso[ii]>0.50);
 	      index_extra=ii;
@@ -772,24 +769,22 @@ int main(int argc, char** argv) {
         }
         for (int ii=1; ii<n_el; ++ii){
            TLorentzVector tmp_el; tmp_el.SetPtEtaPhiM(el_pt[ii], el_eta[ii], el_phi[ii], 0.0);
-           //if (el_losthits[ii]==0 and el_conversionveto[ii] and el_MVAIDisoWPLoose[ii] and el_charge[ii]*charge_el<0 and my_ele.DeltaR(tmp_el)>0.3 and my_mu.DeltaR(tmp_el)>0.3 and fabs((my_ele+tmp_el).M()-91.15)<15 and fabs(el_dz[0]-el_dz[ii])<0.1 and el_dxy[ii]<0.05 and el_pt[ii]>10 and fabs(el_eta[ii])<2.5){ 
-           if (el_conversionveto[ii] and el_MVAIDisoWPLoose[ii] and el_charge[ii]*charge_el<0 and my_ele.DeltaR(tmp_el)>0.3 and my_mu.DeltaR(tmp_el)>0.3 and fabs((my_ele+tmp_el).M()-91.15)<15 and fabs(el_dz[0]-el_dz[ii])<0.1 and el_dxy[ii]<0.05 and el_pt[ii]>10 and fabs(el_eta[ii])<2.5){
+           if (el_conversionveto[ii] and el_MVAIDisoWPLoose[ii] and el_charge[ii]*charge_el<0 and my_ele.DeltaR(tmp_el)>0.3 and my_mu.DeltaR(tmp_el)>0.3 and fabs((my_ele+tmp_el).M()-91.15)<15 and fabs(el_dz[0]-el_dz[ii])<0.03 and el_dxy[ii]<0.05 and el_pt[ii]>7 and fabs(el_eta[ii])<2.5){
 	      has_ZLL=true;
 	   }
-           if (el_conversionveto[ii] and el_MVAIDisoWPLoose[ii] and el_charge[ii]*charge_el<0 and my_ele.DeltaR(tmp_el)>0.3 and my_mu.DeltaR(tmp_el)>0.3 and fabs(el_dz[0]-el_dz[ii])<0.1 and el_dxy[ii]<0.05 and el_pt[ii]>10 and fabs(el_eta[ii])<2.5){
+           if (el_conversionveto[ii] and el_MVAIDisoWPLoose[ii] and el_charge[ii]*charge_el<0 and my_ele.DeltaR(tmp_el)>0.3 and my_mu.DeltaR(tmp_el)>0.3 and fabs(el_dz[0]-el_dz[ii])<0.03 and el_dxy[ii]<0.05 and el_pt[ii]>7 and fabs(el_eta[ii])<2.5){
               extrael=tmp_el;
-              is_extra_isolated = (el_MVAIDisoWP80[ii]>0.50);
+              is_extra_isolated = (el_MVAIDisoWP80[ii]>0.50 and el_losthits[ii]==0);
 	      index_extra=ii;
               n_extrael++;
 	      if (name!="data_obs" and (el_genPart[ii]==1 or el_genPart[ii]==22 or el_genPart[ii]==15)) is_extra_real=true;
 	   }
         }
 
-	//if (n_el>1) cout<<n_extrael<<" "<<el_pt[1]<<" "<<extrael.Pt()<<" "<<is_extra_isolated<<" "<<is_extra_real<<endl;
-
 	if (has_ZLL) continue; //FIXME
 	//if (!has_ZLL) continue;
 	if (n_extrael+n_extramu!=1) continue;
+	//if (n_extrael!=1 or n_extramu!=1) continue; //ZZ CR
         if (name!="data_obs" and !is_extra_real) continue;
 
         if (n_extrael==1 and !is_ele_isolated) continue;
@@ -803,13 +798,13 @@ int main(int argc, char** argv) {
         bool is_isomu=false;
         bool is_mu17_mu8=false;
 	if (year=="2018"){
-           is_mu8ele23=(hlt_mu8_el23 and my_ele.Pt()>24 and my_mu.Pt()>9 and my_mu.Pt()<26);
-           is_mu23ele12=(hlt_mu23_el12 and my_ele.Pt()>13 and my_mu.Pt()>23 and my_mu.Pt()<26);
+           is_mu8ele23=(hlt_mu8_el23_DZ and my_ele.Pt()>24 and my_mu.Pt()>9 and my_mu.Pt()<26);
+           is_mu23ele12=(hlt_mu23_el12_DZ and my_ele.Pt()>13 and my_mu.Pt()>23 and my_mu.Pt()<26);
            is_isomu=(hlt_isomu24 and my_mu.Pt()>26);
-           is_mu17_mu8 = (hlt_mu17_mu8 and my_mu.Pt()>18 and extramu.Pt()>9 and my_mu.Pt()<26);
+           is_mu17_mu8 = (hlt_mu17_mu8_DZ_mass3p8 and my_mu.Pt()>18 and extramu.Pt()>9 and my_mu.Pt()<26);
 	   if (n_extramu==1){
-              is_mu8ele23=(hlt_mu8_el23 and my_ele.Pt()>24 and my_mu.Pt()>9 and my_mu.Pt()<26 and (my_mu.Pt()<18 or extramu.Pt()<9));
-              is_mu23ele12=(hlt_mu23_el12 and my_ele.Pt()>13 and my_mu.Pt()>23 and my_mu.Pt()<26 and extramu.Pt()<9);
+              is_mu8ele23=(hlt_mu8_el23_DZ and my_ele.Pt()>24 and my_mu.Pt()>9 and my_mu.Pt()<26 and (my_mu.Pt()<18 or extramu.Pt()<9));
+              is_mu23ele12=(hlt_mu23_el12_DZ and my_ele.Pt()>13 and my_mu.Pt()>23 and my_mu.Pt()<26 and extramu.Pt()<9);
 	   }
 	}
 
@@ -931,7 +926,6 @@ int main(int argc, char** argv) {
         }
 
 	if (sample=="DY" and is_DYtauetaumu) continue;
-        //if ((sample=="DY" or sample=="DYemu") and is_ZG) continue;
 
 	// Ntracks corrections
         float zpos=simple_ditau_z;
@@ -958,30 +952,18 @@ int main(int argc, char** argv) {
 	   my_ele=save_ele;
 	   float weight2=1.0;
 
-
-	   /*if (my_ele.Pt()<18) continue; //FIXME
-           if (my_mu.Pt()<18) continue; //FIXME
-           if (my_ele.Pt()<24 and my_mu.Pt()<24) continue;
-	   //if (is_mu8ele23 and !is_mu23ele12 and my_ele.Pt()<24) continue;
-           //if (!is_mu8ele23 and is_mu23ele12 and my_mu.Pt()<24) continue;
-           is_mu8ele23=(hlt_mu8_el23 and my_ele.Pt()>24 and my_mu.Pt()>10 and mu_trigger8[0]);
-           is_mu23ele12=(hlt_mu23_el12 and my_ele.Pt()>13 and my_mu.Pt()>24 and mu_trigger23[0]);
-           is_isomu24=(hlt_isomu24 and my_mu.Pt()>26);
-           if (!is_mu8ele23 and !is_mu23ele12 and !is_isomu24) continue;*/
-	   if (my_ele.Pt()<18 or my_mu.Pt()<18) continue;
+	   if (my_ele.Pt()<15 or my_mu.Pt()<15) continue; // was 18
 
 	   float mvis=(my_ele+my_mu).M();
-	   //if (mvis<40) continue; //FIXME
 	   if (mvis<4) continue;
 	   if (n_extramu==1 and ((my_mu+extramu).M()<4 or (my_ele+extramu).M()<4)) continue;
            if (n_extrael==1 and ((my_mu+extrael).M()<4 or (my_ele+extrael).M()<4)) continue;
+	   //if (n_extramu==0 or extramu.Pt()<25) continue;//FIXME
 
-           if (n_extrael==1 and (my_mu+my_ele+extrael).M()>70 and (my_mu+my_ele+extrael).M()<95) continue;
+           if (n_extrael==1 and (my_mu+my_ele+extrael).M()>85 and (my_mu+my_ele+extrael).M()<95) continue; //FIXME consider relaxing
            if (n_extramu==1 and (my_mu+my_ele+extramu).M()>75 and (my_mu+my_ele+extramu).M()<100) continue;
-	   //if (n_extrael==1 and ((my_mu+my_ele+extrael).M()<70 or (my_mu+my_ele+extrael).M()>95)) continue; //FIXME invert Zg
+	   //if (n_extrael==1 and ((my_mu+my_ele+extrael).M()<85 or (my_mu+my_ele+extrael).M()>95)) continue; //FIXME invert Zg
            //if (n_extramu==1 and ((my_mu+my_ele+extramu).M()<75 or (my_mu+my_ele+extramu).M()>100)) continue;
-
-//if (n_extramu==1) cout<<el_pt[0]<<" "<<el_eta[0]<<" "<<el_genPart[0]<<" "<<mu_genPart[0]<<" "<<mu_genPart[index_extra]<<" "<<mu_charge[0]*mu_charge[index_extra]<<endl;
 
            float mt = TMass_F(my_mu.Pt(), my_mu.Px(), my_mu.Py(), PuppiMET_pt, PuppiMET_phi);
            float ptbalance = (my_ele+my_mu).Pt()/(my_ele.Pt()+my_mu.Pt());
@@ -989,9 +971,13 @@ int main(int argc, char** argv) {
            if (n_extrael==1) ptbalance = (my_ele+my_mu+extrael).Pt()/(my_ele.Pt()+my_mu.Pt()+extrael.Pt());
 
            int ntrk=ntrk_prompt+ntrk_nonprompt;
-	   if (name=="llscat") ntrk=ntrk_PU+ntrk_signal;
-	   else if (name=="data_obs") ntrk=ntrk_all;
-	   else ntrk=ntrk_HS+ntrk_PU;
+	   //if (name=="llscat") ntrk=ntrk_PU+ntrk_signal;
+	   //else if (name=="data_obs") ntrk=ntrk_all;
+	   //else ntrk=ntrk_HS+ntrk_PU;
+
+           if (name=="llscat") ntrk=ntrk0p03_PU+ntrk0p03_signal;
+           else if (name=="data_obs") ntrk=ntrk0p03_all;
+           else ntrk=ntrk0p03_HS+ntrk0p03_PU;
 
            bool is_cat0=(mvis>0);
            bool is_cat1=(mvis>0);
@@ -1046,27 +1032,16 @@ int main(int argc, char** argv) {
 
               var0=ptbalance;
               var1=ptbalance;
-              var2=(my_ele+my_mu+extramu).M();//ntrk;
-              var3=(my_ele+my_mu+extramu).M();//ntrk;
+              var2=ntrk;
+              var3=ntrk;
               var4=ptbalance;
               var5=ptbalance;
-              var6=(my_ele+my_mu+extrael).M();//ntrk;
-              var7=(my_ele+my_mu+extrael).M();//ntrk;
+              var6=ntrk;
+              var7=ntrk;
               var8=ptbalance;
            }
 
 	   if (is_extra_isolated and ((n_extrael==1 and is_mu_isolated) or (n_extramu==1 and is_ele_isolated))){
-//if (n_extrael==1) cout<<"Extra el: "<<el_genPart[0]<<" "<<mu_genPart[0]<<endl;
-//if (n_extramu==1) cout<<"Extra mu: "<<el_genPart[0]<<" "<<mu_genPart[0]<<endl;
-/*cout<<"Electron: "<<el_pt[0]<<" "<<el_eta[0]<<" "<<el_phi[0]<<" "<<el_genPart[0]<<" "<<el_charge[0]<<endl;
-cout<<"Muon: "<<mu_pt[0]<<" "<<mu_eta[0]<<" "<<mu_phi[0]<<" "<<mu_genPart[0]<<" "<<mu_charge[0]<<endl;
-if (n_extrael==1) cout<<"Extra electron: "<<extrael.Pt()<<" "<<extrael.Eta()<<" "<<extrael.Phi()<<endl;
-if (n_extramu==1) cout<<"Extra muon: "<<extramu.Pt()<<" "<<extramu.Eta()<<" "<<extramu.Phi()<<endl;
-if (n_extrael==1) cout<<"3 lepton mass: "<<(my_ele+my_mu+extrael).M()<<" "<<(my_ele+extrael).M()<<endl;
-if (n_extramu==1) cout<<"3 lepton mass: "<<(my_ele+my_mu+extramu).M()<<" "<<(my_mu+extramu).M()<<endl;
-if (n_extrael==1) cout<<"DR: "<<my_ele.DeltaR(my_mu)<<" "<<my_ele.DeltaR(extrael)<<" "<<my_mu.DeltaR(extrael)<<endl;
-if (n_extramu==1) cout<<"DR: "<<my_ele.DeltaR(my_mu)<<" "<<my_ele.DeltaR(extramu)<<" "<<my_mu.DeltaR(extramu)<<endl;
-cout<<endl;*/
 if (n_extramu==1) h_m3mu->Fill((my_ele+my_mu+extramu).M(),weight*aweight*weight2);
 if (n_extrael==1) h_m3e->Fill((my_ele+my_mu+extrael).M(),weight*aweight*weight2);
 	     if (is_cat0) h0[k]->Fill(var0,weight*aweight*weight2);
@@ -1097,8 +1072,14 @@ if (n_extrael==1) h_m3e->Fill((my_ele+my_mu+extrael).M(),weight*aweight*weight2)
               float mupt=extramu.Pt();
               if (mupt<5) mupt=5;
               if (mupt>59) mupt=59;//FIXME
-	      if (fabs(extramu.Eta())<1.2) mufr=h_mufrB->GetBinContent(h_mufrB->GetXaxis()->FindBin(mupt));
-              else mufr=h_mufrE->GetBinContent(h_mufrE->GetXaxis()->FindBin(mupt));
+	      if (mupt<10){
+	         if (fabs(extramu.Eta())<1.2) mufr=fit_mufrB_notrg->Eval(mupt);
+                 else mufr=fit_mufrE_notrg->Eval(mupt);
+	      }
+	      else{
+                 if (fabs(extramu.Eta())<1.2) mufr=fit_mufrB_emutrg->Eval(mupt);
+                 else mufr=fit_mufrE_emutrg->Eval(mupt);
+              }
 	      mufr*=fit_mufrnt->Eval(ntracks);
 	   }
            float efr=0.0;
@@ -1106,8 +1087,8 @@ if (n_extrael==1) h_m3e->Fill((my_ele+my_mu+extrael).M(),weight*aweight*weight2)
 	      float ept=extrael.Pt();
               if (ept<10) ept=10;
               if (ept>59) ept=59;//FIXME
-              if (fabs(extrael.Eta())<1.5) efr=h_efrB->GetBinContent(h_efrB->GetXaxis()->FindBin(ept));
-              else efr=h_efrE->GetBinContent(h_efrE->GetXaxis()->FindBin(ept));
+              if (fabs(extrael.Eta())<1.5) efr=fit_efrB_notrg->Eval(ept);
+              else efr=fit_efrE_notrg->Eval(ept);
               efr*=fit_efrnt->Eval(ntracks);
 	   }
 	   float wfr=mufr;
@@ -1118,15 +1099,17 @@ if (n_extrael==1) h_m3e->Fill((my_ele+my_mu+extrael).M(),weight*aweight*weight2)
            float mupt2=my_mu.Pt();
            if (mupt2<5) mupt2=5;
            if (mupt2>59) mupt2=59;//FIXME
-           if (fabs(my_mu.Eta())<1.2) mufr2=h_mufrB->GetBinContent(h_mufrB->GetXaxis()->FindBin(mupt2));
-           else mufr2=h_mufrE->GetBinContent(h_mufrE->GetXaxis()->FindBin(mupt2));
+           //if (fabs(my_mu.Eta())<1.2) mufr2=h_mufrB->GetBinContent(h_mufrB->GetXaxis()->FindBin(mupt2));
+           //else mufr2=h_mufrE->GetBinContent(h_mufrE->GetXaxis()->FindBin(mupt2));
+	   if (fabs(my_mu.Eta())<1.2) mufr2=fit_mufrB_emutrg->Eval(mupt2);
+           else mufr2=fit_mufrE_emutrg->Eval(mupt2);
            mufr2*=fit_mufrnt->Eval(ntracks);
            float efr2=0.0;
            float ept2=my_ele.Pt();
            if (ept2<10) ept2=10;
            if (ept2>59) ept2=59;//FIXME
-           if (fabs(my_ele.Eta())<1.5) efr=h_efrB->GetBinContent(h_efrB->GetXaxis()->FindBin(ept2));
-           else efr2=h_efrE->GetBinContent(h_efrE->GetXaxis()->FindBin(ept2));
+           if (fabs(my_ele.Eta())<1.5) efr=fit_efrE_notrg->Eval(ept2);//FIXME
+           else efr2=fit_efrE_notrg->Eval(ept2);
            efr2*=fit_efrnt->Eval(ntracks);
            float wfr2=mufr2;
            if (n_extramu==1) wfr2=efr2;
@@ -1283,5 +1266,3 @@ if (n_extrael==1) h_m3e->Fill((my_ele+my_mu+extrael).M(),weight*aweight*weight2)
 
     fout->Close();
 } 
-
-
